@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/sounds">
+        <file>move.wav</file>
+        <file>capture.wav</file>
+    </qresource>
+</RCC>
