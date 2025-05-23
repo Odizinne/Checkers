@@ -33,6 +33,7 @@ set(QML_FILES
 set(QML_SINGLETONS
     qml/Singletons/GameLogic.qml
     qml/Singletons/AIPlayer.qml
+    qml/Singletons/AudioEngine.qml
 )
 
 set_source_files_properties(${QML_SINGLETONS}

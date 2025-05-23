@@ -2,14 +2,13 @@ import QtQuick
 
 Rectangle {
     id: board
-    width: GameLogic.boardSize * GameLogic.cellSize
-    height: GameLogic.boardSize * GameLogic.cellSize
     color: "transparent"
 
     signal cellClicked(int row, int col)
 
     // Board squares
     Grid {
+        anchors.fill: parent
         rows: GameLogic.boardSize
         columns: GameLogic.boardSize
 
@@ -18,8 +17,8 @@ Rectangle {
 
             Rectangle {
                 id: boardRec
-                width: GameLogic.cellSize
-                height: GameLogic.cellSize
+                width: board.width / GameLogic.boardSize
+                height: board.height / GameLogic.boardSize
                 color: (model.row + model.col) % 2 === 0 ? "#F0D9B5" : "#B58863"
                 required property var model
 

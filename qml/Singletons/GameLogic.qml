@@ -95,7 +95,7 @@ QtObject {
 
         // Handle capture
         if (wasCapture) {
-            if (captureFX) captureFX.play()
+            AudioEngine.playCapture()
             let rowDiff = toRow - fromRow
             let colDiff = toCol - fromCol
             let middleRow = fromRow + rowDiff / 2
@@ -115,7 +115,7 @@ QtObject {
                 })
             }
         } else {
-            if (moveFX) moveFX.play()
+            AudioEngine.playMove()
         }
 
         // Check for king promotion

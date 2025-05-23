@@ -2,10 +2,10 @@ import QtQuick
 
 Item {
     id: piece
-    x: model.x - 30
-    y: model.y - 30
-    width: 60
-    height: 60
+    x: model.x - width/2
+    y: model.y - height/2
+    width: GameLogic.cellSize * 0.75
+    height: GameLogic.cellSize * 0.75
     visible: model.isAlive
     required property var model
 
@@ -18,7 +18,7 @@ Item {
 
     Rectangle {
         anchors.fill: parent
-        radius: 30
+        radius: width / 2
         color: piece.model.player === 1 ? "#F5F5F5" : "#3C3C3C"
         border.width: GameLogic.selectedPiece && GameLogic.selectedPiece.row === piece.model.row &&
                      GameLogic.selectedPiece.col === piece.model.col ? 3 : 1
