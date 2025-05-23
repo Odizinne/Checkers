@@ -24,7 +24,7 @@ Popup {
         RowLayout {
             Layout.fillWidth: true
             spacing: 15
-            property int buttonWidth: Math.max(newGameButton.implicitWidth, closeButton.implicitWidth)
+            property int buttonWidth: Math.max(newGameButton.implicitWidth, closeButton.implicitWidth) + 30
             Button {
                 id: newGameButton
                 Layout.preferredWidth: parent.buttonWidth

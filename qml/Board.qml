@@ -43,7 +43,7 @@ Rectangle {
                     Rectangle {
                         anchors.fill: parent
                         color: (boardRec.model.row + boardRec.model.col) % 2 === 0 ? "#F0D9B5" : "#B58863"
-                        opacity: 0.5
+                        opacity: 0.7
                     }
 
                     // Subtle wood texture overlay

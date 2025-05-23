@@ -35,14 +35,18 @@ ApplicationWindow {
             anchors.top: parent.top
             anchors.bottom: parent.bottom
             icon.source: "qrc:/icons/menu.png"
+            icon.color: UserSettings.darkMode ? "white" : "black"
             onClicked: menu.visible = true
+            icon.width: 16
+            icon.height: 16
         }
 
         Label {
             text: GameLogic.gameOver ? ("Winner: " + (GameLogic.winner === 1 ? "White" : "Black")) :
                                        (GameLogic.inChainCapture ? "Continue capturing!" :
                                                                    ((GameLogic.isPlayer1Turn ? "White" : "Black") + " Turn"))
-            font.pixelSize: Math.round(18 * root.scaleFactor)
+            color: UserSettings.darkMode ? "white" : "black"
+            font.pixelSize: Math.round(16 * root.scaleFactor)
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
         }
@@ -57,7 +61,7 @@ ApplicationWindow {
             }
 
             Switch {
-                checked: true
+                checked: UserSettings.vsAI
                 onClicked: {
                     UserSettings.vsAI = checked
                     GameLogic.initializeBoard()
@@ -107,7 +111,8 @@ ApplicationWindow {
 
                 Label {
                     height: parent.height
-                    text: GameLogic.capturedWhiteCount > 0 ? GameLogic.capturedWhiteCount : ""
+                    color: UserSettings.darkMode ? "white" : "black"
+                    text: GameLogic.capturedWhiteCount
                     font.pixelSize: 20
                     //visible: GameLogic.capturedWhiteCount > 0
                     verticalAlignment: Text.AlignVCenter
@@ -122,7 +127,8 @@ ApplicationWindow {
 
                 Label {
                     height: parent.height
-                    text: GameLogic.capturedBlackCount > 0 ? GameLogic.capturedBlackCount : ""
+                    color: UserSettings.darkMode ? "white" : "black"
+                    text: GameLogic.capturedBlackCount
                     font.pixelSize: 20
                     //visible: GameLogic.capturedBlackCount > 0
                     verticalAlignment: Text.AlignVCenter
