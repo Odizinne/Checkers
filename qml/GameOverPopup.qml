@@ -17,6 +17,8 @@ Popup {
             Layout.fillWidth: true
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
+            font.pixelSize: 20
+            font.bold: true
         }
 
         RowLayout {

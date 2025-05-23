@@ -71,7 +71,7 @@ ApplicationWindow {
         height: 40
         Material.background: UserSettings.darkMode ? "#2B2B2B" : "#FFFFFF"
 
-        Row {
+        Item {
             anchors.fill: parent
             anchors.margins: 4
             opacity: GameLogic.isResetting ? 0 : 1
@@ -81,225 +81,69 @@ ApplicationWindow {
             }
 
             // Captured white pieces (left side)
-            Column {
-                width: parent.width / 2
-                height: parent.height
-                spacing: 2
+            Row {
+                anchors.left: parent.left
+                anchors.verticalCenter: parent.verticalCenter
+                spacing: 8
 
-                Row {
-                    spacing: 2
-                    Repeater {
-                        model: GameLogic.isResetting ? 0 : Math.min(6, GameLogic.capturedWhiteCount)
+                Rectangle {
+                    id: whiteCapture
+                    width: 30
+                    height: 30
+                    radius: 15
+                    color: "#F5F5F5"
+                    border.width: 1
+                    border.color: "#E0E0E0"
+                    visible: GameLogic.capturedWhiteCount > 0
 
-                        Rectangle {
-                            id: capWhite1
-                            width: 16
-                            height: 16
-                            radius: 6
-                            color: "#F5F5F5"
-                            border.width: 1
-                            border.color: "#E0E0E0"
-                            required property int index
-
-                            opacity: 0
-                            Component.onCompleted: {
-                                fadeInCapwhite1.start()
-                            }
-
-                            NumberAnimation {
-                                id: fadeInCapwhite1
-                                target: capWhite1
-                                property: "opacity"
-                                to: 1
-                                duration: 300
-                                easing.type: Easing.OutQuad
-                            }
-
-                            Rectangle {
-                                anchors.centerIn: parent
-                                width: parent.width * 0.7
-                                height: width
-                                radius: width / 2
-                                color: "#D0D0D0"
-
-                                Rectangle {
-                                    visible: capWhite1.index < GameLogic.capturedWhitePieces.length &&
-                                             GameLogic.capturedWhitePieces[capWhite1.index] &&
-                                    GameLogic.capturedWhitePieces[capWhite1.index].isKing
-                                    anchors.centerIn: parent
-                                    width: parent.width * 0.6
-                                    height: width
-                                    radius: width / 2
-                                    color: "#FFD700"
-                                }
-                            }
-                        }
+                    Rectangle {
+                        anchors.centerIn: parent
+                        width: parent.width * 0.7
+                        height: width
+                        radius: width / 2
+                        color: "#D0D0D0"
                     }
                 }
 
-                Row {
-                    spacing: 2
-                    Repeater {
-                        model: GameLogic.isResetting ? 0 : Math.max(0, GameLogic.capturedWhiteCount - 6)
-
-                        Rectangle {
-                            id: capWhite2
-                            width: 16
-                            height: 16
-                            radius: 6
-                            color: "#F5F5F5"
-                            border.width: 1
-                            border.color: "#E0E0E0"
-                            required property int index
-
-                            opacity: 0
-                            Component.onCompleted: {
-                                fadeInCapwhite2.start()
-                            }
-
-                            NumberAnimation {
-                                id: fadeInCapwhite2
-                                target: capWhite2
-                                property: "opacity"
-                                to: 1
-                                duration: 300
-                                easing.type: Easing.OutQuad
-                            }
-
-                            Rectangle {
-                                anchors.centerIn: parent
-                                width: parent.width * 0.7
-                                height: width
-                                radius: width / 2
-                                color: "#D0D0D0"
-
-                                Rectangle {
-                                    visible: (capWhite2.index + 6) < GameLogic.capturedWhitePieces.length &&
-                                             GameLogic.capturedWhitePieces[capWhite2.index + 6] &&
-                                    GameLogic.capturedWhitePieces[capWhite2.index + 6].isKing
-                                    anchors.centerIn: parent
-                                    width: parent.width * 0.6
-                                    height: width
-                                    radius: width / 2
-                                    color: "#FFD700"
-                                }
-                            }
-                        }
-                    }
+                Label {
+                    height: parent.height
+                    text: GameLogic.capturedWhiteCount > 0 ? GameLogic.capturedWhiteCount : ""
+                    font.pixelSize: 20
+                    visible: GameLogic.capturedWhiteCount > 0
+                    verticalAlignment: Text.AlignVCenter
                 }
             }
 
-            // Captured black pieces (right side) - apply same pattern
-            Column {
-                width: parent.width / 2
-                height: parent.height
-                spacing: 2
+            // Captured black pieces (right side)
+            Row {
+                anchors.right: parent.right
+                anchors.verticalCenter: parent.verticalCenter
+                spacing: 8
 
-                Row {
-                    spacing: 2
-                    layoutDirection: Qt.RightToLeft
-                    anchors.right: parent.right
-
-                    Repeater {
-                        model: GameLogic.isResetting ? 0 : Math.min(6, GameLogic.capturedBlackCount)
-
-                        Rectangle {
-                            id: capBlack1
-                            width: 16
-                            height: 16
-                            radius: 6
-                            color: "#3C3C3C"
-                            border.width: 1
-                            border.color: "#2C2C2C"
-                            required property int index
-
-                            opacity: 0
-                            Component.onCompleted: {
-                                fadeInCapBlack1.start()
-                            }
-
-                            NumberAnimation {
-                                id: fadeInCapBlack1
-                                target: capBlack1
-                                property: "opacity"
-                                to: 1
-                                duration: 300
-                                easing.type: Easing.OutQuad
-                            }
-
-                            Rectangle {
-                                anchors.centerIn: parent
-                                width: parent.width * 0.7
-                                height: width
-                                radius: width / 2
-                                color: "#1F1F1F"
-
-                                Rectangle {
-                                    visible: capBlack1.index < GameLogic.capturedBlackPieces.length &&
-                                             GameLogic.capturedBlackPieces[capBlack1.index] &&
-                                    GameLogic.capturedBlackPieces[capBlack1.index].isKing
-                                    anchors.centerIn: parent
-                                    width: parent.width * 0.6
-                                    height: width
-                                    radius: width / 2
-                                    color: "#FFD700"
-                                }
-                            }
-                        }
-                    }
+                Label {
+                    height: parent.height
+                    text: GameLogic.capturedBlackCount > 0 ? GameLogic.capturedBlackCount : ""
+                    font.pixelSize: 20
+                    visible: GameLogic.capturedBlackCount > 0
+                    verticalAlignment: Text.AlignVCenter
                 }
 
-                Row {
-                    spacing: 2
-                    layoutDirection: Qt.RightToLeft
-                    anchors.right: parent.right
+                Rectangle {
+                    id: blackCapture
+                    width: 30
+                    height: 30
+                    radius: 15
+                    color: "#3C3C3C"
+                    border.width: 1
+                    border.color: "#2C2C2C"
+                    visible: GameLogic.capturedBlackCount > 0
 
-                    Repeater {
-                        model: GameLogic.isResetting ? 0 : Math.max(0, GameLogic.capturedBlackCount - 6)
-
-                        Rectangle {
-                            id: capBlack2
-                            width: 16
-                            height: 16
-                            radius: 6
-                            color: "#3C3C3C"
-                            border.width: 1
-                            border.color: "#2C2C2C"
-                            required property int index
-
-                            opacity: 0
-                            Component.onCompleted: {
-                                fadeInCapBlack2.start()
-                            }
-
-                            NumberAnimation {
-                                id: fadeInCapBlack2
-                                target: capBlack2
-                                property: "opacity"
-                                to: 1
-                                duration: 300
-                                easing.type: Easing.OutQuad
-                            }
-
-                            Rectangle {
-                                anchors.centerIn: parent
-                                width: parent.width * 0.7
-                                height: width
-                                radius: width / 2
-                                color: "#1F1F1F"
-
-                                Rectangle {
-                                    visible: (capBlack2.index + 6) < GameLogic.capturedBlackPieces.length &&
-                                             GameLogic.capturedBlackPieces[capBlack2.index + 6] &&
-                                    GameLogic.capturedBlackPieces[capBlack2.index + 6].isKing
-                                    anchors.centerIn: parent
-                                    width: parent.width * 0.6
-                                    height: width
-                                    radius: width / 2
-                                    color: "#FFD700"
-                                }
-                            }
-                        }
+                    Rectangle {
+                        anchors.centerIn: parent
+                        width: parent.width * 0.7
+                        height: width
+                        radius: width / 2
+                        color: "#1F1F1F"
                     }
                 }
             }
@@ -547,7 +391,6 @@ ApplicationWindow {
         Connections {
             target: GameLogic
             function onShowGameOverPopup() {
-                console.log("pass")
                 gameOverPopup.open()
             }
         }
