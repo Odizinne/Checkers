@@ -26,6 +26,7 @@ QtObject {
     property var boardModel: null
     property var piecesModel: null
 
+    signal showGameOverPopup()
     // Animation handling
     property int animationDuration: 300
     property Timer animationTimer: Timer {
@@ -515,10 +516,12 @@ QtObject {
         if (player1Count === 0) {
             gameOver = true
             winner = 2
+            showGameOverPopup()
             return
         } else if (player2Count === 0) {
             gameOver = true
             winner = 1
+            showGameOverPopup()
             return
         }
 
@@ -527,6 +530,7 @@ QtObject {
         if (!hasValidMoves(currentPlayer)) {
             gameOver = true
             winner = currentPlayer === 1 ? 2 : 1
+            showGameOverPopup()
         }
     }
 }

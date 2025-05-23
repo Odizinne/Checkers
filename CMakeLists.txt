@@ -25,6 +25,7 @@ set(SOURCES
 set(QML_FILES
     qml/Main.qml
     qml/Board.qml
+    qml/GameOverPopup.qml
     qml/Piece.qml
 )
 

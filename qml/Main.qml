@@ -540,4 +540,16 @@ ApplicationWindow {
             }
         }
     }
+
+    GameOverPopup {
+        id: gameOverPopup
+        anchors.centerIn: parent
+        Connections {
+            target: GameLogic
+            function onShowGameOverPopup() {
+                console.log("pass")
+                gameOverPopup.open()
+            }
+        }
+    }
 }
