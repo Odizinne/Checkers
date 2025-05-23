@@ -305,21 +305,24 @@ QtObject {
             return
         }
 
+        // First, check if we're clicking on a piece
+        let clickedPiece = getPieceAt(row, col)
+
         if (selectedPiece !== null) {
+            // We have a piece selected, try to move
             if (isValidMove(selectedPiece.row, selectedPiece.col, row, col)) {
                 executeMove(selectedPiece.row, selectedPiece.col, row, col)
+            } else if (clickedPiece && clickedPiece.player === (isPlayer1Turn ? 1 : 2)) {
+                // Clicking on another valid piece - select it instead
+                selectedPiece = { row: row, col: col, index: clickedPiece.index }
             } else {
-                let piece = getPieceAt(row, col)
-                if (piece && piece.player === (isPlayer1Turn ? 1 : 2)) {
-                    selectedPiece = { row: row, col: col, index: piece.index }
-                } else {
-                    selectedPiece = null
-                }
+                // Invalid move and not clicking on a valid piece - deselect
+                selectedPiece = null
             }
         } else {
-            let piece = getPieceAt(row, col)
-            if (piece && piece.player === (isPlayer1Turn ? 1 : 2)) {
-                selectedPiece = { row: row, col: col, index: piece.index }
+            // No piece selected, try to select one
+            if (clickedPiece && clickedPiece.player === (isPlayer1Turn ? 1 : 2)) {
+                selectedPiece = { row: row, col: col, index: clickedPiece.index }
             }
         }
     }

@@ -118,6 +118,7 @@ Item {
         id: mouseArea
         anchors.fill: parent
         drag.target: parent
+        propagateComposedEvents: true
         enabled: {
             if (GameLogic.gameOver || GameLogic.animating || GameLogic.isResetting) return false
 
@@ -129,7 +130,7 @@ Item {
             }
 
             // vs AI mode - only player 1 (white pieces) can be dragged on player 1's turn
-            if (GameLogic.vsAI) {
+            if (UserSettings.vsAI) {
                 return GameLogic.isPlayer1Turn && piece.model.player === 1
             }
 
