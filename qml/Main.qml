@@ -404,6 +404,11 @@ Window {
                         table.inChainCapture = true
                         table.chainCapturePosition = { row: toRow, col: toCol }
                         table.selectedPiece = { row: toRow, col: toCol, index: pieceIndex }
+
+                        // If it's AI's turn and AI made the capture, continue with AI immediately
+                        if (table.vsAI && !table.isPlayer1Turn) {
+                            aiChainCaptureTimer.start()
+                        }
                         return
                     }
                 }
@@ -422,6 +427,21 @@ Window {
             }
         }
 
+        Timer {
+            id: aiChainCaptureTimer
+            interval: 400
+            onTriggered: {
+                if (table.inChainCapture && table.chainCapturePosition) {
+                    let availableCaptures = table.getCaptureMoves(table.chainCapturePosition.row, table.chainCapturePosition.col)
+                    if (availableCaptures.length > 0) {
+                        let randomCapture = availableCaptures[Math.floor(Math.random() * availableCaptures.length)]
+                        table.animating = true
+                        table.movePiece(table.chainCapturePosition.row, table.chainCapturePosition.col, randomCapture.row, randomCapture.col)
+                    }
+                }
+            }
+        }
+
         function checkGameState() {
             let player1Count = 0
             let player2Count = 0
@@ -434,13 +454,51 @@ Window {
                 }
             }
 
+            // Check for no pieces left
             if (player1Count === 0) {
                 table.gameOver = true
                 table.winner = 2
+                return
             } else if (player2Count === 0) {
                 table.gameOver = true
                 table.winner = 1
+                return
             }
+
+            // Check for no valid moves (stalemate = defeat)
+            let currentPlayer = table.isPlayer1Turn ? 1 : 2
+            if (!hasValidMoves(currentPlayer)) {
+                table.gameOver = true
+                table.winner = currentPlayer === 1 ? 2 : 1
+            }
+        }
+
+        function hasValidMoves(player) {
+            for (let i = 0; i < piecesModel.count; i++) {
+                let piece = piecesModel.get(i)
+                if (piece.isAlive && piece.player === player) {
+                    // Check for captures first
+                    if (getCaptureMoves(piece.row, piece.col).length > 0) {
+                        return true
+                    }
+
+                    // If no captures available, check regular moves
+                    if (!hasAnyCaptures(player)) {
+                        let directions = piece.isKing ?
+                            [[-1, -1], [-1, 1], [1, -1], [1, 1]] :
+                            (piece.player === 1 ? [[-1, -1], [-1, 1]] : [[1, -1], [1, 1]])
+
+                        for (let dir of directions) {
+                            let newRow = piece.row + dir[0]
+                            let newCol = piece.col + dir[1]
+                            if (isValidMove(piece.row, piece.col, newRow, newCol)) {
+                                return true
+                            }
+                        }
+                    }
+                }
+            }
+            return false
         }
 
         function makeAIMove() {
@@ -470,7 +528,7 @@ Window {
                         for (let dir of directions) {
                             let newRow = piece.row + dir[0]
                             let newCol = piece.col + dir[1]
-                            if (isValidMove(piece.row, piece.col, newRow, newCol)) {
+                            if (table.isValidMove(piece.row, piece.col, newRow, newCol)) {
                                 allMoves.push({
                                     from: {row: piece.row, col: piece.col},
                                     to: {row: newRow, col: newCol},
@@ -488,8 +546,11 @@ Window {
 
             if (moveToMake) {
                 table.animating = true
-                movePiece(moveToMake.from.row, moveToMake.from.col,
+                table.movePiece(moveToMake.from.row, moveToMake.from.col,
                          moveToMake.to.row, moveToMake.to.col)
+            } else {
+                // AI has no valid moves - trigger game over
+                table.checkGameState()
             }
         }
 
@@ -524,6 +585,11 @@ Window {
                             anchors.fill: parent
                             color: "transparent"
                             visible: {
+                                // Don't show valid moves during AI chain capture
+                                if (table.vsAI && !table.isPlayer1Turn && table.inChainCapture) {
+                                    return false
+                                }
+
                                 if (table.inChainCapture && table.chainCapturePosition) {
                                     return table.isValidMove(table.chainCapturePosition.row, table.chainCapturePosition.col, boardRec.model.row, boardRec.model.col)
                                 } else if (table.selectedPiece) {
