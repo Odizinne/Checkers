@@ -4,6 +4,9 @@
         <file>menu.png</file>
         <file>sun.png</file>
         <file>moon.png</file>
+        <file>volume_up.png</file>
+        <file>volume_down.png</file>
+        <file>volume_muted.png</file>
         <file>wood_texture.png</file>
     </qresource>
 </RCC>

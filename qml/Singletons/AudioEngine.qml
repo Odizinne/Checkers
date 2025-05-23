@@ -10,7 +10,6 @@ Item {
 
     Component.onCompleted: {
         updateAudioDevice()
-        //playSilent()
     }
 
     MediaDevices {
@@ -44,7 +43,7 @@ Item {
         id: moveFX
         source: "qrc:/sounds/move.wav"
         audioOutput: AudioOutput {
-            volume: 1
+            volume: UserSettings.volume
             device: mediaDevices.defaultAudioOutput
         }
     }
@@ -53,7 +52,7 @@ Item {
         id: captureFX
         source: "qrc:/sounds/capture.wav"
         audioOutput: AudioOutput {
-            volume: 1
+            volume: UserSettings.volume
             device: mediaDevices.defaultAudioOutput
         }
     }

@@ -5,6 +5,7 @@ import QtQuick.Window
 import Odizinne.Checkers
 import QtQuick.Controls.Material
 import QtQuick.Layouts
+import QtQuick.Controls.impl
 
 ApplicationWindow {
     id: root
@@ -320,22 +321,73 @@ ApplicationWindow {
                 width: parent.width
                 spacing: 2
                 ItemDelegate {
+                    text: qsTr("Close menu")
+                    height: 40
+                    width: parent.width
+                    onClicked: menu.visible = false
+                }
+
+                MenuSeparator {}
+
+                ItemDelegate {
                     text: qsTr("New game")
-                    height: 50
+                    height: 40
                     width: parent.width
                     onClicked: GameLogic.initializeBoard()
                 }
 
                 ItemDelegate {
                     text: qsTr("Exit")
-                    height: 50
+                    height: 40
                     width: parent.width
                     onClicked: Qt.quit()
                 }
             }
         }
 
+        MenuSeparator {
+            anchors.bottom: volumeLyt.top
+            anchors.left: parent.left
+            anchors.right: parent.right
+        }
+
         RowLayout {
+            id: volumeLyt
+            anchors.margins: 16
+            anchors.bottom: themeLyt.top
+            anchors.left: parent.left
+            anchors.right: parent.right
+
+            IconImage {
+                sourceSize.width: 24
+                sourceSize.height: 24
+                color: Material.foreground
+                source: {
+                    if (UserSettings.volume === 0) {
+                        return "qrc:/icons/volume_muted.png"
+                    } else if (UserSettings.volume <= 0.50) {
+                        return "qrc:/icons/volume_down.png"
+                    } else if (UserSettings.volume <= 1) {
+                        return "qrc:/icons/volume_up.png"
+                    } else {
+                        return "qrc:/icons/volume_up.png"
+                    }
+                }
+            }
+
+            Slider {
+                id: volumeSlider
+                Layout.preferredWidth: 180 -24 -16 -16 -6
+                from: 0.0
+                to: 1.0
+                Layout.leftMargin: 5
+                value: UserSettings.volume
+                onValueChanged: UserSettings.volume = value
+            }
+        }
+
+        RowLayout {
+            id: themeLyt
             anchors.margins: 16
             anchors.bottom: parent.bottom
             anchors.left: parent.left
