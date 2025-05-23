@@ -1,4 +1,5 @@
 import QtQuick
+import Odizinne.Checkers
 
 Item {
     id: piece
@@ -17,51 +18,69 @@ Item {
     }
 
     Rectangle {
+        id: outerCircle
         anchors.fill: parent
         radius: width / 2
         color: piece.model.player === 1 ? "#F5F5F5" : "#3C3C3C"
+
+        // Use fixed border width instead of variable
         border.width: GameLogic.selectedPiece && GameLogic.selectedPiece.row === piece.model.row &&
-                     GameLogic.selectedPiece.col === piece.model.col ? 3 : 1
+                     GameLogic.selectedPiece.col === piece.model.col ?
+                     Math.max(2, Math.round(width * 0.04)) : Math.max(1, Math.round(width * 0.02))
         border.color: GameLogic.selectedPiece && GameLogic.selectedPiece.row === piece.model.row &&
                      GameLogic.selectedPiece.col === piece.model.col ? "#F39C12" :
                      (piece.model.player === 1 ? "#E0E0E0" : "#2C2C2C")
 
-        // Edge gradient only - covers outer ring
+        // Force perfect circle by making sure width equals height
+        width: Math.min(parent.width, parent.height)
+        height: width
+        anchors.centerIn: parent
+
+        // Simplified gradient - less likely to cause rendering issues
         Rectangle {
             anchors.fill: parent
             radius: width / 2
+            opacity: 0.3
 
-            gradient: {
-                if (piece.model.player === 1) {
-                    return piece.whiteGradient
-                } else {
-                    return piece.darkGradient
+            gradient: Gradient {
+                GradientStop {
+                    position: 0.0
+                    color: piece.model.player === 1 ? "#40000000" : "#60FFFFFF"
+                }
+                GradientStop {
+                    position: 1.0
+                    color: piece.model.player === 1 ? "#10FFFFFF" : "#20000000"
                 }
             }
         }
 
         // Inner circle - clean, no gradient
         Rectangle {
+            id: innerCircle
             anchors.centerIn: parent
-            width: parent.width * 0.7
-            height: parent.height * 0.7
+            width: Math.round(parent.width * 0.7)
+            height: width  // Force perfect circle
             radius: width / 2
             color: piece.model.player === 1 ? "#D0D0D0" : "#1F1F1F"
 
-            // King crown (replaces the inner circle when king)
+            // King crown
             Rectangle {
                 visible: piece.model.isKing
                 anchors.centerIn: parent
-                width: parent.width * 0.6
-                height: parent.height * 0.6
+                width: Math.round(parent.width * 0.6)
+                height: width  // Force perfect circle
                 radius: width / 2
                 color: "#FFD700"
 
-                // Crown gradient - keep some shine on gold
+                // Simplified crown gradient
                 Rectangle {
                     anchors.fill: parent
                     radius: width / 2
-                    gradient: piece.crownGradient
+                    opacity: 0.4
+                    gradient: Gradient {
+                        GradientStop { position: 0.0; color: "#FFFFFF" }
+                        GradientStop { position: 1.0; color: "#000000" }
+                    }
                 }
             }
         }
@@ -70,26 +89,5 @@ Item {
         Behavior on scale {
             NumberAnimation { duration: 300; easing.type: Easing.InBack }
         }
-    }
-
-    // Edge gradients only
-    property Gradient whiteGradient: Gradient {
-        GradientStop { position: 0.0; color: "#30000000" }
-        GradientStop { position: 0.2; color: "#10000000" }
-        GradientStop { position: 0.8; color: "#00000000" }
-        GradientStop { position: 1.0; color: "#40000000" }
-    }
-
-    property Gradient darkGradient: Gradient {
-        GradientStop { position: 0.0; color: "#40FFFFFF" }
-        GradientStop { position: 0.3; color: "#20FFFFFF" }
-        GradientStop { position: 0.7; color: "#00FFFFFF" }
-        GradientStop { position: 1.0; color: "#10000000" }
-    }
-
-    property Gradient crownGradient: Gradient {
-        GradientStop { position: 0.0; color: "#60FFFFFF" }
-        GradientStop { position: 0.4; color: "#30FFFFFF" }
-        GradientStop { position: 1.0; color: "#20000000" }
     }
 }

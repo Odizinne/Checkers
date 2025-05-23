@@ -10,7 +10,7 @@ Item {
 
     Component.onCompleted: {
         updateAudioDevice()
-        playSilent()
+        //playSilent()
     }
 
     MediaDevices {

@@ -17,12 +17,10 @@ find_package(Qt6 REQUIRED COMPONENTS
 
 qt_standard_project_setup(REQUIRES 6.8)
 
-qt_add_executable(${CMAKE_PROJECT_NAME}
+set(SOURCES
     src/main.cpp
-    resources/sounds/sounds.qrc
-    resources/icons/icons.qrc
-    resources/appicon.rc
 )
+
 
 set(QML_FILES
     qml/Main.qml
@@ -40,6 +38,13 @@ set_source_files_properties(${QML_SINGLETONS}
     PROPERTIES QT_QML_SINGLETON_TYPE TRUE
 )
 
+qt_add_executable(${CMAKE_PROJECT_NAME}
+    ${SOURCES}
+    #${HEADERS}
+    resources/sounds/sounds.qrc
+    resources/icons/icons.qrc
+    resources/appicon.rc
+)
 
 qt_add_qml_module(${CMAKE_PROJECT_NAME}
     URI Odizinne.Checkers
@@ -51,6 +56,22 @@ set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
     WIN32_EXECUTABLE TRUE
 )
 
+set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
+    WIN32_EXECUTABLE TRUE
+    QT_ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android"
+    QT_ANDROID_PACKAGE_NAME "com.odizinne.checkers"
+    QT_ANDROID_APP_NAME "Checkers"
+    QT_ANDROID_APP_ICON "@mipmap/ic_launcher"
+    QT_ANDROID_TARGET_SDK_VERSION 34
+    QT_ANDROID_MIN_SDK_VERSION 24
+    QT_ANDROID_VERSION_NAME "1.0"
+    QT_ANDROID_VERSION_CODE 1
+)
+
+target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+
 target_link_libraries(${CMAKE_PROJECT_NAME}
     PRIVATE
     Qt6::Quick
@@ -58,15 +79,27 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
 )
 
 include(GNUInstallDirs)
-install(TARGETS ${CMAKE_PROJECT_NAME}
-    BUNDLE DESTINATION .
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-)
-qt_generate_deploy_qml_app_script(
-    TARGET ${CMAKE_PROJECT_NAME}
-    OUTPUT_SCRIPT deploy_script
-    NO_TRANSLATIONS
-    DEPLOY_TOOL_OPTIONS --no-compiler-runtime --no-opengl-sw --no-system-dxc-compiler --no-system-d3d-compiler --skip-plugin-types imageformats,designer,iconengines,qmllint,generic,networkinformation,help,qmltooling,sqldrivers,tls,qmlls
-)
 
-install(SCRIPT ${deploy_script})
+# Platform-specific installation
+if(ANDROID)
+    install(TARGETS ${CMAKE_PROJECT_NAME}
+        BUNDLE DESTINATION .
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    )
+else()
+    install(TARGETS ${CMAKE_PROJECT_NAME}
+        BUNDLE DESTINATION .
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    )
+
+    # Only generate deploy script for non-Android platforms
+    qt_generate_deploy_qml_app_script(
+        TARGET ${CMAKE_PROJECT_NAME}
+        OUTPUT_SCRIPT deploy_script
+        NO_TRANSLATIONS
+        DEPLOY_TOOL_OPTIONS --no-compiler-runtime --no-opengl-sw --no-system-dxc-compiler --no-system-d3d-compiler --skip-plugin-types imageformats,designer,iconengines,qmllint,generic,networkinformation,help,qmltooling,sqldrivers,tls,qmlls
+    )
+
+    install(SCRIPT ${deploy_script})
+endif()

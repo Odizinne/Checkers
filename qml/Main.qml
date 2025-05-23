@@ -3,44 +3,86 @@ pragma ComponentBehavior: Bound
 import QtQuick 2.15
 import QtQuick.Window 2.15
 import Odizinne.Checkers
-import QtQuick.Effects
 
 Window {
     id: root
-    width: 840
-    height: 840
+    width: 850
+    minimumWidth: 850
+    height: 600
+    minimumHeight: 600
     visible: true
     title: "Checkers"
     color: "#2C3E50"
-    visibility: Window.FullScreen
+    //visibility: Window.FullScreen
+
+    Shortcut {
+        sequence: "F11"
+        onActivated: {
+            if (root.visibility !== Window.FullScreen) {
+                root.visibility = Window.FullScreen
+            } else {
+                root.visibility = Window.Windowed
+            }
+        }
+    }
 
     readonly property bool isPortrait: height > width
-    readonly property int availableSpace: isPortrait ? (width - 80) : (height - 80) // 40px margin on each side
+    readonly property real scaleFactor: Math.max(Screen.pixelDensity / 6, 1.2)
+
+    // Simple margins - just a bit of padding
+    readonly property int margin: Math.round(20 * scaleFactor)
+
+    // Use window size directly
+    readonly property int availableSpace: isPortrait ?
+        (width - margin * 2) : (height - margin * 2)
     readonly property int boardSize: availableSpace
     readonly property int cellSize: boardSize / 8
 
-    Component.onCompleted: {
-        AudioEngine.playSilent()
+    readonly property int buttonWidth: Math.round(80 * scaleFactor)
+    readonly property int buttonHeight: Math.round(32 * scaleFactor)
+    readonly property int buttonSpacing: Math.round(8 * scaleFactor)
+    property real compOpacity: 0
+
+    Timer {
+        id: audioInitTimer
+        interval: 50
+        onTriggered: {
+            AudioEngine.playSilent()
+            // Show the UI with a nice fade-in
+            root.compOpacity = 1.0
+        }
     }
 
+    Component.onCompleted: {
+        audioInitTimer.start()
+    }
+
+    // Portrait layout - top buttons
     Row {
+        Behavior on opacity {
+            NumberAnimation {
+                duration: 800
+                easing.type: Easing.OutCubic
+            }
+        }
+        opacity: root.compOpacity
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.topMargin: 20
-        spacing: 10
+        anchors.topMargin: margin
+        spacing: buttonSpacing
         z: 1
         visible: root.isPortrait
 
         Rectangle {
-            width: 100
-            height: 40
+            width: buttonWidth
+            height: buttonHeight
             color: "#3498DB"
             radius: 5
             Text {
                 anchors.centerIn: parent
                 text: "New Game"
                 color: "white"
-                font.pixelSize: 12
+                font.pixelSize: Math.round(10 * scaleFactor)
             }
             MouseArea {
                 anchors.fill: parent
@@ -49,15 +91,15 @@ Window {
         }
 
         Rectangle {
-            width: 100
-            height: 40
+            width: buttonWidth
+            height: buttonHeight
             color: GameLogic.vsAI ? "#E74C3C" : "#27AE60"
             radius: 5
             Text {
                 anchors.centerIn: parent
                 text: GameLogic.vsAI ? "vs AI" : "vs Human"
                 color: "white"
-                font.pixelSize: 12
+                font.pixelSize: Math.round(10 * scaleFactor)
             }
             MouseArea {
                 anchors.fill: parent
@@ -69,15 +111,15 @@ Window {
         }
 
         Rectangle {
-            width: 100
-            height: 40
+            width: buttonWidth
+            height: buttonHeight
             color: "#95A5A6"
             radius: 5
             Text {
                 anchors.centerIn: parent
                 text: "Quit"
                 color: "white"
-                font.pixelSize: 12
+                font.pixelSize: Math.round(10 * scaleFactor)
             }
             MouseArea {
                 anchors.fill: parent
@@ -86,11 +128,19 @@ Window {
         }
     }
 
+    // Portrait layout - bottom status
     Column {
+        Behavior on opacity {
+            NumberAnimation {
+                duration: 800
+                easing.type: Easing.OutCubic
+            }
+        }
+        opacity: root.compOpacity
         anchors.bottom: parent.bottom
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottomMargin: 20
-        spacing: 10
+        anchors.bottomMargin: margin
+        spacing: buttonSpacing
         z: 1
         visible: root.isPortrait
 
@@ -99,24 +149,31 @@ Window {
                   (GameLogic.inChainCapture ? "Continue capturing!" :
                    ("Player " + (GameLogic.isPlayer1Turn ? "1" : "2") + "'s Turn"))
             color: "white"
-            font.pixelSize: Math.min(24, root.width / 20)
+            font.pixelSize: Math.round(18 * scaleFactor)
             anchors.horizontalCenter: parent.horizontalCenter
             horizontalAlignment: Text.AlignHCenter
         }
     }
 
-    // Landscape layout - buttons on left, status on right
+    // Landscape layout - left buttons
     Column {
+        Behavior on opacity {
+            NumberAnimation {
+                duration: 800
+                easing.type: Easing.OutCubic
+            }
+        }
+        opacity: root.compOpacity
         anchors.left: parent.left
         anchors.verticalCenter: parent.verticalCenter
-        anchors.leftMargin: 20
-        spacing: 15
+        anchors.leftMargin: margin
+        spacing: Math.round(12 * scaleFactor)
         z: 1
         visible: !root.isPortrait
 
         Rectangle {
-            width: 100
-            height: 40
+            width: buttonWidth
+            height: buttonHeight
             color: "#3498DB"
             radius: 5
 
@@ -124,7 +181,7 @@ Window {
                 anchors.centerIn: parent
                 text: "New Game"
                 color: "white"
-                font.pixelSize: 12
+                font.pixelSize: Math.round(10 * scaleFactor)
             }
 
             MouseArea {
@@ -134,8 +191,8 @@ Window {
         }
 
         Rectangle {
-            width: 100
-            height: 40
+            width: buttonWidth
+            height: buttonHeight
             color: GameLogic.vsAI ? "#E74C3C" : "#27AE60"
             radius: 5
 
@@ -143,7 +200,7 @@ Window {
                 anchors.centerIn: parent
                 text: GameLogic.vsAI ? "vs AI" : "vs Human"
                 color: "white"
-                font.pixelSize: 12
+                font.pixelSize: Math.round(10 * scaleFactor)
             }
 
             MouseArea {
@@ -156,8 +213,8 @@ Window {
         }
 
         Rectangle {
-            width: 100
-            height: 40
+            width: buttonWidth
+            height: buttonHeight
             color: "#95A5A6"
             radius: 5
 
@@ -165,7 +222,7 @@ Window {
                 anchors.centerIn: parent
                 text: "Quit"
                 color: "white"
-                font.pixelSize: 12
+                font.pixelSize: Math.round(10 * scaleFactor)
             }
 
             MouseArea {
@@ -175,11 +232,19 @@ Window {
         }
     }
 
+    // Landscape layout - right status
     Column {
+        Behavior on opacity {
+            NumberAnimation {
+                duration: 800
+                easing.type: Easing.OutCubic
+            }
+        }
+        opacity: root.compOpacity
         anchors.right: parent.right
         anchors.verticalCenter: parent.verticalCenter
-        anchors.rightMargin: 20
-        spacing: 10
+        anchors.rightMargin: margin
+        spacing: buttonSpacing
         z: 1
         visible: !root.isPortrait
 
@@ -188,14 +253,21 @@ Window {
                   (GameLogic.inChainCapture ? "Continue\ncapturing!" :
                    ("Player " + (GameLogic.isPlayer1Turn ? "1" : "2") + "'s\nTurn"))
             color: "white"
-            font.pixelSize: Math.min(20, root.height / 25)
+            font.pixelSize: Math.round(16 * scaleFactor)
             horizontalAlignment: Text.AlignHCenter
-            width: 120
+            width: Math.round(100 * scaleFactor)
             wrapMode: Text.WordWrap
         }
     }
 
     Rectangle {
+        Behavior on opacity {
+            NumberAnimation {
+                duration: 800
+                easing.type: Easing.OutCubic
+            }
+        }
+        opacity: root.compOpacity
         id: table
         width: root.boardSize
         height: root.boardSize
@@ -217,10 +289,8 @@ Window {
             GameLogic.initializeBoard()
         }
 
-        // Update cell size when window is resized
         onWidthChanged: {
             GameLogic.cellSize = root.cellSize
-            // Update piece positions
             for (let i = 0; i < piecesModel.count; i++) {
                 let piece = piecesModel.get(i)
                 piecesModel.set(i, {
@@ -239,7 +309,6 @@ Window {
         function handleCellClick(row, col) {
             if (GameLogic.gameOver || GameLogic.animating) return
 
-            // During chain capture, only allow clicking on valid capture squares
             if (GameLogic.inChainCapture && GameLogic.chainCapturePosition) {
                 if (GameLogic.isValidMove(GameLogic.chainCapturePosition.row, GameLogic.chainCapturePosition.col, row, col)) {
                     GameLogic.animating = true
@@ -293,7 +362,6 @@ Window {
             onTriggered: {
                 GameLogic.animating = false
 
-                // Check for chain capture
                 if (wasCapture) {
                     let availableCaptures = GameLogic.getCaptureMoves(toRow, toCol)
                     if (availableCaptures.length > 0) {
@@ -301,7 +369,6 @@ Window {
                         GameLogic.chainCapturePosition = { row: toRow, col: toCol }
                         GameLogic.selectedPiece = { row: toRow, col: toCol, index: pieceIndex }
 
-                        // If it's AI's turn and AI made the capture, continue with AI immediately
                         if (GameLogic.vsAI && !GameLogic.isPlayer1Turn) {
                             aiChainCaptureTimer.start()
                         }
@@ -309,7 +376,6 @@ Window {
                     }
                 }
 
-                // Turn ends
                 GameLogic.inChainCapture = false
                 GameLogic.chainCapturePosition = null
                 GameLogic.isPlayer1Turn = !GameLogic.isPlayer1Turn
@@ -339,7 +405,6 @@ Window {
                         animationTimer.start()
                     }
                 } else {
-                    // AI has no valid moves - trigger game over
                     GameLogic.checkGameState()
                 }
             }
@@ -369,7 +434,6 @@ Window {
             onCellClicked: (row, col) => table.handleCellClick(row, col)
         }
 
-        // Pieces layer
         Item {
             anchors.fill: parent
 
