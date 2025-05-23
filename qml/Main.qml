@@ -3,6 +3,7 @@ pragma ComponentBehavior: Bound
 import QtQuick 2.15
 import QtQuick.Window 2.15
 import Odizinne.Checkers
+import QtQuick.Effects
 
 Window {
     id: root
@@ -22,7 +23,6 @@ Window {
         AudioEngine.playSilent()
     }
 
-    // Portrait layout - buttons on top, status on bottom
     Row {
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter

@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/icons">
         <file>icon.png</file>
+        <file>wood_texture.png</file>
     </qresource>
 </RCC>

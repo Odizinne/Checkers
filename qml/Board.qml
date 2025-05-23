@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Effects
 
 Rectangle {
     id: board
@@ -6,7 +7,16 @@ Rectangle {
 
     signal cellClicked(int row, int col)
 
-    // Board squares
+    // Single wood texture for entire board
+    Image {
+        id: woodTexture
+        anchors.fill: parent
+        source: "qrc:/icons/wood_texture.png"
+        fillMode: Image.PreserveAspectCrop
+        visible: false  // We'll use this as source for MultiEffect
+    }
+
+    // Board squares with wood texture applied
     Grid {
         anchors.fill: parent
         rows: GameLogic.boardSize
@@ -19,8 +29,32 @@ Rectangle {
                 id: boardRec
                 width: board.width / GameLogic.boardSize
                 height: board.height / GameLogic.boardSize
-                color: (model.row + model.col) % 2 === 0 ? "#F0D9B5" : "#B58863"
+                color: "transparent"
                 required property var model
+
+                // Clipped portion of the wood texture with square color
+                Item {
+                    anchors.fill: parent
+                    clip: true
+
+                    // Base color
+                    Rectangle {
+                        anchors.fill: parent
+                        color: (boardRec.model.row + boardRec.model.col) % 2 === 0 ? "#F0D9B5" : "#B58863"
+                    }
+
+                    // Subtle wood texture overlay
+                    MultiEffect {
+                        source: woodTexture
+                        width: board.width
+                        height: board.height
+                        x: -boardRec.model.col * boardRec.width
+                        y: -boardRec.model.row * boardRec.height
+                        colorization: 1.0
+                        colorizationColor: (boardRec.model.row + boardRec.model.col) % 2 === 0 ? "#F0D9B5" : "#B58863"
+                        opacity: 0.4
+                    }
+                }
 
                 Rectangle {
                     anchors.fill: parent
