@@ -1,6 +1,8 @@
+pragma ComponentBehavior: Bound
+
 import QtQuick
 import QtQuick.Effects
-
+import Odizinne.Checkers
 Rectangle {
     id: board
     color: "transparent"
@@ -50,7 +52,7 @@ Rectangle {
                         height: board.height
                         x: -boardRec.model.col * boardRec.width
                         y: -boardRec.model.row * boardRec.height
-                        colorization: 1.0
+                        colorization: 1
                         colorizationColor: (boardRec.model.row + boardRec.model.col) % 2 === 0 ? "#F0D9B5" : "#B58863"
                         opacity: 0.4
                     }
@@ -61,7 +63,7 @@ Rectangle {
                     color: "transparent"
                     visible: {
                         // Don't show valid moves during AI chain capture
-                        if (GameLogic.vsAI && !GameLogic.isPlayer1Turn && GameLogic.inChainCapture) {
+                        if (UserSettings.vsAI && !GameLogic.isPlayer1Turn && GameLogic.inChainCapture) {
                             return false
                         }
 

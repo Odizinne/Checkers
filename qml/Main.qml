@@ -332,80 +332,79 @@ ApplicationWindow {
                     width: parent.width
                     onClicked: Qt.quit()
                 }
+            }
+        }
 
-                ItemDelegate {
-                    height: 50
-                    width: parent.width
-                    contentItem: RowLayout {
-                        spacing: 16
+        RowLayout {
+            anchors.margins: 16
+            anchors.bottom: parent.bottom
+            anchors.left: parent.left
+            anchors.right: parent.right
 
-                        Item {
-                            Layout.preferredHeight: 24
-                            Layout.preferredWidth: 24
+            Item {
+                Layout.preferredHeight: 24
+                Layout.preferredWidth: 24
 
-                            Image {
-                                id: sunImage
-                                anchors.fill: parent
-                                source: "qrc:/icons/sun.png"
-                                opacity: !themeSwitch.checked ? 1 : 0
-                                rotation: themeSwitch.checked ? 360 : 0
-                                mipmap: true
+                Image {
+                    id: sunImage
+                    anchors.fill: parent
+                    source: "qrc:/icons/sun.png"
+                    opacity: !themeSwitch.checked ? 1 : 0
+                    rotation: themeSwitch.checked ? 360 : 0
+                    mipmap: true
 
-                                Behavior on rotation {
-                                    NumberAnimation {
-                                        duration: 500
-                                        easing.type: Easing.OutQuad
-                                    }
-                                }
-
-                                Behavior on opacity {
-                                    NumberAnimation { duration: 500 }
-                                }
-
-                                MouseArea {
-                                    anchors.fill: parent
-                                    onClicked: themeSwitch.checked = !themeSwitch.checked
-                                }
-                            }
-
-                            Image {
-                                anchors.fill: parent
-                                id: moonImage
-                                source: "qrc:/icons/moon.png"
-                                opacity: themeSwitch.checked ? 1 : 0
-                                rotation: themeSwitch.checked ? 360 : 0
-                                mipmap: true
-
-                                Behavior on rotation {
-                                    NumberAnimation {
-                                        duration: 500
-                                        easing.type: Easing.OutQuad
-                                    }
-                                }
-
-                                Behavior on opacity {
-                                    NumberAnimation { duration: 100 }
-                                }
-
-                                MouseArea {
-                                    anchors.fill: parent
-                                    onClicked: themeSwitch.checked = !themeSwitch.checked
-                                }
-                            }
-                        }
-
-                        Item {
-                            Layout.fillWidth: true
-                        }
-
-                        Switch {
-                            id: themeSwitch
-                            checked: UserSettings.darkMode
-                            onClicked: UserSettings.darkMode = checked
-                            Layout.rightMargin: -10
+                    Behavior on rotation {
+                        NumberAnimation {
+                            duration: 500
+                            easing.type: Easing.OutQuad
                         }
                     }
+
+                    Behavior on opacity {
+                        NumberAnimation { duration: 500 }
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: themeSwitch.checked = !themeSwitch.checked
+                    }
                 }
+
+                Image {
+                    anchors.fill: parent
+                    id: moonImage
+                    source: "qrc:/icons/moon.png"
+                    opacity: themeSwitch.checked ? 1 : 0
+                    rotation: themeSwitch.checked ? 360 : 0
+                    mipmap: true
+
+                    Behavior on rotation {
+                        NumberAnimation {
+                            duration: 500
+                            easing.type: Easing.OutQuad
+                        }
+                    }
+
+                    Behavior on opacity {
+                        NumberAnimation { duration: 100 }
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: themeSwitch.checked = !themeSwitch.checked
+                    }
+                }
+            }
+
+            Item {
+                Layout.fillWidth: true
+            }
+
+            Switch {
+                id: themeSwitch
+                checked: UserSettings.darkMode
+                onClicked: UserSettings.darkMode = checked
+                Layout.rightMargin: -10
             }
         }
     }
