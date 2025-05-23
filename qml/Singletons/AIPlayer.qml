@@ -1,5 +1,6 @@
 pragma Singleton
 import QtQuick
+import Odizinne.Checkers
 
 QtObject {
     id: aiPlayer

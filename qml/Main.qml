@@ -94,7 +94,7 @@ ApplicationWindow {
                     color: "#F5F5F5"
                     border.width: 1
                     border.color: "#E0E0E0"
-                    visible: GameLogic.capturedWhiteCount > 0
+                    //visible: GameLogic.capturedWhiteCount > 0
 
                     Rectangle {
                         anchors.centerIn: parent
@@ -109,7 +109,7 @@ ApplicationWindow {
                     height: parent.height
                     text: GameLogic.capturedWhiteCount > 0 ? GameLogic.capturedWhiteCount : ""
                     font.pixelSize: 20
-                    visible: GameLogic.capturedWhiteCount > 0
+                    //visible: GameLogic.capturedWhiteCount > 0
                     verticalAlignment: Text.AlignVCenter
                 }
             }
@@ -124,7 +124,7 @@ ApplicationWindow {
                     height: parent.height
                     text: GameLogic.capturedBlackCount > 0 ? GameLogic.capturedBlackCount : ""
                     font.pixelSize: 20
-                    visible: GameLogic.capturedBlackCount > 0
+                    //visible: GameLogic.capturedBlackCount > 0
                     verticalAlignment: Text.AlignVCenter
                 }
 
@@ -136,7 +136,7 @@ ApplicationWindow {
                     color: "#3C3C3C"
                     border.width: 1
                     border.color: "#2C2C2C"
-                    visible: GameLogic.capturedBlackCount > 0
+                    //visible: GameLogic.capturedBlackCount > 0
 
                     Rectangle {
                         anchors.centerIn: parent
@@ -157,35 +157,30 @@ ApplicationWindow {
         width: 180
         Material.roundedScale: Material.NotRounded
 
-        ScrollView {
+        Column {
             anchors.fill: parent
-            clip: true
-
-            Column {
+            spacing: 2
+            ItemDelegate {
+                text: qsTr("Close menu")
+                height: 40
                 width: parent.width
-                spacing: 2
-                ItemDelegate {
-                    text: qsTr("Close menu")
-                    height: 40
-                    width: parent.width
-                    onClicked: menu.visible = false
-                }
+                onClicked: menu.visible = false
+            }
 
-                MenuSeparator {}
+            MenuSeparator {}
 
-                ItemDelegate {
-                    text: qsTr("New game")
-                    height: 40
-                    width: parent.width
-                    onClicked: GameLogic.initializeBoard()
-                }
+            ItemDelegate {
+                text: qsTr("New game")
+                height: 40
+                width: parent.width
+                onClicked: GameLogic.initializeBoard()
+            }
 
-                ItemDelegate {
-                    text: qsTr("Exit")
-                    height: 40
-                    width: parent.width
-                    onClicked: Qt.quit()
-                }
+            ItemDelegate {
+                text: qsTr("Exit")
+                height: 40
+                width: parent.width
+                onClicked: Qt.quit()
             }
         }
 

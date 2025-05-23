@@ -38,14 +38,16 @@ Item {
         id: outerCircle
         anchors.fill: parent
         radius: width / 2
-        color: piece.model.player === 1 ? "#F5F5F5" : "#3C3C3C"
+        color: piece.model.isKing ? "#FFD700" :
+               (piece.model.player === 1 ? "#F5F5F5" : "#3C3C3C")
 
         border.width: GameLogic.selectedPiece && GameLogic.selectedPiece.row === piece.model.row &&
                      GameLogic.selectedPiece.col === piece.model.col ?
                      Math.max(2, Math.round(width * 0.04)) : Math.max(1, Math.round(width * 0.02))
         border.color: GameLogic.selectedPiece && GameLogic.selectedPiece.row === piece.model.row &&
                      GameLogic.selectedPiece.col === piece.model.col ? "#F39C12" :
-                     (piece.model.player === 1 ? "#E0E0E0" : "#2C2C2C")
+                     (piece.model.isKing ? "#B8860B" :
+                      (piece.model.player === 1 ? "#E0E0E0" : "#2C2C2C"))
 
         width: Math.min(parent.width, parent.height)
         height: width
@@ -59,11 +61,13 @@ Item {
             gradient: Gradient {
                 GradientStop {
                     position: 0.0
-                    color: piece.model.player === 1 ? "#40000000" : "#60FFFFFF"
+                    color: piece.model.isKing ? "#FFFFFF" :
+                           (piece.model.player === 1 ? "#40000000" : "#60FFFFFF")
                 }
                 GradientStop {
                     position: 1.0
-                    color: piece.model.player === 1 ? "#10FFFFFF" : "#20000000"
+                    color: piece.model.isKing ? "#B8860B" :
+                           (piece.model.player === 1 ? "#10FFFFFF" : "#20000000")
                 }
             }
         }
@@ -77,20 +81,17 @@ Item {
             color: piece.model.player === 1 ? "#D0D0D0" : "#1F1F1F"
 
             Rectangle {
-                visible: piece.model.isKing
-                anchors.centerIn: parent
-                width: Math.round(parent.width * 0.6)
-                height: width
+                anchors.fill: parent
                 radius: width / 2
-                color: "#FFD700"
-
-                Rectangle {
-                    anchors.fill: parent
-                    radius: width / 2
-                    opacity: 0.4
-                    gradient: Gradient {
-                        GradientStop { position: 0.0; color: "#FFFFFF" }
-                        GradientStop { position: 1.0; color: "#000000" }
+                opacity: 0.4
+                gradient: Gradient {
+                    GradientStop {
+                        position: 0.0
+                        color: piece.model.player === 1 ? "#40000000" : "#60FFFFFF"
+                    }
+                    GradientStop {
+                        position: 1.0
+                        color: piece.model.player === 1 ? "#10FFFFFF" : "#20000000"
                     }
                 }
             }
