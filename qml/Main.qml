@@ -3,8 +3,9 @@ pragma ComponentBehavior: Bound
 import QtQuick 2.15
 import QtQuick.Window 2.15
 import Odizinne.Checkers
+import QtQuick.Controls.Material
 
-Window {
+ApplicationWindow {
     id: root
     width: 850
     minimumWidth: 850
@@ -12,9 +13,83 @@ Window {
     minimumHeight: 600
     visible: true
     title: "Checkers"
-    color: "#2C3E50"
+    color: isDarkTheme ? "#1C1C1C" : "#E3E3E3"
     //visibility: Window.FullScreen
+    Material.theme: Material.System
 
+    header: ToolBar {
+        height: 40
+        Material.background: root.isDarkTheme ? "#2B2B2B" : "#FFFFFF"
+
+        ToolButton {
+            anchors.left: parent.left
+            anchors.top: parent.top
+            anchors.bottom: parent.bottom
+            icon.source: "qrc:/icons/menu.png"
+            onClicked: menu.visible = true
+        }
+
+        Label {
+            text: GameLogic.gameOver ? ("Winner: " + (GameLogic.winner === 1 ? "White" : "Black")) :
+                                       (GameLogic.inChainCapture ? "Continue capturing!" :
+                                                                   ((GameLogic.isPlayer1Turn ? "White" : "Black") + " Turn"))
+            font.pixelSize: Math.round(18 * scaleFactor)
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.verticalCenter: parent.verticalCenter
+        }
+
+        Row {
+            anchors.right: parent.right
+            anchors.top: parent.top
+            anchors.bottom: parent.bottom
+            Label {
+                text: GameLogic.vsAI ? "Ai" : "2 Players"
+                anchors.verticalCenter: parent.verticalCenter
+            }
+
+            Switch {
+                checked: true
+                onClicked: {
+                    GameLogic.vsAI = checked
+                    GameLogic.initializeBoard()
+                }
+                anchors.verticalCenter: parent.verticalCenter
+            }
+        }
+    }
+
+    Drawer {
+        id: menu
+        height: parent.height
+        edge: Qt.LeftEdge
+        width: 180
+        Material.roundedScale: Material.NotRounded
+
+        ScrollView {
+            anchors.fill: parent
+            clip: true
+
+            Column {
+                width: parent.width
+                spacing: 2
+                ItemDelegate {
+                    text: qsTr("Exit")
+                    height: 40
+                    width: parent.width
+                    onClicked: GameLogic.initializeBoard()
+                }
+
+                ItemDelegate {
+                    text: qsTr("New game")
+                    height: 40
+                    width: parent.width
+                    onClicked: Qt.quit()
+                }
+            }
+        }
+    }
+
+    property bool isDarkTheme: Material.theme === Material.Dark
     Shortcut {
         sequence: "F11"
         onActivated: {
@@ -28,14 +103,7 @@ Window {
 
     readonly property bool isPortrait: height > width
     readonly property real scaleFactor: Math.max(Screen.pixelDensity / 6, 1.2)
-
-    // Simple margins - just a bit of padding
-    readonly property int margin: Math.round(20 * scaleFactor)
-
-    // Use window size directly
-    readonly property int availableSpace: isPortrait ?
-        (width - margin * 2) : (height - margin * 2)
-    readonly property int boardSize: availableSpace
+    readonly property int boardSize: table.maxSize
     readonly property int cellSize: boardSize / 8
 
     readonly property int buttonWidth: Math.round(80 * scaleFactor)
@@ -48,216 +116,12 @@ Window {
         interval: 50
         onTriggered: {
             AudioEngine.playSilent()
-            // Show the UI with a nice fade-in
             root.compOpacity = 1.0
         }
     }
 
     Component.onCompleted: {
         audioInitTimer.start()
-    }
-
-    // Portrait layout - top buttons
-    Row {
-        Behavior on opacity {
-            NumberAnimation {
-                duration: 800
-                easing.type: Easing.OutCubic
-            }
-        }
-        opacity: root.compOpacity
-        anchors.top: parent.top
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.topMargin: margin
-        spacing: buttonSpacing
-        z: 1
-        visible: root.isPortrait
-
-        Rectangle {
-            width: buttonWidth
-            height: buttonHeight
-            color: "#3498DB"
-            radius: 5
-            Text {
-                anchors.centerIn: parent
-                text: "New Game"
-                color: "white"
-                font.pixelSize: Math.round(10 * scaleFactor)
-            }
-            MouseArea {
-                anchors.fill: parent
-                onClicked: GameLogic.initializeBoard()
-            }
-        }
-
-        Rectangle {
-            width: buttonWidth
-            height: buttonHeight
-            color: GameLogic.vsAI ? "#E74C3C" : "#27AE60"
-            radius: 5
-            Text {
-                anchors.centerIn: parent
-                text: GameLogic.vsAI ? "vs AI" : "vs Human"
-                color: "white"
-                font.pixelSize: Math.round(10 * scaleFactor)
-            }
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    GameLogic.vsAI = !GameLogic.vsAI
-                    GameLogic.initializeBoard()
-                }
-            }
-        }
-
-        Rectangle {
-            width: buttonWidth
-            height: buttonHeight
-            color: "#95A5A6"
-            radius: 5
-            Text {
-                anchors.centerIn: parent
-                text: "Quit"
-                color: "white"
-                font.pixelSize: Math.round(10 * scaleFactor)
-            }
-            MouseArea {
-                anchors.fill: parent
-                onClicked: Qt.quit()
-            }
-        }
-    }
-
-    // Portrait layout - bottom status
-    Column {
-        Behavior on opacity {
-            NumberAnimation {
-                duration: 800
-                easing.type: Easing.OutCubic
-            }
-        }
-        opacity: root.compOpacity
-        anchors.bottom: parent.bottom
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottomMargin: margin
-        spacing: buttonSpacing
-        z: 1
-        visible: root.isPortrait
-
-        Text {
-            text: GameLogic.gameOver ? ("Winner: " + (GameLogic.winner === 1 ? "White" : "Black")) :
-                  (GameLogic.inChainCapture ? "Continue capturing!" :
-                   ((GameLogic.isPlayer1Turn ? "White" : "Black") + "'s Turn"))
-            color: "white"
-            font.pixelSize: Math.round(18 * scaleFactor)
-            anchors.horizontalCenter: parent.horizontalCenter
-            horizontalAlignment: Text.AlignHCenter
-        }
-    }
-
-    // Landscape layout - left buttons
-    Column {
-        Behavior on opacity {
-            NumberAnimation {
-                duration: 800
-                easing.type: Easing.OutCubic
-            }
-        }
-        opacity: root.compOpacity
-        anchors.left: parent.left
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.leftMargin: margin
-        spacing: Math.round(12 * scaleFactor)
-        z: 1
-        visible: !root.isPortrait
-
-        Rectangle {
-            width: buttonWidth
-            height: buttonHeight
-            color: "#3498DB"
-            radius: 5
-
-            Text {
-                anchors.centerIn: parent
-                text: "New Game"
-                color: "white"
-                font.pixelSize: Math.round(10 * scaleFactor)
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: GameLogic.initializeBoard()
-            }
-        }
-
-        Rectangle {
-            width: buttonWidth
-            height: buttonHeight
-            color: GameLogic.vsAI ? "#E74C3C" : "#27AE60"
-            radius: 5
-
-            Text {
-                anchors.centerIn: parent
-                text: GameLogic.vsAI ? "vs AI" : "vs Human"
-                color: "white"
-                font.pixelSize: Math.round(10 * scaleFactor)
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    GameLogic.vsAI = !GameLogic.vsAI
-                    GameLogic.initializeBoard()
-                }
-            }
-        }
-
-        Rectangle {
-            width: buttonWidth
-            height: buttonHeight
-            color: "#95A5A6"
-            radius: 5
-
-            Text {
-                anchors.centerIn: parent
-                text: "Quit"
-                color: "white"
-                font.pixelSize: Math.round(10 * scaleFactor)
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: Qt.quit()
-            }
-        }
-    }
-
-    // Landscape layout - right status
-    Column {
-        Behavior on opacity {
-            NumberAnimation {
-                duration: 800
-                easing.type: Easing.OutCubic
-            }
-        }
-        opacity: root.compOpacity
-        anchors.right: parent.right
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.rightMargin: margin
-        spacing: buttonSpacing
-        z: 1
-        visible: !root.isPortrait
-
-        Text {
-            text: GameLogic.gameOver ? ("Winner:\n" + (GameLogic.winner === 1 ? "White" : "Black")) :
-                  (GameLogic.inChainCapture ? "Continue\ncapturing!" :
-                   ((GameLogic.isPlayer1Turn ? "White" : "Black") + "'s\nTurn"))
-            color: "white"
-            font.pixelSize: Math.round(16 * scaleFactor)
-            horizontalAlignment: Text.AlignHCenter
-            width: Math.round(100 * scaleFactor)
-            wrapMode: Text.WordWrap
-        }
     }
 
     Rectangle {
@@ -269,8 +133,11 @@ Window {
         }
         opacity: root.compOpacity
         id: table
-        width: root.boardSize
-        height: root.boardSize
+
+        readonly property int maxSize: Math.min(parent.width, parent.height)
+        width: maxSize
+        height: maxSize
+
         color: "#2C3E50"
         anchors.centerIn: parent
 
@@ -294,16 +161,24 @@ Window {
             for (let i = 0; i < piecesModel.count; i++) {
                 let piece = piecesModel.get(i)
                 piecesModel.set(i, {
-                    id: piece.id,
-                    row: piece.row,
-                    col: piece.col,
-                    player: piece.player,
-                    isKing: piece.isKing,
-                    isAlive: piece.isAlive,
-                    x: piece.col * GameLogic.cellSize + GameLogic.cellSize / 2,
-                    y: piece.row * GameLogic.cellSize + GameLogic.cellSize / 2
-                })
+                                    id: piece.id,
+                                    row: piece.row,
+                                    col: piece.col,
+                                    player: piece.player,
+                                    isKing: piece.isKing,
+                                    isAlive: piece.isAlive,
+                                    x: piece.col * GameLogic.cellSize + GameLogic.cellSize / 2,
+                                    y: piece.row * GameLogic.cellSize + GameLogic.cellSize / 2
+                                })
             }
+        }
+
+        function handleMoveResult(result) {
+            animationTimer.wasCapture = result.wasCapture
+            animationTimer.toRow = result.toRow
+            animationTimer.toCol = result.toCol
+            animationTimer.pieceIndex = result.pieceIndex
+            animationTimer.start()
         }
 
         function handleCellClick(row, col) {
