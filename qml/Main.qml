@@ -1,9 +1,10 @@
 pragma ComponentBehavior: Bound
 
-import QtQuick 2.15
-import QtQuick.Window 2.15
+import QtQuick
+import QtQuick.Window
 import Odizinne.Checkers
 import QtQuick.Controls.Material
+import QtQuick.Layouts
 
 ApplicationWindow {
     id: root
@@ -13,8 +14,8 @@ ApplicationWindow {
     minimumHeight: 680
     visible: true
     title: "Checkers"
-    color: isDarkTheme ? "#1C1C1C" : "#E3E3E3"
-    Material.theme: Material.System
+    color: UserSettings.darkMode ? "#1C1C1C" : "#E3E3E3"
+    Material.theme: UserSettings.darkMode ? Material.Dark : Material.Light
 
     readonly property bool isPortrait: height > width
     readonly property real scaleFactor: Math.max(Screen.pixelDensity / 6, 1.2)
@@ -23,11 +24,10 @@ ApplicationWindow {
     readonly property int buttonWidth: Math.round(80 * scaleFactor)
     readonly property int buttonHeight: Math.round(32 * scaleFactor)
     readonly property int buttonSpacing: Math.round(8 * scaleFactor)
-    property real compOpacity: 0
 
     header: ToolBar {
         height: 40
-        Material.background: root.isDarkTheme ? "#2B2B2B" : "#FFFFFF"
+        Material.background: UserSettings.darkMode ? "#2B2B2B" : "#FFFFFF"
 
         ToolButton {
             anchors.left: parent.left
@@ -51,14 +51,14 @@ ApplicationWindow {
             anchors.top: parent.top
             anchors.bottom: parent.bottom
             Label {
-                text: GameLogic.vsAI ? "Computer" : "2 Players"
+                text: UserSettings.vsAI ? "Computer" : "2 Players"
                 anchors.verticalCenter: parent.verticalCenter
             }
 
             Switch {
                 checked: true
                 onClicked: {
-                    GameLogic.vsAI = checked
+                    UserSettings.vsAI = checked
                     GameLogic.initializeBoard()
                 }
                 anchors.verticalCenter: parent.verticalCenter
@@ -68,7 +68,7 @@ ApplicationWindow {
 
     footer: ToolBar {
         height: 40
-        Material.background: root.isDarkTheme ? "#2B2B2B" : "#FFFFFF"
+        Material.background: UserSettings.darkMode ? "#2B2B2B" : "#FFFFFF"
 
         Row {
             anchors.fill: parent
@@ -123,8 +123,8 @@ ApplicationWindow {
 
                                 Rectangle {
                                     visible: capWhite1.index < GameLogic.capturedWhitePieces.length &&
-                                            GameLogic.capturedWhitePieces[capWhite1.index] &&
-                                            GameLogic.capturedWhitePieces[capWhite1.index].isKing
+                                             GameLogic.capturedWhitePieces[capWhite1.index] &&
+                                    GameLogic.capturedWhitePieces[capWhite1.index].isKing
                                     anchors.centerIn: parent
                                     width: parent.width * 0.6
                                     height: width
@@ -174,8 +174,8 @@ ApplicationWindow {
 
                                 Rectangle {
                                     visible: (capWhite2.index + 6) < GameLogic.capturedWhitePieces.length &&
-                                            GameLogic.capturedWhitePieces[capWhite2.index + 6] &&
-                                            GameLogic.capturedWhitePieces[capWhite2.index + 6].isKing
+                                             GameLogic.capturedWhitePieces[capWhite2.index + 6] &&
+                                    GameLogic.capturedWhitePieces[capWhite2.index + 6].isKing
                                     anchors.centerIn: parent
                                     width: parent.width * 0.6
                                     height: width
@@ -235,8 +235,8 @@ ApplicationWindow {
 
                                 Rectangle {
                                     visible: capBlack1.index < GameLogic.capturedBlackPieces.length &&
-                                            GameLogic.capturedBlackPieces[capBlack1.index] &&
-                                            GameLogic.capturedBlackPieces[capBlack1.index].isKing
+                                             GameLogic.capturedBlackPieces[capBlack1.index] &&
+                                    GameLogic.capturedBlackPieces[capBlack1.index].isKing
                                     anchors.centerIn: parent
                                     width: parent.width * 0.6
                                     height: width
@@ -289,8 +289,8 @@ ApplicationWindow {
 
                                 Rectangle {
                                     visible: (capBlack2.index + 6) < GameLogic.capturedBlackPieces.length &&
-                                            GameLogic.capturedBlackPieces[capBlack2.index + 6] &&
-                                            GameLogic.capturedBlackPieces[capBlack2.index + 6].isKing
+                                             GameLogic.capturedBlackPieces[capBlack2.index + 6] &&
+                                    GameLogic.capturedBlackPieces[capBlack2.index + 6].isKing
                                     anchors.centerIn: parent
                                     width: parent.width * 0.6
                                     height: width
@@ -321,22 +321,95 @@ ApplicationWindow {
                 spacing: 2
                 ItemDelegate {
                     text: qsTr("New game")
-                    height: 40
+                    height: 50
                     width: parent.width
                     onClicked: GameLogic.initializeBoard()
                 }
 
                 ItemDelegate {
                     text: qsTr("Exit")
-                    height: 40
+                    height: 50
                     width: parent.width
                     onClicked: Qt.quit()
+                }
+
+                ItemDelegate {
+                    height: 50
+                    width: parent.width
+                    contentItem: RowLayout {
+                        spacing: 16
+
+                        Item {
+                            Layout.preferredHeight: 24
+                            Layout.preferredWidth: 24
+
+                            Image {
+                                id: sunImage
+                                anchors.fill: parent
+                                source: "qrc:/icons/sun.png"
+                                opacity: !themeSwitch.checked ? 1 : 0
+                                rotation: themeSwitch.checked ? 360 : 0
+                                mipmap: true
+
+                                Behavior on rotation {
+                                    NumberAnimation {
+                                        duration: 500
+                                        easing.type: Easing.OutQuad
+                                    }
+                                }
+
+                                Behavior on opacity {
+                                    NumberAnimation { duration: 500 }
+                                }
+
+                                MouseArea {
+                                    anchors.fill: parent
+                                    onClicked: themeSwitch.checked = !themeSwitch.checked
+                                }
+                            }
+
+                            Image {
+                                anchors.fill: parent
+                                id: moonImage
+                                source: "qrc:/icons/moon.png"
+                                opacity: themeSwitch.checked ? 1 : 0
+                                rotation: themeSwitch.checked ? 360 : 0
+                                mipmap: true
+
+                                Behavior on rotation {
+                                    NumberAnimation {
+                                        duration: 500
+                                        easing.type: Easing.OutQuad
+                                    }
+                                }
+
+                                Behavior on opacity {
+                                    NumberAnimation { duration: 100 }
+                                }
+
+                                MouseArea {
+                                    anchors.fill: parent
+                                    onClicked: themeSwitch.checked = !themeSwitch.checked
+                                }
+                            }
+                        }
+
+                        Item {
+                            Layout.fillWidth: true
+                        }
+
+                        Switch {
+                            id: themeSwitch
+                            checked: UserSettings.darkMode
+                            onClicked: UserSettings.darkMode = checked
+                            Layout.rightMargin: -10
+                        }
+                    }
                 }
             }
         }
     }
 
-    property bool isDarkTheme: Material.theme === Material.Dark
     Shortcut {
         sequence: "F11"
         onActivated: {
@@ -353,7 +426,6 @@ ApplicationWindow {
         interval: 50
         onTriggered: {
             AudioEngine.playSilent()
-            root.compOpacity = 1.0
         }
     }
 
@@ -362,20 +434,13 @@ ApplicationWindow {
     }
 
     Rectangle {
-        Behavior on opacity {
-            NumberAnimation {
-                duration: 800
-                easing.type: Easing.OutCubic
-            }
-        }
-        opacity: root.compOpacity
         id: table
 
         readonly property int maxSize: Math.min(parent.width, parent.height)
         width: maxSize
         height: maxSize
 
-        color: "#2C3E50"
+        color: "transparent"
         anchors.centerIn: parent
 
         ListModel {

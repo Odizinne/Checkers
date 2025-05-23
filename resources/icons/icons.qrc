@@ -2,6 +2,8 @@
     <qresource prefix="/icons">
         <file>icon.png</file>
         <file>menu.png</file>
+        <file>sun.png</file>
+        <file>moon.png</file>
         <file>wood_texture.png</file>
     </qresource>
 </RCC>

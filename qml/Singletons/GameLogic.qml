@@ -10,7 +10,6 @@ QtObject {
     property bool gameOver: false
     property int winner: 0
     property bool isPlayer1Turn: true
-    property bool vsAI: true
     property bool animating: false
     property bool inChainCapture: false
     property var chainCapturePosition: null
@@ -45,7 +44,7 @@ QtObject {
     property Timer resetTimer: Timer {
         interval: 350
         repeat: false
-        onTriggered: rebuildBoard()
+        onTriggered: gameLogic.rebuildBoard()
     }
 
     // AI timers
@@ -261,7 +260,7 @@ QtObject {
                 chainCapturePosition = { row: toRow, col: toCol }
                 selectedPiece = { row: toRow, col: toCol, index: pieceIndex }
 
-                if (vsAI && !isPlayer1Turn) {
+                if (UserSettings.vsAI && !isPlayer1Turn) {
                     aiChainCaptureTimer.start()
                 }
                 return
@@ -275,7 +274,7 @@ QtObject {
 
         checkGameState()
 
-        if (!gameOver && vsAI && !isPlayer1Turn) {
+        if (!gameOver && UserSettings.vsAI && !isPlayer1Turn) {
             aiTimer.start()
         }
     }
