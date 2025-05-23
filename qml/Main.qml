@@ -14,8 +14,16 @@ ApplicationWindow {
     visible: true
     title: "Checkers"
     color: isDarkTheme ? "#1C1C1C" : "#E3E3E3"
-    //visibility: Window.FullScreen
     Material.theme: Material.System
+
+    readonly property bool isPortrait: height > width
+    readonly property real scaleFactor: Math.max(Screen.pixelDensity / 6, 1.2)
+    readonly property int boardSize: table.maxSize
+    readonly property int cellSize: boardSize / 8
+    readonly property int buttonWidth: Math.round(80 * scaleFactor)
+    readonly property int buttonHeight: Math.round(32 * scaleFactor)
+    readonly property int buttonSpacing: Math.round(8 * scaleFactor)
+    property real compOpacity: 0
 
     header: ToolBar {
         height: 40
@@ -33,7 +41,7 @@ ApplicationWindow {
             text: GameLogic.gameOver ? ("Winner: " + (GameLogic.winner === 1 ? "White" : "Black")) :
                                        (GameLogic.inChainCapture ? "Continue capturing!" :
                                                                    ((GameLogic.isPlayer1Turn ? "White" : "Black") + " Turn"))
-            font.pixelSize: Math.round(18 * scaleFactor)
+            font.pixelSize: Math.round(18 * root.scaleFactor)
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
         }
@@ -43,7 +51,7 @@ ApplicationWindow {
             anchors.top: parent.top
             anchors.bottom: parent.bottom
             Label {
-                text: GameLogic.vsAI ? "Ai" : "2 Players"
+                text: GameLogic.vsAI ? "Computer" : "2 Players"
                 anchors.verticalCenter: parent.verticalCenter
             }
 
@@ -61,6 +69,240 @@ ApplicationWindow {
     footer: ToolBar {
         height: 40
         Material.background: root.isDarkTheme ? "#2B2B2B" : "#FFFFFF"
+
+        Row {
+            anchors.fill: parent
+            anchors.margins: 4
+            opacity: GameLogic.isResetting ? 0 : 1
+
+            Behavior on opacity {
+                NumberAnimation { duration: 300; easing.type: Easing.OutQuad }
+            }
+
+            // Captured white pieces (left side)
+            Column {
+                width: parent.width / 2
+                height: parent.height
+                spacing: 2
+
+                Row {
+                    spacing: 2
+                    Repeater {
+                        model: GameLogic.isResetting ? 0 : Math.min(6, GameLogic.capturedWhiteCount)
+
+                        Rectangle {
+                            id: capWhite1
+                            width: 16
+                            height: 16
+                            radius: 6
+                            color: "#F5F5F5"
+                            border.width: 1
+                            border.color: "#E0E0E0"
+                            required property int index
+
+                            opacity: 0
+                            Component.onCompleted: {
+                                fadeInCapwhite1.start()
+                            }
+
+                            NumberAnimation {
+                                id: fadeInCapwhite1
+                                target: capWhite1
+                                property: "opacity"
+                                to: 1
+                                duration: 300
+                                easing.type: Easing.OutQuad
+                            }
+
+                            Rectangle {
+                                anchors.centerIn: parent
+                                width: parent.width * 0.7
+                                height: width
+                                radius: width / 2
+                                color: "#D0D0D0"
+
+                                Rectangle {
+                                    visible: capWhite1.index < GameLogic.capturedWhitePieces.length &&
+                                            GameLogic.capturedWhitePieces[capWhite1.index] &&
+                                            GameLogic.capturedWhitePieces[capWhite1.index].isKing
+                                    anchors.centerIn: parent
+                                    width: parent.width * 0.6
+                                    height: width
+                                    radius: width / 2
+                                    color: "#FFD700"
+                                }
+                            }
+                        }
+                    }
+                }
+
+                Row {
+                    spacing: 2
+                    Repeater {
+                        model: GameLogic.isResetting ? 0 : Math.max(0, GameLogic.capturedWhiteCount - 6)
+
+                        Rectangle {
+                            id: capWhite2
+                            width: 16
+                            height: 16
+                            radius: 6
+                            color: "#F5F5F5"
+                            border.width: 1
+                            border.color: "#E0E0E0"
+                            required property int index
+
+                            opacity: 0
+                            Component.onCompleted: {
+                                fadeInCapwhite2.start()
+                            }
+
+                            NumberAnimation {
+                                id: fadeInCapwhite2
+                                target: capWhite2
+                                property: "opacity"
+                                to: 1
+                                duration: 300
+                                easing.type: Easing.OutQuad
+                            }
+
+                            Rectangle {
+                                anchors.centerIn: parent
+                                width: parent.width * 0.7
+                                height: width
+                                radius: width / 2
+                                color: "#D0D0D0"
+
+                                Rectangle {
+                                    visible: (capWhite2.index + 6) < GameLogic.capturedWhitePieces.length &&
+                                            GameLogic.capturedWhitePieces[capWhite2.index + 6] &&
+                                            GameLogic.capturedWhitePieces[capWhite2.index + 6].isKing
+                                    anchors.centerIn: parent
+                                    width: parent.width * 0.6
+                                    height: width
+                                    radius: width / 2
+                                    color: "#FFD700"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Captured black pieces (right side) - apply same pattern
+            Column {
+                width: parent.width / 2
+                height: parent.height
+                spacing: 2
+
+                Row {
+                    spacing: 2
+                    layoutDirection: Qt.RightToLeft
+                    anchors.right: parent.right
+
+                    Repeater {
+                        model: GameLogic.isResetting ? 0 : Math.min(6, GameLogic.capturedBlackCount)
+
+                        Rectangle {
+                            id: capBlack1
+                            width: 16
+                            height: 16
+                            radius: 6
+                            color: "#3C3C3C"
+                            border.width: 1
+                            border.color: "#2C2C2C"
+                            required property int index
+
+                            opacity: 0
+                            Component.onCompleted: {
+                                fadeInCapBlack1.start()
+                            }
+
+                            NumberAnimation {
+                                id: fadeInCapBlack1
+                                target: capBlack1
+                                property: "opacity"
+                                to: 1
+                                duration: 300
+                                easing.type: Easing.OutQuad
+                            }
+
+                            Rectangle {
+                                anchors.centerIn: parent
+                                width: parent.width * 0.7
+                                height: width
+                                radius: width / 2
+                                color: "#1F1F1F"
+
+                                Rectangle {
+                                    visible: capBlack1.index < GameLogic.capturedBlackPieces.length &&
+                                            GameLogic.capturedBlackPieces[capBlack1.index] &&
+                                            GameLogic.capturedBlackPieces[capBlack1.index].isKing
+                                    anchors.centerIn: parent
+                                    width: parent.width * 0.6
+                                    height: width
+                                    radius: width / 2
+                                    color: "#FFD700"
+                                }
+                            }
+                        }
+                    }
+                }
+
+                Row {
+                    spacing: 2
+                    layoutDirection: Qt.RightToLeft
+                    anchors.right: parent.right
+
+                    Repeater {
+                        model: GameLogic.isResetting ? 0 : Math.max(0, GameLogic.capturedBlackCount - 6)
+
+                        Rectangle {
+                            id: capBlack2
+                            width: 16
+                            height: 16
+                            radius: 6
+                            color: "#3C3C3C"
+                            border.width: 1
+                            border.color: "#2C2C2C"
+                            required property int index
+
+                            opacity: 0
+                            Component.onCompleted: {
+                                fadeInCapBlack2.start()
+                            }
+
+                            NumberAnimation {
+                                id: fadeInCapBlack2
+                                target: capBlack2
+                                property: "opacity"
+                                to: 1
+                                duration: 300
+                                easing.type: Easing.OutQuad
+                            }
+
+                            Rectangle {
+                                anchors.centerIn: parent
+                                width: parent.width * 0.7
+                                height: width
+                                radius: width / 2
+                                color: "#1F1F1F"
+
+                                Rectangle {
+                                    visible: (capBlack2.index + 6) < GameLogic.capturedBlackPieces.length &&
+                                            GameLogic.capturedBlackPieces[capBlack2.index + 6] &&
+                                            GameLogic.capturedBlackPieces[capBlack2.index + 6].isKing
+                                    anchors.centerIn: parent
+                                    width: parent.width * 0.6
+                                    height: width
+                                    radius: width / 2
+                                    color: "#FFD700"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     Drawer {
@@ -78,14 +320,14 @@ ApplicationWindow {
                 width: parent.width
                 spacing: 2
                 ItemDelegate {
-                    text: qsTr("Exit")
+                    text: qsTr("New game")
                     height: 40
                     width: parent.width
                     onClicked: GameLogic.initializeBoard()
                 }
 
                 ItemDelegate {
-                    text: qsTr("New game")
+                    text: qsTr("Exit")
                     height: 40
                     width: parent.width
                     onClicked: Qt.quit()
@@ -105,16 +347,6 @@ ApplicationWindow {
             }
         }
     }
-
-    readonly property bool isPortrait: height > width
-    readonly property real scaleFactor: Math.max(Screen.pixelDensity / 6, 1.2)
-    readonly property int boardSize: table.maxSize
-    readonly property int cellSize: boardSize / 8
-
-    readonly property int buttonWidth: Math.round(80 * scaleFactor)
-    readonly property int buttonHeight: Math.round(32 * scaleFactor)
-    readonly property int buttonSpacing: Math.round(8 * scaleFactor)
-    property real compOpacity: 0
 
     Timer {
         id: audioInitTimer
@@ -178,140 +410,9 @@ ApplicationWindow {
             }
         }
 
-        function handleMoveResult(result) {
-            animationTimer.wasCapture = result.wasCapture
-            animationTimer.toRow = result.toRow
-            animationTimer.toCol = result.toCol
-            animationTimer.pieceIndex = result.pieceIndex
-            animationTimer.start()
-        }
-
-        function handleCellClick(row, col) {
-            if (GameLogic.gameOver || GameLogic.animating) return
-
-            if (GameLogic.inChainCapture && GameLogic.chainCapturePosition) {
-                if (GameLogic.isValidMove(GameLogic.chainCapturePosition.row, GameLogic.chainCapturePosition.col, row, col)) {
-                    GameLogic.animating = true
-                    let result = GameLogic.movePiece(GameLogic.chainCapturePosition.row, GameLogic.chainCapturePosition.col, row, col)
-                    if (result) {
-                        animationTimer.wasCapture = result.wasCapture
-                        animationTimer.toRow = result.toRow
-                        animationTimer.toCol = result.toCol
-                        animationTimer.pieceIndex = result.pieceIndex
-                        animationTimer.start()
-                    }
-                }
-                return
-            }
-
-            if (GameLogic.selectedPiece !== null) {
-                if (GameLogic.isValidMove(GameLogic.selectedPiece.row, GameLogic.selectedPiece.col, row, col)) {
-                    GameLogic.animating = true
-                    let result = GameLogic.movePiece(GameLogic.selectedPiece.row, GameLogic.selectedPiece.col, row, col)
-                    if (result) {
-                        animationTimer.wasCapture = result.wasCapture
-                        animationTimer.toRow = result.toRow
-                        animationTimer.toCol = result.toCol
-                        animationTimer.pieceIndex = result.pieceIndex
-                        animationTimer.start()
-                    }
-                } else {
-                    let piece = GameLogic.getPieceAt(row, col)
-                    if (piece && piece.player === (GameLogic.isPlayer1Turn ? 1 : 2)) {
-                        GameLogic.selectedPiece = { row: row, col: col, index: piece.index }
-                    } else {
-                        GameLogic.selectedPiece = null
-                    }
-                }
-            } else {
-                let piece = GameLogic.getPieceAt(row, col)
-                if (piece && piece.player === (GameLogic.isPlayer1Turn ? 1 : 2)) {
-                    GameLogic.selectedPiece = { row: row, col: col, index: piece.index }
-                }
-            }
-        }
-
-        Timer {
-            id: animationTimer
-            interval: 300
-            property bool wasCapture: false
-            property int toRow: 0
-            property int toCol: 0
-            property int pieceIndex: -1
-
-            onTriggered: {
-                GameLogic.animating = false
-
-                if (wasCapture) {
-                    let availableCaptures = GameLogic.getCaptureMoves(toRow, toCol)
-                    if (availableCaptures.length > 0) {
-                        GameLogic.inChainCapture = true
-                        GameLogic.chainCapturePosition = { row: toRow, col: toCol }
-                        GameLogic.selectedPiece = { row: toRow, col: toCol, index: pieceIndex }
-
-                        if (GameLogic.vsAI && !GameLogic.isPlayer1Turn) {
-                            aiChainCaptureTimer.start()
-                        }
-                        return
-                    }
-                }
-
-                GameLogic.inChainCapture = false
-                GameLogic.chainCapturePosition = null
-                GameLogic.isPlayer1Turn = !GameLogic.isPlayer1Turn
-                GameLogic.selectedPiece = null
-
-                GameLogic.checkGameState()
-
-                if (!GameLogic.gameOver && GameLogic.vsAI && !GameLogic.isPlayer1Turn) {
-                    aiTimer.start()
-                }
-            }
-        }
-
-        Timer {
-            id: aiTimer
-            interval: 500
-            onTriggered: {
-                let move = AIPlayer.makeMove()
-                if (move) {
-                    GameLogic.animating = true
-                    let result = GameLogic.movePiece(move.from.row, move.from.col, move.to.row, move.to.col)
-                    if (result) {
-                        animationTimer.wasCapture = result.wasCapture
-                        animationTimer.toRow = result.toRow
-                        animationTimer.toCol = result.toCol
-                        animationTimer.pieceIndex = result.pieceIndex
-                        animationTimer.start()
-                    }
-                } else {
-                    GameLogic.checkGameState()
-                }
-            }
-        }
-
-        Timer {
-            id: aiChainCaptureTimer
-            interval: 400
-            onTriggered: {
-                let move = AIPlayer.makeChainCaptureMove()
-                if (move) {
-                    GameLogic.animating = true
-                    let result = GameLogic.movePiece(move.from.row, move.from.col, move.to.row, move.to.col)
-                    if (result) {
-                        animationTimer.wasCapture = result.wasCapture
-                        animationTimer.toRow = result.toRow
-                        animationTimer.toCol = result.toCol
-                        animationTimer.pieceIndex = result.pieceIndex
-                        animationTimer.start()
-                    }
-                }
-            }
-        }
-
         Board {
             anchors.fill: parent
-            onCellClicked: (row, col) => table.handleCellClick(row, col)
+            onCellClicked: (row, col) => GameLogic.handleCellClick(row, col)
         }
 
         Item {

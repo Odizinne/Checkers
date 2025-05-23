@@ -15,18 +15,67 @@ QtObject {
     property bool inChainCapture: false
     property var chainCapturePosition: null
     property var selectedPiece: null
+    property bool isResetting: false
+
+    // Captured pieces tracking
+    property var capturedWhitePieces: []
+    property var capturedBlackPieces: []
+    property int capturedWhiteCount: 0
+    property int capturedBlackCount: 0
 
     // Models - will be set from Main.qml
     property var boardModel: null
     property var piecesModel: null
 
-    // Sound effects - will be set from Main.qml
-    property var captureFX: null
-    property var moveFX: null
+    // Animation handling
+    property int animationDuration: 300
+    property Timer animationTimer: Timer {
+        interval: gameLogic.animationDuration
+        property bool wasCapture: false
+        property int toRow: 0
+        property int toCol: 0
+        property int pieceIndex: -1
+
+        onTriggered: {
+            gameLogic.animating = false
+            gameLogic.handlePostMoveLogic(wasCapture, toRow, toCol, pieceIndex)
+        }
+    }
+
+    property Timer resetTimer: Timer {
+        interval: 350
+        repeat: false
+        onTriggered: rebuildBoard()
+    }
+
+    // AI timers
+    property Timer aiTimer: Timer {
+        interval: 500
+        onTriggered: gameLogic.executeAIMove()
+    }
+
+    property Timer aiChainCaptureTimer: Timer {
+        interval: 400
+        onTriggered: gameLogic.executeAIChainCapture()
+    }
 
     function initializeBoard() {
         if (!boardModel || !piecesModel) return
 
+        // Start reset animation
+        isResetting = true
+
+        // Clear captured pieces immediately so footer fades out
+        capturedWhitePieces = []
+        capturedBlackPieces = []
+        capturedWhiteCount = 0
+        capturedBlackCount = 0
+
+        // After fade out completes, rebuild the board
+        resetTimer.start()
+    }
+
+    function rebuildBoard() {
         boardModel.clear()
         piecesModel.clear()
 
@@ -72,6 +121,39 @@ QtObject {
         animating = false
         inChainCapture = false
         chainCapturePosition = null
+
+        // End reset animation
+        isResetting = false
+    }
+
+    function addCapturedPiece(piece) {
+        if (piece.player === 1) {
+            capturedWhitePieces = capturedWhitePieces.concat([piece])
+            capturedWhiteCount = capturedWhitePieces.length
+        } else {
+            capturedBlackPieces = capturedBlackPieces.concat([piece])
+            capturedBlackCount = capturedBlackPieces.length
+        }
+    }
+
+    function executeMove(fromRow, fromCol, toRow, toCol) {
+        if (gameOver || animating) return false
+
+        if (!isValidMove(fromRow, fromCol, toRow, toCol)) return false
+
+        animating = true
+        let result = movePiece(fromRow, fromCol, toRow, toCol)
+        if (result) {
+            animationTimer.wasCapture = result.wasCapture
+            animationTimer.toRow = result.toRow
+            animationTimer.toCol = result.toCol
+            animationTimer.pieceIndex = result.pieceIndex
+            animationTimer.start()
+            return true
+        }
+
+        animating = false
+        return false
     }
 
     function movePiece(fromRow, fromCol, toRow, toCol) {
@@ -103,6 +185,14 @@ QtObject {
             let capturedPiece = getPieceAt(middleRow, middleCol)
             if (capturedPiece) {
                 let capturedData = piecesModel.get(capturedPiece.index)
+
+                // Store captured piece data before marking as not alive
+                let capturedPieceInfo = {
+                    player: capturedData.player,
+                    isKing: capturedData.isKing,
+                    id: capturedData.id
+                }
+
                 piecesModel.set(capturedPiece.index, {
                     id: capturedData.id,
                     row: capturedData.row,
@@ -113,6 +203,21 @@ QtObject {
                     x: capturedData.x,
                     y: capturedData.y
                 })
+
+                // Add captured piece to the collection after fade animation completes
+                let captureTimer = Qt.createQmlObject('
+                    import QtQuick 2.15
+                    Timer {
+                        interval: 350
+                        repeat: false
+                    }
+                ', gameLogic)
+
+                captureTimer.triggered.connect(function() {
+                    addCapturedPiece(capturedPieceInfo)
+                    captureTimer.destroy()
+                })
+                captureTimer.start()
             }
         } else {
             AudioEngine.playMove()
@@ -146,6 +251,102 @@ QtObject {
             toCol: toCol,
             pieceIndex: piece.index
         }
+    }
+
+    function handlePostMoveLogic(wasCapture, toRow, toCol, pieceIndex) {
+        if (wasCapture) {
+            let availableCaptures = getCaptureMoves(toRow, toCol)
+            if (availableCaptures.length > 0) {
+                inChainCapture = true
+                chainCapturePosition = { row: toRow, col: toCol }
+                selectedPiece = { row: toRow, col: toCol, index: pieceIndex }
+
+                if (vsAI && !isPlayer1Turn) {
+                    aiChainCaptureTimer.start()
+                }
+                return
+            }
+        }
+
+        inChainCapture = false
+        chainCapturePosition = null
+        isPlayer1Turn = !isPlayer1Turn
+        selectedPiece = null
+
+        checkGameState()
+
+        if (!gameOver && vsAI && !isPlayer1Turn) {
+            aiTimer.start()
+        }
+    }
+
+    function executeAIMove() {
+        let move = AIPlayer.makeMove()
+        if (move) {
+            executeMove(move.from.row, move.from.col, move.to.row, move.to.col)
+        } else {
+            checkGameState()
+        }
+    }
+
+    function executeAIChainCapture() {
+        let move = AIPlayer.makeChainCaptureMove()
+        if (move) {
+            executeMove(move.from.row, move.from.col, move.to.row, move.to.col)
+        }
+    }
+
+    function handleCellClick(row, col) {
+        if (gameOver || animating) return
+
+        if (inChainCapture && chainCapturePosition) {
+            if (isValidMove(chainCapturePosition.row, chainCapturePosition.col, row, col)) {
+                executeMove(chainCapturePosition.row, chainCapturePosition.col, row, col)
+            }
+            return
+        }
+
+        if (selectedPiece !== null) {
+            if (isValidMove(selectedPiece.row, selectedPiece.col, row, col)) {
+                executeMove(selectedPiece.row, selectedPiece.col, row, col)
+            } else {
+                let piece = getPieceAt(row, col)
+                if (piece && piece.player === (isPlayer1Turn ? 1 : 2)) {
+                    selectedPiece = { row: row, col: col, index: piece.index }
+                } else {
+                    selectedPiece = null
+                }
+            }
+        } else {
+            let piece = getPieceAt(row, col)
+            if (piece && piece.player === (isPlayer1Turn ? 1 : 2)) {
+                selectedPiece = { row: row, col: col, index: piece.index }
+            }
+        }
+    }
+
+    function handlePieceDrop(fromRow, fromCol, targetRow, targetCol) {
+        if (gameOver || animating) return false
+
+        let isValidDrop = false
+
+        if (inChainCapture && chainCapturePosition) {
+            isValidDrop = isValidMove(
+                chainCapturePosition.row,
+                chainCapturePosition.col,
+                targetRow, targetCol
+            )
+            if (isValidDrop) {
+                return executeMove(chainCapturePosition.row, chainCapturePosition.col, targetRow, targetCol)
+            }
+        } else {
+            isValidDrop = isValidMove(fromRow, fromCol, targetRow, targetCol)
+            if (isValidDrop) {
+                return executeMove(fromRow, fromCol, targetRow, targetCol)
+            }
+        }
+
+        return false
     }
 
     function getPieceAt(row, col) {

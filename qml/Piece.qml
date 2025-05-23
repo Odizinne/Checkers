@@ -7,7 +7,6 @@ Item {
     y: model.y - height/2
     width: GameLogic.cellSize * 0.75
     height: GameLogic.cellSize * 0.75
-    visible: model.isAlive
     required property var model
 
     property real originalX: model.x - width/2
@@ -27,11 +26,11 @@ Item {
     }
 
     Behavior on x {
-        enabled: !isDragging
+        enabled: !piece.isDragging
         NumberAnimation { duration: 300; easing.type: Easing.InOutQuad }
     }
     Behavior on y {
-        enabled: !isDragging
+        enabled: !piece.isDragging
         NumberAnimation { duration: 300; easing.type: Easing.InOutQuad }
     }
 
@@ -97,9 +96,21 @@ Item {
             }
         }
 
-        scale: piece.model.isAlive ? 1 : 0
+        scale: (piece.model.isAlive && !GameLogic.isResetting) ? 1 : 0
+        opacity: (piece.model.isAlive && !GameLogic.isResetting) ? 1 : 0
+
         Behavior on scale {
-            NumberAnimation { duration: 300; easing.type: Easing.InBack }
+            NumberAnimation {
+                duration: GameLogic.isResetting ? 300 : 300
+                easing.type: GameLogic.isResetting ? Easing.OutQuad : Easing.InBack
+            }
+        }
+
+        Behavior on opacity {
+            NumberAnimation {
+                duration: GameLogic.isResetting ? 300 : 300
+                easing.type: GameLogic.isResetting ? Easing.OutQuad : Easing.InQuad
+            }
         }
     }
 
@@ -108,7 +119,7 @@ Item {
         anchors.fill: parent
         drag.target: parent
         enabled: {
-            if (GameLogic.gameOver || GameLogic.animating) return false
+            if (GameLogic.gameOver || GameLogic.animating || GameLogic.isResetting) return false
 
             // During chain capture, only the capturing piece can be moved
             if (GameLogic.inChainCapture) {
@@ -161,33 +172,17 @@ Item {
                 let fromRow = piece.model.row
                 let fromCol = piece.model.col
 
-                // Check if this is a valid move
-                let isValidDrop = false
+                // Try to execute the move through GameLogic
+                let success = GameLogic.handlePieceDrop(fromRow, fromCol, targetRow, targetCol)
 
-                if (GameLogic.inChainCapture && GameLogic.chainCapturePosition) {
-                    isValidDrop = GameLogic.isValidMove(
-                        GameLogic.chainCapturePosition.row,
-                        GameLogic.chainCapturePosition.col,
-                        targetRow, targetCol
-                    )
-                } else {
-                    isValidDrop = GameLogic.isValidMove(fromRow, fromCol, targetRow, targetCol)
-                }
-
-                if (isValidDrop) {
-                    // Valid move - animate to center of target cell and execute move
+                if (success) {
+                    // Valid move - animate to center of target cell
                     let targetCenterX = targetCol * GameLogic.cellSize + GameLogic.cellSize / 2 - piece.width/2
                     let targetCenterY = targetRow * GameLogic.cellSize + GameLogic.cellSize / 2 - piece.height/2
-
                     piece.x = targetCenterX
                     piece.y = targetCenterY
-
-                    // Execute the move after a short delay to show the snap-to-center animation
-                    moveTimer.targetRow = targetRow
-                    moveTimer.targetCol = targetCol
-                    moveTimer.start()
                 } else {
-                    // Invalid move - animate back to original position
+                    // Invalid move - return to original position
                     returnToOriginalPosition()
                 }
             } else {
@@ -199,39 +194,6 @@ Item {
         function returnToOriginalPosition() {
             piece.x = piece.originalX
             piece.y = piece.originalY
-        }
-    }
-
-    Timer {
-        id: moveTimer
-        interval: 150
-        property int targetRow: 0
-        property int targetCol: 0
-
-        onTriggered: {
-            if (GameLogic.inChainCapture && GameLogic.chainCapturePosition) {
-                GameLogic.animating = true
-                let result = GameLogic.movePiece(
-                    GameLogic.chainCapturePosition.row,
-                    GameLogic.chainCapturePosition.col,
-                    targetRow, targetCol
-                )
-                if (result) {
-                    // Let Main.qml handle the post-move logic
-                    piece.parent.parent.handleMoveResult(result)
-                }
-            } else if (GameLogic.selectedPiece) {
-                GameLogic.animating = true
-                let result = GameLogic.movePiece(
-                    GameLogic.selectedPiece.row,
-                    GameLogic.selectedPiece.col,
-                    targetRow, targetCol
-                )
-                if (result) {
-                    // Let Main.qml handle the post-move logic
-                    piece.parent.parent.handleMoveResult(result)
-                }
-            }
         }
     }
 }
