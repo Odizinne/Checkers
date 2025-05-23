@@ -7,10 +7,10 @@ import QtQuick.Controls.Material
 
 ApplicationWindow {
     id: root
-    width: 850
-    minimumWidth: 850
-    height: 600
-    minimumHeight: 600
+    width: 600
+    minimumWidth: 600
+    height: 680
+    minimumHeight: 680
     visible: true
     title: "Checkers"
     color: isDarkTheme ? "#1C1C1C" : "#E3E3E3"
@@ -56,6 +56,11 @@ ApplicationWindow {
                 anchors.verticalCenter: parent.verticalCenter
             }
         }
+    }
+
+    footer: ToolBar {
+        height: 40
+        Material.background: root.isDarkTheme ? "#2B2B2B" : "#FFFFFF"
     }
 
     Drawer {
