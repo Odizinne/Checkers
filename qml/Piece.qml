@@ -62,12 +62,12 @@ Item {
                 GradientStop {
                     position: 0.0
                     color: piece.model.isKing ? "#FFFFFF" :
-                           (piece.model.player === 1 ? "#40000000" : "#60FFFFFF")
+                           (piece.model.player === 1 ? "#40000000" : "#10FFFFFF")
                 }
                 GradientStop {
                     position: 1.0
                     color: piece.model.isKing ? "#B8860B" :
-                           (piece.model.player === 1 ? "#10FFFFFF" : "#20000000")
+                           (piece.model.player === 1 ? "#10FFFFFF" : "#40000000")
                 }
             }
         }
@@ -87,11 +87,11 @@ Item {
                 gradient: Gradient {
                     GradientStop {
                         position: 0.0
-                        color: piece.model.player === 1 ? "#40000000" : "#60FFFFFF"
+                        color: piece.model.player === 1 ? "#40000000" : "#20000000"
                     }
                     GradientStop {
                         position: 1.0
-                        color: piece.model.player === 1 ? "#10FFFFFF" : "#20000000"
+                        color: piece.model.player === 1 ? "#10FFFFFF" : "#30FFFFFF"
                     }
                 }
             }
