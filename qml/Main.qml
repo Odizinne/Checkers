@@ -145,9 +145,9 @@ Window {
         visible: root.isPortrait
 
         Text {
-            text: GameLogic.gameOver ? ("Winner: Player " + GameLogic.winner) :
+            text: GameLogic.gameOver ? ("Winner: " + (GameLogic.winner === 1 ? "White" : "Black")) :
                   (GameLogic.inChainCapture ? "Continue capturing!" :
-                   ("Player " + (GameLogic.isPlayer1Turn ? "1" : "2") + "'s Turn"))
+                   ((GameLogic.isPlayer1Turn ? "White" : "Black") + "'s Turn"))
             color: "white"
             font.pixelSize: Math.round(18 * scaleFactor)
             anchors.horizontalCenter: parent.horizontalCenter
@@ -249,9 +249,9 @@ Window {
         visible: !root.isPortrait
 
         Text {
-            text: GameLogic.gameOver ? ("Winner:\nPlayer " + GameLogic.winner) :
+            text: GameLogic.gameOver ? ("Winner:\n" + (GameLogic.winner === 1 ? "White" : "Black")) :
                   (GameLogic.inChainCapture ? "Continue\ncapturing!" :
-                   ("Player " + (GameLogic.isPlayer1Turn ? "1" : "2") + "'s\nTurn"))
+                   ((GameLogic.isPlayer1Turn ? "White" : "Black") + "'s\nTurn"))
             color: "white"
             font.pixelSize: Math.round(16 * scaleFactor)
             horizontalAlignment: Text.AlignHCenter
