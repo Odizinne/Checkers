@@ -404,7 +404,7 @@ QtObject {
 
     function executeAIMove() {
         let move = AIPlayer.makeMove()
-        if (move) {
+        if (move && move.from && move.to) {
             executeMove(move.from.row, move.from.col, move.to.row, move.to.col)
         } else {
             checkGameState()
@@ -413,7 +413,7 @@ QtObject {
 
     function executeAIChainCapture() {
         let move = AIPlayer.makeChainCaptureMove()
-        if (move) {
+        if (move && move.from && move.to) {
             executeMove(move.from.row, move.from.col, move.to.row, move.to.col)
         }
     }

@@ -21,10 +21,12 @@ qt_standard_project_setup(REQUIRES 6.8)
 set(SOURCES
     src/main.cpp
     src/helper.cpp
+    src/aiplayer.cpp
 )
 
 set(HEADERS
     include/helper.h
+    include/aiplayer.h
 )
 
 set(QML_FILES
@@ -39,7 +41,7 @@ set(QML_FILES
 
 set(QML_SINGLETONS
     qml/Singletons/GameLogic.qml
-    qml/Singletons/AIPlayer.qml
+    #qml/Singletons/AIPlayer.qml
     qml/Singletons/AudioEngine.qml
     qml/Singletons/UserSettings.qml
 )
