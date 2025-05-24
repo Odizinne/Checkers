@@ -191,20 +191,22 @@ Popup {
                             ComboBox {
                                 id: boardSizeCombo
                                 model: [
-                                    { text: qsTr("8x8 (12 pieces)"), value: 8 },
-                                    { text: qsTr("10x10 (20 pieces)"), value: 10 }
+                                    { text: "8x8", value: 8 },
+                                    { text: "10x10", value: 10 }
                                 ]
                                 textRole: "text"
                                 valueRole: "value"
-                                Layout.preferredWidth: 160
+                                Layout.preferredHeight: 35
 
                                 Component.onCompleted: {
                                     currentIndex = UserSettings.boardSize === 8 ? 0 : 1
                                 }
 
                                 onActivated: {
-                                    UserSettings.boardSize = currentValue
-                                    GameLogic.initializeBoard()
+                                    if (UserSettings.boardSize !== currentValue) {
+                                        UserSettings.boardSize = currentValue
+                                        GameLogic.initializeBoard()
+                                    }
                                 }
 
                                 Material.roundedScale: Material.SmallScale
@@ -253,12 +255,31 @@ Popup {
                     Material.elevation: 6
                     Material.background: UserSettings.darkMode ? "#2B2B2B" : "#FFFFFF"
 
-
                     ColumnLayout {
                         id: appSettingsLyt
                         anchors.fill: parent
                         spacing: 15
                         property int labelWidth: Math.max(themeLabel.implicitWidth, volumeLabel.implicitWidth)
+
+                        RowLayout {
+                            spacing: 10
+
+                            Label {
+                                text: qsTr("Language")
+                                Layout.fillWidth: true
+                            }
+
+                            ComboBox {
+                                Layout.preferredHeight: 35
+                                model: [qsTr("System"), "english", "français"]
+                                currentIndex: UserSettings.languageIndex
+                                onActivated: {
+                                    UserSettings.languageIndex = currentIndex
+                                    Helper.changeApplicationLanguage(currentIndex)
+                                    currentIndex = UserSettings.languageIndex
+                                }
+                            }
+                        }
 
                         RowLayout {
                             id: volumeLyt

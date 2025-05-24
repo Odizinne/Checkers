@@ -20,8 +20,12 @@ qt_standard_project_setup(REQUIRES 6.8)
 
 set(SOURCES
     src/main.cpp
+    src/helper.cpp
 )
 
+set(HEADERS
+    include/helper.h
+)
 
 set(QML_FILES
     qml/Main.qml
@@ -46,11 +50,15 @@ set_source_files_properties(${QML_SINGLETONS}
 
 qt_add_executable(${CMAKE_PROJECT_NAME}
     ${SOURCES}
-    #${HEADERS}
+    ${HEADERS}
     resources/sounds/sounds.qrc
     resources/icons/icons.qrc
     resources/textures/textures.qrc
     resources/appicon.rc
+)
+
+target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
 qt_add_qml_module(${CMAKE_PROJECT_NAME}

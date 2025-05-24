@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="fr" sourcelanguage="en">
+<TS version="2.1" language="fr_FR" sourcelanguage="en_US">
 <context>
     <name>GameOverPopup</name>
     <message>
@@ -82,87 +82,87 @@
     <message>
         <location filename="../qml/SettingsPopup.qml" line="56"/>
         <source>Custom Rules</source>
-        <translation type="unfinished"></translation>
+        <translation>Règles personnalisées</translation>
     </message>
     <message>
         <location filename="../qml/SettingsPopup.qml" line="82"/>
         <source>Backward Captures</source>
-        <translation type="unfinished"></translation>
+        <translation>Prises arrière</translation>
     </message>
     <message>
         <location filename="../qml/SettingsPopup.qml" line="88"/>
         <source>Regular pieces can capture backward</source>
-        <translation type="unfinished"></translation>
+        <translation>Les pions normaux peuvent capturer vers l&apos;arrière</translation>
     </message>
     <message>
         <location filename="../qml/SettingsPopup.qml" line="111"/>
         <source>Optional Captures</source>
-        <translation type="unfinished"></translation>
+        <translation>Prises optionnelles</translation>
     </message>
     <message>
         <location filename="../qml/SettingsPopup.qml" line="117"/>
         <source>Players can choose not to capture</source>
-        <translation type="unfinished"></translation>
+        <translation>Les joueurs peuvent choisir de ne pas capturer</translation>
     </message>
     <message>
         <location filename="../qml/SettingsPopup.qml" line="140"/>
         <source>King Fast Forward</source>
-        <translation type="unfinished"></translation>
+        <translation>Avancement rapide</translation>
     </message>
     <message>
         <location filename="../qml/SettingsPopup.qml" line="146"/>
         <source>Kings move freely diagonally on first move per turn</source>
-        <translation type="unfinished"></translation>
+        <translation>Les dames se déplacent librement en diagonale au premier coup par tour</translation>
     </message>
     <message>
         <location filename="../qml/SettingsPopup.qml" line="168"/>
         <source>Board settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Paramètres du plateau</translation>
     </message>
     <message>
         <location filename="../qml/SettingsPopup.qml" line="187"/>
         <source>Board size</source>
-        <translation type="unfinished"></translation>
+        <translation>Taille du plateau</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPopup.qml" line="194"/>
-        <source>8x8 (12 pieces)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qml/SettingsPopup.qml" line="195"/>
-        <source>10x10 (20 pieces)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qml/SettingsPopup.qml" line="217"/>
+        <location filename="../qml/SettingsPopup.qml" line="219"/>
         <source>Show hints</source>
-        <translation type="unfinished"></translation>
+        <translation>Afficher les indices</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPopup.qml" line="230"/>
+        <location filename="../qml/SettingsPopup.qml" line="232"/>
         <source>Wood texture</source>
-        <translation type="unfinished"></translation>
+        <translation>Texture bois</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPopup.qml" line="243"/>
+        <location filename="../qml/SettingsPopup.qml" line="245"/>
         <source>Application settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Paramètres de l&apos;application</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPopup.qml" line="269"/>
-        <source>Volume</source>
-        <translation type="unfinished"></translation>
+        <location filename="../qml/SettingsPopup.qml" line="268"/>
+        <source>Language</source>
+        <translation>Langue</translation>
+    </message>
+    <message>
+        <location filename="../qml/SettingsPopup.qml" line="274"/>
+        <source>System</source>
+        <translation>Système</translation>
     </message>
     <message>
         <location filename="../qml/SettingsPopup.qml" line="290"/>
-        <source>Dark mode</source>
-        <translation type="unfinished"></translation>
+        <source>Volume</source>
+        <translation>Volume</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPopup.qml" line="369"/>
+        <location filename="../qml/SettingsPopup.qml" line="311"/>
+        <source>Dark mode</source>
+        <translation>Mode sombre</translation>
+    </message>
+    <message>
+        <location filename="../qml/SettingsPopup.qml" line="390"/>
         <source>Save and close</source>
-        <translation type="unfinished"></translation>
+        <translation>Enregistrer et fermer</translation>
     </message>
 </context>
 </TS>

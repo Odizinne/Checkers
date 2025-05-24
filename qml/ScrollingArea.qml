@@ -16,7 +16,7 @@ ScrollView {
         anchors.bottom: parent.bottom
         visible: policy === ScrollBar.AlwaysOn
         active: true
-        interactive: !Qt.platform.os === "android"
+        interactive: Qt.platform.os !== "android"
         policy: (parent.contentHeight > parent.height) ? ScrollBar.AlwaysOn : ScrollBar.AlwaysOff
     }
 }

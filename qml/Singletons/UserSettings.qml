@@ -13,4 +13,6 @@ Settings {
     property bool optionalCaptures: false
     property bool kingFastForward: false
     property int boardSize: 8
+
+    property int languageIndex: 0
 }

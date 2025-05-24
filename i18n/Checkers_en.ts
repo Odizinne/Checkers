@@ -125,42 +125,42 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPopup.qml" line="194"/>
-        <source>8x8 (12 pieces)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qml/SettingsPopup.qml" line="195"/>
-        <source>10x10 (20 pieces)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qml/SettingsPopup.qml" line="217"/>
+        <location filename="../qml/SettingsPopup.qml" line="219"/>
         <source>Show hints</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPopup.qml" line="230"/>
+        <location filename="../qml/SettingsPopup.qml" line="232"/>
         <source>Wood texture</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPopup.qml" line="243"/>
+        <location filename="../qml/SettingsPopup.qml" line="245"/>
         <source>Application settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPopup.qml" line="269"/>
-        <source>Volume</source>
+        <location filename="../qml/SettingsPopup.qml" line="268"/>
+        <source>Language</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/SettingsPopup.qml" line="274"/>
+        <source>System</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/SettingsPopup.qml" line="290"/>
+        <source>Volume</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/SettingsPopup.qml" line="311"/>
         <source>Dark mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPopup.qml" line="369"/>
+        <location filename="../qml/SettingsPopup.qml" line="390"/>
         <source>Save and close</source>
         <translation type="unfinished"></translation>
     </message>

@@ -315,6 +315,7 @@ ApplicationWindow {
     }
 
     Component.onCompleted: {
+        Helper.changeApplicationLanguage(UserSettings.languageIndex)
         audioInitTimer.start()
         compOpacity = 1
     }
