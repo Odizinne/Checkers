@@ -362,7 +362,9 @@ ApplicationWindow {
         }
 
         Item {
-            anchors.fill: parent
+            width: GameLogic.cellSize * GameLogic.boardSize
+            height: GameLogic.cellSize * GameLogic.boardSize
+            anchors.centerIn: parent
 
             Repeater {
                 model: piecesModel
