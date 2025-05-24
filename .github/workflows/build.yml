@@ -126,16 +126,46 @@ jobs:
         uses: android-actions/setup-android@v3
 
       - name: Install Qt
+        uses: jurplel/install-qt-action@v3
+        with:
+          aqtversion: '==3.1.*'
+          version: '6.9.0'
+          host: 'linux'
+          target: 'desktop'
+          arch: 'linux_gcc_64'
+          modules: 'qtmultimedia'
+          cache: true
+          add-tools-to-path: true
+
+      - name: Install Qt Android
         uses: jurplel/install-qt-action@v4
         with:
           version: ${{ env.QT_VERSION }}
           target: 'android'
           arch: ${{ matrix.qt_arch }}
           modules: 'qtmultimedia'
+          cache: true
+          add-tools-to-path: true
 
       - name: Decode Keystore
         run: |
           echo "${{ secrets.KEYSTORE_FILE }}" | base64 -d > android-keystore.jks || echo "No keystore provided"
+
+      - name: Debug Qt components
+        run: |
+          echo "=== QT COMPONENTS DEBUG ==="
+          echo "Contents of Qt cmake directory:"
+          ls -la $QT_ROOT_DIR/lib/cmake/
+          echo "Looking for Qt6Quick specifically:"
+          ls -la $QT_ROOT_DIR/lib/cmake/Qt6Quick/ 2>/dev/null || echo "Qt6Quick cmake not found"
+          echo "Looking for ALL Qt6 components:"
+          find $QT_ROOT_DIR/lib/cmake/ -name "Qt6*" -type d
+          echo "============================"
+
+      - name: Set Android paths
+        run: |
+          echo "ANDROID_SDK_ROOT=/usr/local/lib/android/sdk" >> $GITHUB_ENV
+          echo "ANDROID_HOME=/usr/local/lib/android/sdk" >> $GITHUB_ENV
 
       - name: Build Android APK
         env:
@@ -143,27 +173,47 @@ jobs:
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+          # Add these for androiddeployqt
+          QT_ANDROID_KEYSTORE_PATH: ${{ github.workspace }}/android-keystore.jks
+          QT_ANDROID_KEYSTORE_ALIAS: ${{ secrets.KEY_ALIAS }}
+          QT_ANDROID_KEYSTORE_STORE_PASS: ${{ secrets.KEYSTORE_PASSWORD }}
+          QT_ANDROID_KEYSTORE_KEY_PASS: ${{ secrets.KEY_PASSWORD }}
         run: |
+          # Debug: Check signing conditions
+          echo "=== SIGNING DEBUG INFO ==="
+          echo "KEYSTORE_PATH: $KEYSTORE_PATH"
+          echo "Keystore file exists: $([ -f "$KEYSTORE_PATH" ] && echo "YES" || echo "NO")"
+          echo "QT_ANDROID_KEYSTORE_PATH: $QT_ANDROID_KEYSTORE_PATH"
+          echo "QT_ANDROID_KEYSTORE_ALIAS: $QT_ANDROID_KEYSTORE_ALIAS"
+          echo "=========================="
+          
           mkdir build
           cd build
-          chmod +x $(which qt-cmake)
-
-          # Check if we have signing secrets
+      
           if [ -f "$KEYSTORE_PATH" ] && [ -n "$KEYSTORE_PASSWORD" ]; then
-            echo "Building signed APK for ${{ matrix.android_abi }}"
-            qt-cmake .. \
+            echo "🔐 BUILDING SIGNED APK for ${{ matrix.android_abi }}"
+            cmake .. \
+              -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_ROOT/build/cmake/android.toolchain.cmake \
+              -DCMAKE_PREFIX_PATH="$QT_ROOT_DIR" \
+              -DCMAKE_FIND_ROOT_PATH="$QT_ROOT_DIR" \
+              -DQT_HOST_PATH="$QT_HOST_PATH" \
+              -DANDROID_SDK_ROOT="$ANDROID_SDK_ROOT" \
+              -DANDROID_NDK="$ANDROID_NDK_ROOT" \
               -DANDROID_ABI=${{ matrix.android_abi }} \
-              -DANDROID_BUILD_ABI_${{ matrix.arch_name }}=ON \
-              -DQT_ANDROID_SIGN_APK=ON \
-              -DQT_ANDROID_KEYSTORE_PATH=$KEYSTORE_PATH \
-              -DQT_ANDROID_KEYSTORE_ALIAS=$KEY_ALIAS \
-              -DQT_ANDROID_KEYSTORE_STORE_PASS=$KEYSTORE_PASSWORD \
-              -DQT_ANDROID_KEYSTORE_KEY_PASS=$KEY_PASSWORD
+              -DANDROID_PLATFORM=android-24
           else
-            echo "Building debug APK for ${{ matrix.android_abi }} (no signing secrets found)"
-            qt-cmake .. -DANDROID_ABI=${{ matrix.android_abi }} -DANDROID_BUILD_ABI_${{ matrix.arch_name }}=ON
+            echo "🔓 BUILDING DEBUG APK for ${{ matrix.android_abi }} (no signing secrets found)"
+            cmake .. \
+              -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_ROOT/build/cmake/android.toolchain.cmake \
+              -DCMAKE_PREFIX_PATH="$QT_ROOT_DIR" \
+              -DCMAKE_FIND_ROOT_PATH="$QT_ROOT_DIR" \
+              -DQT_HOST_PATH="$QT_HOST_PATH" \
+              -DANDROID_SDK_ROOT="$ANDROID_SDK_ROOT" \
+              -DANDROID_NDK="$ANDROID_NDK_ROOT" \
+              -DANDROID_ABI=${{ matrix.android_abi }} \
+              -DANDROID_PLATFORM=android-24
           fi
-
+      
           cmake --build . --config Release
           cmake --install . --config Release
 
