@@ -1,4 +1,5 @@
 pragma Singleton
+
 import QtQuick
 import Odizinne.Checkers
 
@@ -304,6 +305,10 @@ QtObject {
     }
 
     function applyMove(boardState, move) {
+        // Destructure to satisfy static analysis
+        const { from, to, isCapture } = move || {}
+        if (!from || !to) return boardState
+
         // Create deep copy of board state
         let newState = {
             pieces: [],
@@ -323,18 +328,18 @@ QtObject {
         }
 
         // Apply move
-        let movingPiece = newState.board[move.from.row][move.from.col]
-        newState.board[move.from.row][move.from.col] = null
+        let movingPiece = newState.board[from.row][from.col]
+        newState.board[from.row][from.col] = null
 
         // Update piece position
         for (let i = 0; i < newState.pieces.length; i++) {
-            if (newState.pieces[i].row === move.from.row && newState.pieces[i].col === move.from.col) {
-                newState.pieces[i].row = move.to.row
-                newState.pieces[i].col = move.to.col
+            if (newState.pieces[i].row === from.row && newState.pieces[i].col === from.col) {
+                newState.pieces[i].row = to.row
+                newState.pieces[i].col = to.col
 
                 // Check for promotion
-                if ((newState.pieces[i].player === 1 && move.to.row === 0) ||
-                    (newState.pieces[i].player === 2 && move.to.row === 7)) {
+                if ((newState.pieces[i].player === 1 && to.row === 0) ||
+                    (newState.pieces[i].player === 2 && to.row === 7)) {
                     newState.pieces[i].isKing = true
                 }
 
@@ -343,18 +348,18 @@ QtObject {
             }
         }
 
-        newState.board[move.to.row][move.to.col] = movingPiece
+        newState.board[to.row][to.col] = movingPiece
 
         // Handle capture
-        if (move.isCapture) {
+        if (isCapture) {
             // King fast forward capture
             if (movingPiece.isKing && UserSettings.kingFastForward) {
-                let rowDir = move.to.row > move.from.row ? 1 : -1
-                let colDir = move.to.col > move.from.col ? 1 : -1
+                let rowDir = to.row > from.row ? 1 : -1
+                let colDir = to.col > from.col ? 1 : -1
 
-                for (let i = 1; i < Math.abs(move.to.row - move.from.row); i++) {
-                    let checkRow = move.from.row + (rowDir * i)
-                    let checkCol = move.from.col + (colDir * i)
+                for (let i = 1; i < Math.abs(to.row - from.row); i++) {
+                    let checkRow = from.row + (rowDir * i)
+                    let checkCol = from.col + (colDir * i)
                     let capturedPiece = newState.board[checkRow][checkCol]
                     if (capturedPiece && capturedPiece.player !== movingPiece.player) {
                         newState.board[checkRow][checkCol] = null
@@ -366,8 +371,8 @@ QtObject {
                 }
             } else {
                 // Regular capture
-                let middleRow = move.from.row + (move.to.row - move.from.row) / 2
-                let middleCol = move.from.col + (move.to.col - move.from.col) / 2
+                let middleRow = from.row + (to.row - from.row) / 2
+                let middleCol = from.col + (to.col - from.col) / 2
                 newState.board[middleRow][middleCol] = null
 
                 // Remove captured piece

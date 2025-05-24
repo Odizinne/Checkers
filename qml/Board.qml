@@ -132,15 +132,4 @@ Rectangle {
             }
         }
     }
-
-    // Reset state when board is reinitialized
-    //Connections {
-    //    target: GameLogic
-    //    function onIsResettingChanged() {
-    //        if (GameLogic.isResetting) {
-    //            board.allItemsCreated = false
-    //            board.createdItemsCount = 0
-    //        }
-    //    }
-    //}
 }
