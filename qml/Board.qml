@@ -3,6 +3,7 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Effects
 import Odizinne.Checkers
+
 Rectangle {
     id: board
     color: "transparent"
@@ -15,45 +16,55 @@ Rectangle {
         anchors.fill: parent
         source: "qrc:/icons/wood_texture.png"
         fillMode: Image.PreserveAspectCrop
-        visible: false  // We'll use this as source for MultiEffect
+        visible: false
     }
 
-    // Board squares with wood texture applied
-    Grid {
+    // Pre-rendered wood texture effect (cached)
+    MultiEffect {
+        id: cachedWoodEffect
+        source: woodTexture
         anchors.fill: parent
+        colorization: 1
+        colorizationColor: "#D4B896" // Neutral wood color
+        opacity: 0.3
+        visible: false
+        layer.enabled: true // Cache the effect
+    }
+
+    // Board squares
+    Grid {
+        id: grid
         rows: GameLogic.boardSize
         columns: GameLogic.boardSize
+
+        readonly property int cellSize: Math.floor(board.width / GameLogic.boardSize)
+        width: cellSize * GameLogic.boardSize
+        height: cellSize * GameLogic.boardSize
+        anchors.centerIn: parent
 
         Repeater {
             model: GameLogic.boardModel
 
             Item {
                 id: boardRec
-                width: board.width / GameLogic.boardSize
-                height: board.height / GameLogic.boardSize
+                width: grid.cellSize
+                height: grid.cellSize
                 required property var model
 
-                // Clipped portion of the wood texture with square color
-                Item {
+                Rectangle {
                     anchors.fill: parent
-                    clip: true
+                    color: (boardRec.model.row + boardRec.model.col) % 2 === 0 ? "#F0D9B5" : "#B58863"
 
-                    // Base color
-                    Rectangle {
+                    // Simplified wood texture overlay using ShaderEffectSource
+                    ShaderEffectSource {
                         anchors.fill: parent
-                        color: (boardRec.model.row + boardRec.model.col) % 2 === 0 ? "#F0D9B5" : "#B58863"
-                        opacity: 0.7
-                    }
-
-                    // Subtle wood texture overlay
-                    MultiEffect {
-                        source: woodTexture
-                        width: board.width
-                        height: board.height
-                        x: -boardRec.model.col * boardRec.width
-                        y: -boardRec.model.row * boardRec.height
-                        colorization: 1
-                        colorizationColor: (boardRec.model.row + boardRec.model.col) % 2 === 0 ? "#F0D9B5" : "#B58863"
+                        sourceItem: cachedWoodEffect
+                        sourceRect: Qt.rect(
+                            boardRec.model.col * grid.cellSize,
+                            boardRec.model.row * grid.cellSize,
+                            grid.cellSize,
+                            grid.cellSize
+                        )
                         opacity: 0.4
                     }
                 }
@@ -62,7 +73,6 @@ Rectangle {
                     anchors.fill: parent
                     color: "transparent"
                     visible: {
-                        // Don't show valid moves during AI chain capture
                         if (UserSettings.vsAI && !GameLogic.isPlayer1Turn && GameLogic.inChainCapture) {
                             return false
                         }
