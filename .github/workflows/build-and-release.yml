@@ -23,11 +23,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Visual Studio shell
-        uses: egor-tensin/vs-shell@v2
-        with:
-          arch: x64
-
       - name: Install Qt
         id: qt
         uses: jurplel/install-qt-action@v4
@@ -79,7 +74,7 @@ jobs:
           git fetch --tags
           # Get the latest semver tag
           LATEST_TAG=$(git tag --list '*.*.*' --sort=-version:refname | head -n 1)
-         
+
           if [ -z "$LATEST_TAG" ]; then
             # No existing semver tags, start with 0.0.1
             NEW_VERSION="0.0.1"
@@ -87,11 +82,11 @@ jobs:
             # Parse the latest tag
             VERSION=$LATEST_TAG
             IFS='.' read -r MAJOR MINOR PATCH <<< "$VERSION"
-           
+
             # For the installer, we'll use just the patch number like before
             NEW_VERSION="0.0.$((PATCH + 1))"
           fi
-         
+
           echo "New version: $NEW_VERSION"
           echo "TagVersion=${NEW_VERSION}" >> $GITHUB_ENV
 
