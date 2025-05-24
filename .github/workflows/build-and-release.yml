@@ -228,24 +228,44 @@ jobs:
             SIGNED_APK="${UNSIGNED_APK%%-unsigned.apk}.apk"
             ALIGNED_APK="${UNSIGNED_APK%%-unsigned.apk}-aligned.apk"
             
+            # Find build tools
+            BUILD_TOOLS_DIR=$(find $ANDROID_SDK_ROOT/build-tools -maxdepth 1 -type d | sort -V | tail -1)
+            ZIPALIGN="$BUILD_TOOLS_DIR/zipalign"
+            APKSIGNER="$BUILD_TOOLS_DIR/apksigner"
+            echo "Found zipalign at: $ZIPALIGN"
+            echo "Found apksigner at: $APKSIGNER"
+            
+            if [ ! -f "$ZIPALIGN" ]; then
+              echo "❌ zipalign not found, trying alternative path..."
+              ZIPALIGN=$(find $ANDROID_SDK_ROOT/build-tools -name "zipalign" -type f | head -1)
+              echo "Alternative zipalign path: $ZIPALIGN"
+            fi
+            
+            if [ ! -f "$APKSIGNER" ]; then
+              echo "❌ apksigner not found, trying alternative path..."
+              APKSIGNER=$(find $ANDROID_SDK_ROOT/build-tools -name "apksigner" -type f | head -1)
+              echo "Alternative apksigner path: $APKSIGNER"
+            fi
+            
             echo "Found unsigned APK: $UNSIGNED_APK"
-            echo "Step 1: Signing APK..."
-            # Use jarsigner to sign
-            jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 \
-              -keystore "$KEYSTORE_PATH" \
-              -storepass "$KEYSTORE_PASSWORD" \
-              -keypass "$KEY_PASSWORD" \
-              "$UNSIGNED_APK" "$KEY_ALIAS"
+            echo "Step 1: Aligning APK..."
+            # Align first, then sign (proper order)
+            "$ZIPALIGN" -v 4 "$UNSIGNED_APK" "$ALIGNED_APK"
             
-            echo "Step 2: Aligning APK for Android 11+..."
-            # Use zipalign to fix the alignment issue
-            zipalign -v 4 "$UNSIGNED_APK" "$ALIGNED_APK"
+            echo "Step 2: Signing APK with v2 signature..."
+            # Use apksigner for v2+ signatures
+            "$APKSIGNER" sign \
+              --ks "$KEYSTORE_PATH" \
+              --ks-key-alias "$KEY_ALIAS" \
+              --ks-pass pass:"$KEYSTORE_PASSWORD" \
+              --key-pass pass:"$KEY_PASSWORD" \
+              --out "$SIGNED_APK" \
+              "$ALIGNED_APK"
             
-            # Replace the unsigned APK with the aligned one
-            mv "$ALIGNED_APK" "$SIGNED_APK"
-            rm -f "$UNSIGNED_APK"
+            # Clean up temp files
+            rm -f "$UNSIGNED_APK" "$ALIGNED_APK"
             
-            echo "✅ APK signed and aligned successfully: $SIGNED_APK"
+            echo "✅ APK aligned and signed successfully: $SIGNED_APK"
           fi
 
       - name: Clean up keystore
