@@ -77,15 +77,34 @@ ApplicationWindow {
             }
         }
 
-        ToolButton {
+        Row {
             anchors.left: parent.left
             anchors.top: parent.top
             anchors.bottom: parent.bottom
-            icon.source: "qrc:/icons/menu.png"
-            icon.color: UserSettings.darkMode ? "white" : "black"
-            onClicked: menu.visible = true
-            icon.width: 16
-            icon.height: 16
+            spacing: 4
+
+            ToolButton {
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
+                icon.source: "qrc:/icons/menu.png"
+                icon.color: UserSettings.darkMode ? "white" : "black"
+                onClicked: menu.visible = true
+                icon.width: 16
+                icon.height: 16
+            }
+
+            ToolButton {
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
+                icon.source: "qrc:/icons/undo.png"
+                icon.color: UserSettings.darkMode ? "white" : "black"
+                onClicked: GameLogic.undoLastMove()
+                icon.width: 16
+                icon.height: 16
+                enabled: GameLogic.canUndo && !GameLogic.gameOver && !GameLogic.animating
+                visible: !UserSettings.vsAI
+                opacity: enabled ? 1.0 : 0.3
+            }
         }
 
         Label {

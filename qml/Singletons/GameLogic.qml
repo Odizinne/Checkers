@@ -30,6 +30,8 @@ QtObject {
     property var piecesModel: null
 
     signal showGameOverPopup()
+    property var lastMove: null
+    property bool canUndo: false
 
     // Animation handling
     property int animationDuration: 300
@@ -65,6 +67,10 @@ QtObject {
 
     function initializeBoard() {
         if (!boardModel || !piecesModel) return
+
+        // Clear undo state
+        lastMove = null
+        canUndo = false
 
         // Start reset animation
         isResetting = true
@@ -145,6 +151,10 @@ QtObject {
         if (gameOver || animating) return false
 
         if (!isValidMove(fromRow, fromCol, toRow, toCol)) return false
+
+        // Save current state before making the move
+        lastMove = saveGameState()
+        canUndo = true
 
         animating = true
         let result = movePiece(fromRow, fromCol, toRow, toCol)
@@ -699,6 +709,92 @@ QtObject {
             winner = currentPlayer === 1 ? 2 : 1
             showGameOverPopup()
             AudioEngine.playWin()
+        }
+    }
+
+    function saveGameState() {
+        if (!piecesModel) return null
+
+        let state = {
+            pieces: [],
+            gameState: {
+                isPlayer1Turn: isPlayer1Turn,
+                capturedWhiteCount: capturedWhiteCount,
+                capturedBlackCount: capturedBlackCount,
+                capturedWhitePieces: capturedWhitePieces.slice(),
+                capturedBlackPieces: capturedBlackPieces.slice(),
+                inChainCapture: inChainCapture,
+                chainCapturePosition: chainCapturePosition ? {
+                    row: chainCapturePosition.row,
+                    col: chainCapturePosition.col
+                } : null,
+                selectedPiece: selectedPiece ? {
+                    row: selectedPiece.row,
+                    col: selectedPiece.col,
+                    index: selectedPiece.index
+                } : null,
+                kingUsedFastForward: kingUsedFastForward ? {
+                    row: kingUsedFastForward.row,
+                    col: kingUsedFastForward.col
+                } : null
+            }
+        }
+
+        // Save all pieces
+        for (let i = 0; i < piecesModel.count; i++) {
+            let piece = piecesModel.get(i)
+            state.pieces.push({
+                id: piece.id,
+                row: piece.row,
+                col: piece.col,
+                player: piece.player,
+                isKing: piece.isKing,
+                isAlive: piece.isAlive,
+                x: piece.x,
+                y: piece.y
+            })
+        }
+
+        return state
+    }
+
+    function restoreGameState(state) {
+        if (!state || !piecesModel) return
+
+        // Restore pieces
+        for (let i = 0; i < state.pieces.length && i < piecesModel.count; i++) {
+            let piece = state.pieces[i]
+            piecesModel.set(i, piece)
+        }
+
+        // Restore game state
+        isPlayer1Turn = state.gameState.isPlayer1Turn
+        capturedWhiteCount = state.gameState.capturedWhiteCount
+        capturedBlackCount = state.gameState.capturedBlackCount
+        capturedWhitePieces = state.gameState.capturedWhitePieces.slice()
+        capturedBlackPieces = state.gameState.capturedBlackPieces.slice()
+        inChainCapture = state.gameState.inChainCapture
+        chainCapturePosition = state.gameState.chainCapturePosition ? {
+            row: state.gameState.chainCapturePosition.row,
+            col: state.gameState.chainCapturePosition.col
+        } : null
+        selectedPiece = state.gameState.selectedPiece ? {
+            row: state.gameState.selectedPiece.row,
+            col: state.gameState.selectedPiece.col,
+            index: state.gameState.selectedPiece.index
+        } : null
+        kingUsedFastForward = state.gameState.kingUsedFastForward ? {
+            row: state.gameState.kingUsedFastForward.row,
+            col: state.gameState.kingUsedFastForward.col
+        } : null
+
+        canUndo = false
+        lastMove = null
+    }
+
+    function undoLastMove() {
+        if (lastMove && canUndo) {
+            restoreGameState(lastMove)
         }
     }
 }
