@@ -9,7 +9,7 @@ Popup {
     Material.roundedScale: Material.SmallScale
 
     ColumnLayout {
-        spacing: 0
+        spacing: 3
         Image {
             source: "qrc:/icons/icon.png"
             sourceSize.width: 192
@@ -17,6 +17,7 @@ Popup {
             Layout.leftMargin: 10
             Layout.topMargin: 10
             Layout.rightMargin: 10
+            Layout.fillWidth: true
         }
 
         Label {
@@ -28,14 +29,47 @@ Popup {
             horizontalAlignment: Text.AlignHCenter
         }
 
-        Button {
-            text: "Odizinne"
-            icon.source: "qrc:/icons/github.png"
-            icon.width: 18
-            icon.height: 18
-            Layout.alignment: Qt.AlignCenter
-            onClicked: Qt.openUrlExternally("https://github.com/odizinne/Checkers")
-            Material.roundedScale: Material.SmallScale
+        RowLayout {
+            Layout.fillWidth: true
+
+            Item {
+                Layout.fillWidth: true
+            }
+
+            RoundButton {
+                icon.source: "qrc:/icons/github.png"
+                Layout.preferredWidth: implicitWidth + 10
+                Layout.preferredHeight: implicitHeight + 10
+                onClicked: Qt.openUrlExternally("https://github.com/odizinne/Checkers")
+                Material.roundedScale: Material.SmallScale
+                icon.width: 24
+                icon.height: 24
+                text: "Github"
+                font.bold: true
+                Layout.fillWidth: true
+                smooth: false
+                antialiasing: false
+            }
+
+            RoundButton {
+                icon.source: "qrc:/icons/donate.png"
+                Layout.preferredWidth: implicitWidth + 10
+                Layout.preferredHeight: implicitHeight + 10
+                icon.color: "transparent"
+                onClicked: Qt.openUrlExternally("https://ko-fi.com/odizinne")
+                Material.roundedScale: Material.SmallScale
+                icon.width: 24
+                icon.height: 24
+                font.bold: true
+                text: "Donate"
+                Layout.fillWidth: true
+                smooth: false
+                antialiasing: false
+            }
+
+            Item {
+                Layout.fillWidth: true
+            }
         }
     }
 }
