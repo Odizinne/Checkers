@@ -78,11 +78,6 @@ ApplicationWindow {
         Item {
             anchors.fill: parent
             anchors.margins: 4
-            opacity: GameLogic.isResetting ? 0 : 1
-
-            Behavior on opacity {
-                NumberAnimation { duration: 300; easing.type: Easing.OutQuad }
-            }
 
             Row {
                 anchors.left: parent.left
