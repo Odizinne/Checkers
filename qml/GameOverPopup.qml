@@ -13,7 +13,7 @@ Popup {
         spacing: 15
 
         Label {
-            text: GameLogic.winner === 1 ? qsTr("White won") : qsTr("Black won")
+            text: GameLogic.winner === 1 ? qsTr("Winner: White") : qsTr("Winner: Black")
             Layout.fillWidth: true
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter

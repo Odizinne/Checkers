@@ -5,13 +5,13 @@
     <name>GameOverPopup</name>
     <message>
         <location filename="../qml/GameOverPopup.qml" line="16"/>
-        <source>White won</source>
-        <translation>Les blancs ont gagné</translation>
+        <source>Winner: White</source>
+        <translation type="unfinished">Gagnant : Blancs</translation>
     </message>
     <message>
         <location filename="../qml/GameOverPopup.qml" line="16"/>
-        <source>Black won</source>
-        <translation>Les noirs ont gagné</translation>
+        <source>Winner: Black</source>
+        <translation type="unfinished">Gagnant : Noirs</translation>
     </message>
     <message>
         <location filename="../qml/GameOverPopup.qml" line="31"/>
