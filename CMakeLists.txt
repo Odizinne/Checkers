@@ -30,6 +30,7 @@ set(QML_FILES
     qml/Piece.qml
     qml/AboutPopup.qml
     qml/SettingsPopup.qml
+    qml/ScrollingArea.qml
 )
 
 set(QML_SINGLETONS
