@@ -435,6 +435,8 @@ jobs:
           asset_path: android-arm64/Checkers_arm64.apk
           asset_name: Checkers_arm64-v8a.apk
           asset_content_type: application/vnd.android.package-archive
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload Android APK (armv7)
         uses: actions/upload-release-asset@v1
@@ -443,3 +445,5 @@ jobs:
           asset_path: android-armv7/Checkers_armv7.apk
           asset_name: Checkers_armeabi-v7a.apk
           asset_content_type: application/vnd.android.package-archive
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
