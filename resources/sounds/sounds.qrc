@@ -1,7 +1,7 @@
 <RCC>
     <qresource prefix="/sounds">
         <file>move.wav</file>
-        <file>capture.wav</file>
+        <file>tada.wav</file>
         <file>empty.wav</file>
     </qresource>
 </RCC>

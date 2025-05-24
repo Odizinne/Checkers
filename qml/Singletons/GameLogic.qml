@@ -177,7 +177,7 @@ QtObject {
 
         // Handle capture
         if (wasCapture) {
-            AudioEngine.playCapture()
+            AudioEngine.playMove()
             let rowDiff = toRow - fromRow
             let colDiff = toCol - fromCol
             let middleRow = fromRow + rowDiff / 2
@@ -517,11 +517,13 @@ QtObject {
             gameOver = true
             winner = 2
             showGameOverPopup()
+            AudioEngine.playWin()
             return
         } else if (player2Count === 0) {
             gameOver = true
             winner = 1
             showGameOverPopup()
+            AudioEngine.playWin()
             return
         }
 
@@ -531,6 +533,7 @@ QtObject {
             gameOver = true
             winner = currentPlayer === 1 ? 2 : 1
             showGameOverPopup()
+            AudioEngine.playWin()
         }
     }
 }

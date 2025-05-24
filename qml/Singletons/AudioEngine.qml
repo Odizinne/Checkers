@@ -32,7 +32,7 @@ Item {
 
     function applyAudioDeviceToAllPlayers(device) {
         moveFX.audioOutput.device = device
-        captureFX.audioOutput.device = device
+        winFX.audioOutput.device = device
         silentKeepAlive.audioOutput.device = device
 
         silentKeepAlive.stop()
@@ -49,8 +49,8 @@ Item {
     }
 
     MediaPlayer {
-        id: captureFX
-        source: "qrc:/sounds/capture.wav"
+        id: winFX
+        source: "qrc:/sounds/tada.wav"
         audioOutput: AudioOutput {
             volume: UserSettings.volume
             device: mediaDevices.defaultAudioOutput
@@ -68,8 +68,8 @@ Item {
         loops: MediaPlayer.Infinite
     }
 
-    function playCapture() {
-        captureFX.play()
+    function playWin() {
+        winFX.play()
     }
 
     function playMove() {

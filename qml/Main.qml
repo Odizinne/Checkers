@@ -158,11 +158,21 @@ ApplicationWindow {
 
             ItemDelegate {
                 text: qsTr("New game")
-                //height: 40
+                height: 50
                 width: parent.width
                 onClicked: {
                     GameLogic.initializeBoard()
-                    onClicked: menu.visible = false
+                    menu.visible = false
+                }
+            }
+
+            ItemDelegate {
+                text: qsTr("About")
+                height: 50
+                width: parent.width
+                onClicked: {
+                    aboutPopup.visible = true
+                    menu.visible = false
                 }
             }
         }
@@ -377,5 +387,10 @@ ApplicationWindow {
                 gameOverPopup.open()
             }
         }
+    }
+
+    AboutPopup {
+        id: aboutPopup
+        anchors.centerIn: parent
     }
 }

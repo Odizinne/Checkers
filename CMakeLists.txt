@@ -27,6 +27,7 @@ set(QML_FILES
     qml/Board.qml
     qml/GameOverPopup.qml
     qml/Piece.qml
+    qml/AboutPopup.qml
 )
 
 set(QML_SINGLETONS
@@ -45,6 +46,7 @@ qt_add_executable(${CMAKE_PROJECT_NAME}
     #${HEADERS}
     resources/sounds/sounds.qrc
     resources/icons/icons.qrc
+    resources/textures/textures.qrc
     resources/appicon.rc
 )
 
