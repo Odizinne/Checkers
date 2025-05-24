@@ -7,7 +7,7 @@ Popup {
     id: settingsPopup
     modal: true
     visible: false
-    width: 400
+    width: 350
     Material.background: UserSettings.darkMode ? "#1C1C1C" : "#E3E3E3"
     Material.roundedScale: Material.SmallScale
 
@@ -50,104 +50,150 @@ Popup {
             Material.elevation: 6
             Material.background: UserSettings.darkMode ? "#2B2B2B" : "#FFFFFF"
 
-        ColumnLayout {
-            anchors.fill: parent
-            spacing: 15
+            ColumnLayout {
+                anchors.fill: parent
+                spacing: 15
 
-            // Rule 1: Backward captures
-            RowLayout {
-                Layout.fillWidth: true
-
-                ColumnLayout {
+                // Rule 1: Backward captures
+                RowLayout {
                     Layout.fillWidth: true
-                    spacing: 5
 
-                    Label {
-                        text: qsTr("Backward Captures")
-                        font.pixelSize: 16
-                        font.bold: true
+                    ColumnLayout {
+                        Layout.fillWidth: true
+                        spacing: 5
+
+                        Label {
+                            text: qsTr("Backward Captures")
+                            font.pixelSize: 16
+                            font.bold: true
+                        }
+
+                        Label {
+                            text: qsTr("Regular pieces can capture backward")
+                            font.pixelSize: 12
+                            opacity: 0.7
+                            Layout.fillWidth: true
+                            wrapMode: Text.WordWrap
+                        }
                     }
 
-                    Label {
-                        text: qsTr("Regular pieces can capture backward")
-                        font.pixelSize: 12
-                        opacity: 0.7
-                        Layout.fillWidth: true
-                        wrapMode: Text.WordWrap
+                    Switch {
+                        checked: UserSettings.allowBackwardCaptures
+                        onClicked: UserSettings.allowBackwardCaptures = checked
                     }
                 }
 
-                Switch {
-                    checked: UserSettings.allowBackwardCaptures
-                    onClicked: UserSettings.allowBackwardCaptures = checked
+                // Rule 2: Optional captures
+                RowLayout {
+                    Layout.fillWidth: true
+
+                    ColumnLayout {
+                        Layout.fillWidth: true
+                        spacing: 5
+
+                        Label {
+                            text: qsTr("Optional Captures")
+                            font.pixelSize: 16
+                            font.bold: true
+                        }
+
+                        Label {
+                            text: qsTr("Players can choose not to capture")
+                            font.pixelSize: 12
+                            opacity: 0.7
+                            Layout.fillWidth: true
+                            wrapMode: Text.WordWrap
+                        }
+                    }
+
+                    Switch {
+                        checked: UserSettings.optionalCaptures
+                        onClicked: UserSettings.optionalCaptures = checked
+                    }
+                }
+
+                // Rule 3: King fast forward
+                RowLayout {
+                    Layout.fillWidth: true
+
+                    ColumnLayout {
+                        Layout.fillWidth: true
+                        spacing: 5
+
+                        Label {
+                            text: qsTr("King Fast Forward")
+                            font.pixelSize: 16
+                            font.bold: true
+                        }
+
+                        Label {
+                            text: qsTr("Kings can move multiple squares diagonally")
+                            font.pixelSize: 12
+                            opacity: 0.7
+                            Layout.fillWidth: true
+                            wrapMode: Text.WordWrap
+                        }
+                    }
+
+                    Switch {
+                        checked: UserSettings.kingFastForward
+                        onClicked: UserSettings.kingFastForward = checked
+                    }
                 }
             }
-
-            // Rule 2: Optional captures
-            RowLayout {
-                Layout.fillWidth: true
-
-                ColumnLayout {
-                    Layout.fillWidth: true
-                    spacing: 5
-
-                    Label {
-                        text: qsTr("Optional Captures")
-                        font.pixelSize: 16
-                        font.bold: true
-                    }
-
-                    Label {
-                        text: qsTr("Players can choose not to capture")
-                        font.pixelSize: 12
-                        opacity: 0.7
-                        Layout.fillWidth: true
-                        wrapMode: Text.WordWrap
-                    }
-                }
-
-                Switch {
-                    checked: UserSettings.optionalCaptures
-                    onClicked: UserSettings.optionalCaptures = checked
-                }
-            }
-
-            // Rule 3: King fast forward
-            RowLayout {
-                Layout.fillWidth: true
-
-                ColumnLayout {
-                    Layout.fillWidth: true
-                    spacing: 5
-
-                    Label {
-                        text: qsTr("King Fast Forward")
-                        font.pixelSize: 16
-                        font.bold: true
-                    }
-
-                    Label {
-                        text: qsTr("Kings can move multiple squares diagonally")
-                        font.pixelSize: 12
-                        opacity: 0.7
-                        Layout.fillWidth: true
-                        wrapMode: Text.WordWrap
-                    }
-                }
-
-                Switch {
-                    checked: UserSettings.kingFastForward
-                    onClicked: UserSettings.kingFastForward = checked
-                }
-            }
-        }
         }
 
         Item {
             Layout.fillHeight: true
         }
 
+
         Label {
+            text: qsTr("Board settings")
+            color: Material.accent
+            Layout.leftMargin: 10
+            Layout.bottomMargin: -5
+            font.pixelSize: 14
+        }
+
+        Pane {
+            Layout.fillWidth: true
+            Material.roundedScale: Material.SmallScale
+            Material.elevation: 6
+            Material.background: UserSettings.darkMode ? "#2B2B2B" : "#FFFFFF"
+
+            ColumnLayout {
+                anchors.fill: parent
+                spacing: 15
+                RowLayout {
+                    Layout.fillWidth: true
+                    Label {
+                        text: qsTr("Show hints")
+                        Layout.fillWidth: true
+                    }
+
+                    Switch {
+                        checked: UserSettings.showHints
+                        onClicked: UserSettings.showHints = checked
+                    }
+                }
+
+                RowLayout {
+                    Layout.fillWidth: true
+                    Label {
+                        text: qsTr("Wood texture")
+                        Layout.fillWidth: true
+                    }
+
+                    Switch {
+                        checked: UserSettings.enableWood
+                        onClicked: UserSettings.enableWood = checked
+                    }
+                }
+            }
+        }
+        Label {
+
             text: qsTr("Application settings")
             color: Material.accent
             Layout.leftMargin: 10

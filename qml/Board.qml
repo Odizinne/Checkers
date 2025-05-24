@@ -28,6 +28,7 @@ Rectangle {
         colorizationColor: "#D4B896" // Neutral wood color
         opacity: 0.3
         visible: false
+        enabled: UserSettings.enableWood // Disable processing when not needed
         layer.enabled: true // Cache the effect
     }
 
@@ -66,6 +67,7 @@ Rectangle {
                             grid.cellSize
                         )
                         opacity: 0.4
+                        visible: UserSettings.enableWood // Hide when wood texture is disabled
                     }
                 }
 
@@ -73,6 +75,7 @@ Rectangle {
                     anchors.fill: parent
                     color: "transparent"
                     visible: {
+                        if (!UserSettings.showHints) return false
                         if (UserSettings.vsAI && !GameLogic.isPlayer1Turn && GameLogic.inChainCapture) {
                             return false
                         }
