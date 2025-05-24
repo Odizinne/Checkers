@@ -13,12 +13,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Set up Visual Studio shell
+        uses: egor-tensin/vs-shell@v2
+        with:
+          arch: x64
+
       - name: Install Qt
         id: qt
         uses: jurplel/install-qt-action@v4
         with:
           version: ${{ env.QT_VERSION }}
-          arch: 'win64_llvm_mingw'
+          arch: 'win64_msvc2022_64'
           modules: 'qtmultimedia'
           add-tools-to-path: true
           cache: true
@@ -47,15 +52,15 @@ jobs:
       - name: Zip binaries folder
         shell: pwsh
         run: |
-          $zipFile = "build/Checkers_win64_llvm_mingw.zip"
+          $zipFile = "build/CheckCheckers_win64_msvc2022.zip"
           $folder = "build/Checkers"
           Compress-Archive -Path $folder -DestinationPath $zipFile
       
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: Checkers_win64_llvm_mingw
-          path: build/Checkers_win64_llvm_mingw.zip
+          name: CheckCheckers_win64_msvc2022
+          path: build/CheckCheckers_win64_msvc2022.zip
       
       - name: Get current version for installer
         id: get_version
