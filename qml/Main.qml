@@ -24,6 +24,47 @@ ApplicationWindow {
     readonly property int buttonHeight: Math.round(32 * scaleFactor)
     readonly property int buttonSpacing: Math.round(8 * scaleFactor)
     property real compOpacity: 0.0
+    property bool backPressedOnce: false
+
+    onClosing: function(close) {
+        if (Qt.platform.os === "android") {
+            if (!backPressedOnce) {
+                close.accepted = false
+                backPressedOnce = true
+                exitTooltip.show()
+                exitTimer.start()
+                return
+            }
+        }
+        close.accepted = true
+    }
+
+    Timer {
+        id: exitTimer
+        interval: 2000
+        onTriggered: {
+            root.backPressedOnce = false
+            exitTooltip.hide()
+        }
+    }
+
+    ToolTip {
+        id: exitTooltip
+        text: qsTr("Press back again to exit")
+        timeout: 2000
+        x: (parent.width - width) / 2
+        y: parent.height - height - 60
+        font.pixelSize: 16
+        Material.roundedScale: Material.SmallScale
+
+        function show() {
+            visible = true
+        }
+
+        function hide() {
+            visible = false
+        }
+    }
 
     header: ToolBar {
         height: 40
