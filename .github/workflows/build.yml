@@ -7,7 +7,7 @@ on:
 env:
   QT_VERSION: '6.9.0'
 jobs:
-  build:
+  build-windows:
     runs-on: windows-latest
     steps:
       - name: Checkout code
@@ -146,6 +146,7 @@ jobs:
         run: |
           mkdir build
           cd build
+          chmod +x $(which qt-cmake)
 
           # Check if we have signing secrets
           if [ -f "$KEYSTORE_PATH" ] && [ -n "$KEYSTORE_PASSWORD" ]; then
