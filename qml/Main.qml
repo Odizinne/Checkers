@@ -84,7 +84,6 @@ ApplicationWindow {
                 NumberAnimation { duration: 300; easing.type: Easing.OutQuad }
             }
 
-            // Captured white pieces (left side)
             Row {
                 anchors.left: parent.left
                 anchors.verticalCenter: parent.verticalCenter
@@ -98,11 +97,10 @@ ApplicationWindow {
                     color: "#F5F5F5"
                     border.width: 1
                     border.color: "#E0E0E0"
-                    //visible: GameLogic.capturedWhiteCount > 0
 
                     Rectangle {
                         anchors.centerIn: parent
-                        width: parent.width * 0.7
+                        width: parent.width * 0.6
                         height: width
                         radius: width / 2
                         color: "#D0D0D0"
@@ -114,12 +112,10 @@ ApplicationWindow {
                     color: UserSettings.darkMode ? "white" : "black"
                     text: GameLogic.capturedWhiteCount
                     font.pixelSize: 20
-                    //visible: GameLogic.capturedWhiteCount > 0
                     verticalAlignment: Text.AlignVCenter
                 }
             }
 
-            // Captured black pieces (right side)
             Row {
                 anchors.right: parent.right
                 anchors.verticalCenter: parent.verticalCenter
@@ -130,7 +126,6 @@ ApplicationWindow {
                     color: UserSettings.darkMode ? "white" : "black"
                     text: GameLogic.capturedBlackCount
                     font.pixelSize: 20
-                    //visible: GameLogic.capturedBlackCount > 0
                     verticalAlignment: Text.AlignVCenter
                 }
 
@@ -142,11 +137,10 @@ ApplicationWindow {
                     color: "#3C3C3C"
                     border.width: 1
                     border.color: "#2C2C2C"
-                    //visible: GameLogic.capturedBlackCount > 0
 
                     Rectangle {
                         anchors.centerIn: parent
-                        width: parent.width * 0.7
+                        width: parent.width * 0.6
                         height: width
                         radius: width / 2
                         color: "#1F1F1F"
@@ -160,33 +154,21 @@ ApplicationWindow {
         id: menu
         height: parent.height
         edge: Qt.LeftEdge
-        width: 180
+        width: 230
         Material.roundedScale: Material.NotRounded
 
         Column {
             anchors.fill: parent
             spacing: 2
-            ItemDelegate {
-                text: qsTr("Close menu")
-                height: 40
-                width: parent.width
-                onClicked: menu.visible = false
-            }
-
-            MenuSeparator {}
 
             ItemDelegate {
                 text: qsTr("New game")
-                height: 40
+                //height: 40
                 width: parent.width
-                onClicked: GameLogic.initializeBoard()
-            }
-
-            ItemDelegate {
-                text: qsTr("Exit")
-                height: 40
-                width: parent.width
-                onClicked: Qt.quit()
+                onClicked: {
+                    GameLogic.initializeBoard()
+                    onClicked: menu.visible = false
+                }
             }
         }
 
@@ -222,7 +204,7 @@ ApplicationWindow {
 
             Slider {
                 id: volumeSlider
-                Layout.preferredWidth: 180 -24 -16 -16 -6
+                Layout.preferredWidth: 230 -24 -16 -16 -6
                 from: 0.0
                 to: 1.0
                 Layout.leftMargin: 5

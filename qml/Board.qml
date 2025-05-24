@@ -27,11 +27,10 @@ Rectangle {
         Repeater {
             model: GameLogic.boardModel
 
-            Rectangle {
+            Item {
                 id: boardRec
                 width: board.width / GameLogic.boardSize
                 height: board.height / GameLogic.boardSize
-                color: "transparent"
                 required property var model
 
                 // Clipped portion of the wood texture with square color
