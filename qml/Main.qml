@@ -108,9 +108,8 @@ ApplicationWindow {
         }
 
         Label {
-            text: GameLogic.gameOver ? ("Winner: ") + (GameLogic.winner === 1 ? "White" : "Black") :
-                                       (GameLogic.inChainCapture ? "Continue capturing!" :
-                                                                   ((GameLogic.isPlayer1Turn ? "White" : "Black") + " Turn"))
+            text: GameLogic.gameOver ? (GameLogic.winner === 1 ? qsTr("Winner: White") : qsTr("Winner: Black")) :
+                                       (GameLogic.isPlayer1Turn ? qsTr("White Turn") : qsTr("Black Turn"))
             color: UserSettings.darkMode ? "white" : "black"
             font.pixelSize: Math.round(16 * root.scaleFactor)
             anchors.horizontalCenter: parent.horizontalCenter
