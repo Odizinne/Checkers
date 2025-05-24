@@ -102,33 +102,41 @@ jobs:
 
   build-android:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - qt_arch: android_arm64_v8a
+            android_abi: arm64-v8a
+            arch_name: arm64
+          - qt_arch: android_armv7
+            android_abi: armeabi-v7a
+            arch_name: armv7
   
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-  
+
       - name: Set up Java 17
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
-  
+
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
-  
+
       - name: Install Qt
         uses: jurplel/install-qt-action@v4
         with:
           version: ${{ env.QT_VERSION }}
           target: 'android'
-          arch: 'android_arm64_v8a'
+          arch: ${{ matrix.qt_arch }}
           modules: 'qtmultimedia'
-  
+
       - name: Decode Keystore
-        if: ${{ secrets.KEYSTORE_FILE }}
         run: |
-          echo "${{ secrets.KEYSTORE_FILE }}" | base64 -d > android-keystore.jks
-          
+          echo "${{ secrets.KEYSTORE_FILE }}" | base64 -d > android-keystore.jks || echo "No keystore provided"
+
       - name: Build Android APK
         env:
           KEYSTORE_PATH: ${{ github.workspace }}/android-keystore.jks
@@ -138,39 +146,39 @@ jobs:
         run: |
           mkdir build
           cd build
-          
+
           # Check if we have signing secrets
           if [ -f "$KEYSTORE_PATH" ] && [ -n "$KEYSTORE_PASSWORD" ]; then
-            echo "Building signed APK"
+            echo "Building signed APK for ${{ matrix.android_abi }}"
             qt-cmake .. \
-              -DANDROID_ABI=arm64-v8a \
-              -DANDROID_BUILD_ABI_arm64-v8a=ON \
+              -DANDROID_ABI=${{ matrix.android_abi }} \
+              -DANDROID_BUILD_ABI_${{ matrix.arch_name }}=ON \
               -DQT_ANDROID_SIGN_APK=ON \
               -DQT_ANDROID_KEYSTORE_PATH=$KEYSTORE_PATH \
               -DQT_ANDROID_KEYSTORE_ALIAS=$KEY_ALIAS \
               -DQT_ANDROID_KEYSTORE_STORE_PASS=$KEYSTORE_PASSWORD \
               -DQT_ANDROID_KEYSTORE_KEY_PASS=$KEY_PASSWORD
           else
-            echo "Building debug APK (no signing secrets found)"
-            qt-cmake .. -DANDROID_ABI=arm64-v8a -DANDROID_BUILD_ABI_arm64-v8a=ON
+            echo "Building debug APK for ${{ matrix.android_abi }} (no signing secrets found)"
+            qt-cmake .. -DANDROID_ABI=${{ matrix.android_abi }} -DANDROID_BUILD_ABI_${{ matrix.arch_name }}=ON
           fi
-          
+
           cmake --build . --config Release
           cmake --install . --config Release
-      
+
       - name: Clean up keystore
         if: always()
         run: rm -f android-keystore.jks
-      
+
       - name: Find and Upload APK
         run: |
           find build -name "*.apk" -type f
           mkdir -p apk-output
           find build -name "*.apk" -type f -exec cp {} apk-output/ \;
           ls -la apk-output/
-      
+
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: Checkers_Android_APK
+          name: Checkers_Android_${{ matrix.arch_name }}
           path: apk-output/*.apk
