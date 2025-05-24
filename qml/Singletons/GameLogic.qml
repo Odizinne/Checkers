@@ -15,6 +15,7 @@ QtObject {
     property var chainCapturePosition: null
     property var selectedPiece: null
     property bool isResetting: false
+    property var kingUsedFastForward: null // Tracks which king used fast forward this turn
 
     // Captured pieces tracking
     property var capturedWhitePieces: []
@@ -123,6 +124,7 @@ QtObject {
         animating = false
         inChainCapture = false
         chainCapturePosition = null
+        kingUsedFastForward = null
 
         // End reset animation
         isResetting = false
@@ -177,6 +179,9 @@ QtObject {
                 let checkPiece = getPieceAt(checkRow, checkCol)
                 if (checkPiece && checkPiece.player !== currentPiece.player) {
                     wasCapture = true
+                    // Mark this king as having used fast forward
+                    kingUsedFastForward = { row: fromRow, col: fromCol }
+
                     // Remove the captured piece
                     let capturedData = piecesModel.get(checkPiece.index)
                     let capturedPieceInfo = {
@@ -318,6 +323,12 @@ QtObject {
                 chainCapturePosition = { row: toRow, col: toCol }
                 selectedPiece = { row: toRow, col: toCol, index: pieceIndex }
 
+                // Update the king position for tracking
+                if (kingUsedFastForward) {
+                    kingUsedFastForward.row = toRow
+                    kingUsedFastForward.col = toCol
+                }
+
                 if (UserSettings.vsAI && !isPlayer1Turn) {
                     aiChainCaptureTimer.start()
                 }
@@ -329,6 +340,7 @@ QtObject {
         chainCapturePosition = null
         isPlayer1Turn = !isPlayer1Turn
         selectedPiece = null
+        kingUsedFastForward = null // Reset for next turn
 
         checkGameState()
 
@@ -432,6 +444,13 @@ QtObject {
         let piece = getPieceAt(row, col)
         if (!piece || !piece.isKing) return moves
 
+        // If this king already used fast forward this turn, restrict to normal moves
+        if (kingUsedFastForward &&
+            kingUsedFastForward.row === row &&
+            kingUsedFastForward.col === col) {
+            return []
+        }
+
         let directions = [[-1, -1], [-1, 1], [1, -1], [1, 1]]
 
         for (let dir of directions) {
@@ -471,8 +490,11 @@ QtObject {
         let piece = getPieceAt(row, col)
         if (!piece) return moves
 
-        // King fast forward captures
-        if (piece.isKing && UserSettings.kingFastForward) {
+        // King fast forward captures - only if the king hasn't used fast forward yet
+        if (piece.isKing && UserSettings.kingFastForward &&
+            !(kingUsedFastForward &&
+              kingUsedFastForward.row === row &&
+              kingUsedFastForward.col === col)) {
             let fastMoves = getKingFastForwardMoves(row, col)
             return fastMoves.filter(move => move.isCapture).map(move => ({row: move.row, col: move.col}))
         }

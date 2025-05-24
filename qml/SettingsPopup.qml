@@ -127,7 +127,7 @@ Popup {
                         }
 
                         Label {
-                            text: qsTr("Kings can move multiple squares diagonally")
+                            text: qsTr("Kings move freely diagonally on first move per turn")
                             font.pixelSize: 12
                             opacity: 0.7
                             Layout.fillWidth: true
