@@ -90,77 +90,77 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPopup.qml" line="88"/>
+        <location filename="../qml/SettingsPopup.qml" line="87"/>
         <source>Regular pieces can capture backward</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPopup.qml" line="111"/>
+        <location filename="../qml/SettingsPopup.qml" line="109"/>
         <source>Optional Captures</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPopup.qml" line="117"/>
+        <location filename="../qml/SettingsPopup.qml" line="114"/>
         <source>Players can choose not to capture</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPopup.qml" line="140"/>
+        <location filename="../qml/SettingsPopup.qml" line="136"/>
         <source>King Fast Forward</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPopup.qml" line="146"/>
+        <location filename="../qml/SettingsPopup.qml" line="141"/>
         <source>Kings move freely diagonally on first move per turn</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPopup.qml" line="168"/>
+        <location filename="../qml/SettingsPopup.qml" line="162"/>
         <source>Board settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPopup.qml" line="187"/>
+        <location filename="../qml/SettingsPopup.qml" line="181"/>
         <source>Board size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPopup.qml" line="219"/>
+        <location filename="../qml/SettingsPopup.qml" line="213"/>
         <source>Show hints</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPopup.qml" line="232"/>
+        <location filename="../qml/SettingsPopup.qml" line="226"/>
         <source>Wood texture</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPopup.qml" line="245"/>
+        <location filename="../qml/SettingsPopup.qml" line="239"/>
         <source>Application settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPopup.qml" line="268"/>
+        <location filename="../qml/SettingsPopup.qml" line="262"/>
         <source>Language</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPopup.qml" line="274"/>
+        <location filename="../qml/SettingsPopup.qml" line="268"/>
         <source>System</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPopup.qml" line="290"/>
+        <location filename="../qml/SettingsPopup.qml" line="284"/>
         <source>Volume</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPopup.qml" line="311"/>
+        <location filename="../qml/SettingsPopup.qml" line="305"/>
         <source>Dark mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPopup.qml" line="390"/>
+        <location filename="../qml/SettingsPopup.qml" line="384"/>
         <source>Save and close</source>
         <translation type="unfinished"></translation>
     </message>

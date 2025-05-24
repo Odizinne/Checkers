@@ -70,23 +70,20 @@ Popup {
                         anchors.fill: parent
                         spacing: 15
 
-                        // Rule 1: Backward captures
                         RowLayout {
                             Layout.fillWidth: true
 
                             ColumnLayout {
                                 Layout.fillWidth: true
-                                spacing: 5
+                                spacing: 3
 
                                 Label {
                                     text: qsTr("Backward Captures")
-                                    font.pixelSize: 16
                                     font.bold: true
                                 }
 
                                 Label {
                                     text: qsTr("Regular pieces can capture backward")
-                                    font.pixelSize: 12
                                     opacity: 0.7
                                     Layout.fillWidth: true
                                     wrapMode: Text.WordWrap
@@ -99,23 +96,20 @@ Popup {
                             }
                         }
 
-                        // Rule 2: Optional captures
                         RowLayout {
                             Layout.fillWidth: true
 
                             ColumnLayout {
                                 Layout.fillWidth: true
-                                spacing: 5
+                                spacing: 3
 
                                 Label {
                                     text: qsTr("Optional Captures")
-                                    font.pixelSize: 16
                                     font.bold: true
                                 }
 
                                 Label {
                                     text: qsTr("Players can choose not to capture")
-                                    font.pixelSize: 12
                                     opacity: 0.7
                                     Layout.fillWidth: true
                                     wrapMode: Text.WordWrap
@@ -128,23 +122,20 @@ Popup {
                             }
                         }
 
-                        // Rule 3: King fast forward
                         RowLayout {
                             Layout.fillWidth: true
 
                             ColumnLayout {
                                 Layout.fillWidth: true
-                                spacing: 5
+                                spacing: 3
 
                                 Label {
                                     text: qsTr("King Fast Forward")
-                                    font.pixelSize: 16
                                     font.bold: true
                                 }
 
                                 Label {
                                     text: qsTr("Kings move freely diagonally on first move per turn")
-                                    font.pixelSize: 12
                                     opacity: 0.7
                                     Layout.fillWidth: true
                                     wrapMode: Text.WordWrap

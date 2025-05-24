@@ -90,77 +90,77 @@
         <translation>Prises arrière</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPopup.qml" line="88"/>
+        <location filename="../qml/SettingsPopup.qml" line="87"/>
         <source>Regular pieces can capture backward</source>
         <translation>Les pions normaux peuvent capturer vers l&apos;arrière</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPopup.qml" line="111"/>
+        <location filename="../qml/SettingsPopup.qml" line="109"/>
         <source>Optional Captures</source>
         <translation>Prises optionnelles</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPopup.qml" line="117"/>
+        <location filename="../qml/SettingsPopup.qml" line="114"/>
         <source>Players can choose not to capture</source>
         <translation>Les joueurs peuvent choisir de ne pas capturer</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPopup.qml" line="140"/>
+        <location filename="../qml/SettingsPopup.qml" line="136"/>
         <source>King Fast Forward</source>
         <translation>Avancement rapide</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPopup.qml" line="146"/>
+        <location filename="../qml/SettingsPopup.qml" line="141"/>
         <source>Kings move freely diagonally on first move per turn</source>
         <translation>Les dames se déplacent librement en diagonale au premier coup par tour</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPopup.qml" line="168"/>
+        <location filename="../qml/SettingsPopup.qml" line="162"/>
         <source>Board settings</source>
         <translation>Paramètres du plateau</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPopup.qml" line="187"/>
+        <location filename="../qml/SettingsPopup.qml" line="181"/>
         <source>Board size</source>
         <translation>Taille du plateau</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPopup.qml" line="219"/>
+        <location filename="../qml/SettingsPopup.qml" line="213"/>
         <source>Show hints</source>
         <translation>Afficher les indices</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPopup.qml" line="232"/>
+        <location filename="../qml/SettingsPopup.qml" line="226"/>
         <source>Wood texture</source>
         <translation>Texture bois</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPopup.qml" line="245"/>
+        <location filename="../qml/SettingsPopup.qml" line="239"/>
         <source>Application settings</source>
         <translation>Paramètres de l&apos;application</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPopup.qml" line="268"/>
+        <location filename="../qml/SettingsPopup.qml" line="262"/>
         <source>Language</source>
         <translation>Langue</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPopup.qml" line="274"/>
+        <location filename="../qml/SettingsPopup.qml" line="268"/>
         <source>System</source>
         <translation>Système</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPopup.qml" line="290"/>
+        <location filename="../qml/SettingsPopup.qml" line="284"/>
         <source>Volume</source>
         <translation>Volume</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPopup.qml" line="311"/>
+        <location filename="../qml/SettingsPopup.qml" line="305"/>
         <source>Dark mode</source>
         <translation>Mode sombre</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPopup.qml" line="390"/>
+        <location filename="../qml/SettingsPopup.qml" line="384"/>
         <source>Save and close</source>
         <translation>Enregistrer et fermer</translation>
     </message>
