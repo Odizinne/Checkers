@@ -5,6 +5,8 @@ import QtQuick
 Popup {
     modal: true
     visible: false
+    Material.background: UserSettings.darkMode ? "#1C1C1C" : "#E3E3E3"
+    Material.roundedScale: Material.SmallScale
 
     ColumnLayout {
         spacing: 0

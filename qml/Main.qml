@@ -4,8 +4,6 @@ import QtQuick
 import QtQuick.Window
 import Odizinne.Checkers
 import QtQuick.Controls.Material
-import QtQuick.Layouts
-import QtQuick.Controls.impl
 
 ApplicationWindow {
     id: root
@@ -42,7 +40,7 @@ ApplicationWindow {
         }
 
         Label {
-            text: GameLogic.gameOver ? ("Winner: " + (GameLogic.winner === 1 ? "White" : "Black")) :
+            text: GameLogic.gameOver ? ("Winner: ") + (GameLogic.winner === 1 ? "White" : "Black") :
                                        (GameLogic.inChainCapture ? "Continue capturing!" :
                                                                    ((GameLogic.isPlayer1Turn ? "White" : "Black") + " Turn"))
             color: UserSettings.darkMode ? "white" : "black"
@@ -56,7 +54,7 @@ ApplicationWindow {
             anchors.top: parent.top
             anchors.bottom: parent.bottom
             Label {
-                text: UserSettings.vsAI ? "Computer" : "2 Players"
+                text: UserSettings.vsAI ? qsTr("Computer") : qsTr("2 Players")
                 anchors.verticalCenter: parent.verticalCenter
             }
 
@@ -158,6 +156,10 @@ ApplicationWindow {
 
             ItemDelegate {
                 text: qsTr("New game")
+                icon.source: "qrc:/icons/new.png"
+                icon.width: 20
+                icon.height: 20
+                font.pixelSize: 16
                 height: 50
                 width: parent.width
                 onClicked: {
@@ -167,128 +169,31 @@ ApplicationWindow {
             }
 
             ItemDelegate {
+                text: qsTr("Settings")
+                icon.source: "qrc:/icons/settings.png"
+                icon.width: 20
+                icon.height: 20
+                font.pixelSize: 16
+                height: 50
+                width: parent.width
+                onClicked: {
+                    settingsPopup.visible = true
+                    menu.visible = false
+                }
+            }
+
+            ItemDelegate {
                 text: qsTr("About")
+                icon.source: "qrc:/icons/about.png"
+                icon.width: 20
+                icon.height: 20
+                font.pixelSize: 16
                 height: 50
                 width: parent.width
                 onClicked: {
                     aboutPopup.visible = true
                     menu.visible = false
                 }
-            }
-        }
-
-        MenuSeparator {
-            anchors.bottom: volumeLyt.top
-            anchors.left: parent.left
-            anchors.right: parent.right
-        }
-
-        RowLayout {
-            id: volumeLyt
-            anchors.margins: 16
-            anchors.bottom: themeLyt.top
-            anchors.left: parent.left
-            anchors.right: parent.right
-
-            IconImage {
-                sourceSize.width: 24
-                sourceSize.height: 24
-                color: Material.foreground
-                source: {
-                    if (UserSettings.volume === 0) {
-                        return "qrc:/icons/volume_muted.png"
-                    } else if (UserSettings.volume <= 0.50) {
-                        return "qrc:/icons/volume_down.png"
-                    } else if (UserSettings.volume <= 1) {
-                        return "qrc:/icons/volume_up.png"
-                    } else {
-                        return "qrc:/icons/volume_up.png"
-                    }
-                }
-            }
-
-            Slider {
-                id: volumeSlider
-                Layout.preferredWidth: 230 -24 -16 -16 -6
-                from: 0.0
-                to: 1.0
-                Layout.leftMargin: 5
-                value: UserSettings.volume
-                onValueChanged: UserSettings.volume = value
-            }
-        }
-
-        RowLayout {
-            id: themeLyt
-            anchors.margins: 16
-            anchors.bottom: parent.bottom
-            anchors.left: parent.left
-            anchors.right: parent.right
-
-            Item {
-                Layout.preferredHeight: 24
-                Layout.preferredWidth: 24
-
-                Image {
-                    id: sunImage
-                    anchors.fill: parent
-                    source: "qrc:/icons/sun.png"
-                    opacity: !themeSwitch.checked ? 1 : 0
-                    rotation: themeSwitch.checked ? 360 : 0
-                    mipmap: true
-
-                    Behavior on rotation {
-                        NumberAnimation {
-                            duration: 500
-                            easing.type: Easing.OutQuad
-                        }
-                    }
-
-                    Behavior on opacity {
-                        NumberAnimation { duration: 500 }
-                    }
-
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: themeSwitch.checked = !themeSwitch.checked
-                    }
-                }
-
-                Image {
-                    anchors.fill: parent
-                    id: moonImage
-                    source: "qrc:/icons/moon.png"
-                    opacity: themeSwitch.checked ? 1 : 0
-                    rotation: themeSwitch.checked ? 360 : 0
-                    mipmap: true
-
-                    Behavior on rotation {
-                        NumberAnimation {
-                            duration: 500
-                            easing.type: Easing.OutQuad
-                        }
-                    }
-
-                    Behavior on opacity {
-                        NumberAnimation { duration: 100 }
-                    }
-
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: themeSwitch.checked = !themeSwitch.checked
-                    }
-                }
-            }
-
-            Item {
-                Layout.fillWidth: true
-            }
-
-            Switch {
-                id: themeSwitch
-                checked: UserSettings.darkMode
-                onClicked: UserSettings.darkMode = checked
-                Layout.rightMargin: -10
             }
         }
     }
@@ -391,6 +296,11 @@ ApplicationWindow {
 
     AboutPopup {
         id: aboutPopup
+        anchors.centerIn: parent
+    }
+
+    SettingsPopup {
+        id: settingsPopup
         anchors.centerIn: parent
     }
 }

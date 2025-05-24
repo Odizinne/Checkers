@@ -28,6 +28,7 @@ set(QML_FILES
     qml/GameOverPopup.qml
     qml/Piece.qml
     qml/AboutPopup.qml
+    qml/SettingsPopup.qml
 )
 
 set(QML_SINGLETONS

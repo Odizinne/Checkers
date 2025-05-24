@@ -22,11 +22,13 @@ QtObject {
     property int capturedWhiteCount: 0
     property int capturedBlackCount: 0
     property bool isResizing: false
+
     // Models - will be set from Main.qml
     property var boardModel: null
     property var piecesModel: null
 
     signal showGameOverPopup()
+
     // Animation handling
     property int animationDuration: 300
     property Timer animationTimer: Timer {
@@ -161,7 +163,60 @@ QtObject {
         if (!piece || !piecesModel) return null
 
         let currentPiece = piecesModel.get(piece.index)
-        let wasCapture = Math.abs(toRow - fromRow) === 2
+        let wasCapture = false
+
+        // Check if it's a capture move
+        if (currentPiece.isKing && UserSettings.kingFastForward) {
+            // King fast forward capture detection
+            let rowDir = toRow > fromRow ? 1 : -1
+            let colDir = toCol > fromCol ? 1 : -1
+
+            for (let i = 1; i < Math.abs(toRow - fromRow); i++) {
+                let checkRow = fromRow + (rowDir * i)
+                let checkCol = fromCol + (colDir * i)
+                let checkPiece = getPieceAt(checkRow, checkCol)
+                if (checkPiece && checkPiece.player !== currentPiece.player) {
+                    wasCapture = true
+                    // Remove the captured piece
+                    let capturedData = piecesModel.get(checkPiece.index)
+                    let capturedPieceInfo = {
+                        player: capturedData.player,
+                        isKing: capturedData.isKing,
+                        id: capturedData.id
+                    }
+
+                    piecesModel.set(checkPiece.index, {
+                        id: capturedData.id,
+                        row: capturedData.row,
+                        col: capturedData.col,
+                        player: capturedData.player,
+                        isKing: capturedData.isKing,
+                        isAlive: false,
+                        x: capturedData.x,
+                        y: capturedData.y
+                    })
+
+                    // Add captured piece to the collection after fade animation completes
+                    let captureTimer = Qt.createQmlObject('
+                        import QtQuick 2.15
+                        Timer {
+                            interval: 350
+                            repeat: false
+                        }
+                    ', gameLogic)
+
+                    captureTimer.triggered.connect(function() {
+                        addCapturedPiece(capturedPieceInfo)
+                        captureTimer.destroy()
+                    })
+                    captureTimer.start()
+                    break
+                }
+            }
+        } else {
+            // Regular capture detection
+            wasCapture = Math.abs(toRow - fromRow) === 2
+        }
 
         // Update piece position
         piecesModel.set(piece.index, {
@@ -175,8 +230,8 @@ QtObject {
             y: toRow * cellSize + cellSize / 2
         })
 
-        // Handle capture
-        if (wasCapture) {
+        // Handle regular capture
+        if (wasCapture && (!currentPiece.isKing || !UserSettings.kingFastForward)) {
             AudioEngine.playMove()
             let rowDiff = toRow - fromRow
             let colDiff = toCol - fromCol
@@ -219,7 +274,9 @@ QtObject {
                 })
                 captureTimer.start()
             }
-        } else {
+        } else if (!wasCapture) {
+            AudioEngine.playMove()
+        } else if (wasCapture) {
             AudioEngine.playMove()
         }
 
@@ -368,18 +425,75 @@ QtObject {
         return null
     }
 
+    function getKingFastForwardMoves(row, col) {
+        let moves = []
+        if (!UserSettings.kingFastForward) return moves
+
+        let piece = getPieceAt(row, col)
+        if (!piece || !piece.isKing) return moves
+
+        let directions = [[-1, -1], [-1, 1], [1, -1], [1, 1]]
+
+        for (let dir of directions) {
+            // Check each square in this direction
+            for (let distance = 1; distance < boardSize; distance++) {
+                let newRow = row + (dir[0] * distance)
+                let newCol = col + (dir[1] * distance)
+
+                if (newRow < 0 || newRow >= boardSize || newCol < 0 || newCol >= boardSize)
+                    break
+
+                let targetPiece = getPieceAt(newRow, newCol)
+                if (targetPiece) {
+                    // If it's an enemy piece, check if we can capture it
+                    if (targetPiece.player !== piece.player) {
+                        let captureRow = newRow + dir[0]
+                        let captureCol = newCol + dir[1]
+                        if (captureRow >= 0 && captureRow < boardSize &&
+                            captureCol >= 0 && captureCol < boardSize &&
+                            !getPieceAt(captureRow, captureCol)) {
+                            moves.push({row: captureRow, col: captureCol, isCapture: true})
+                        }
+                    }
+                    break // Can't move past any piece
+                } else {
+                    // Empty square - can move here
+                    moves.push({row: newRow, col: newCol, isCapture: false})
+                }
+            }
+        }
+
+        return moves
+    }
+
     function getCaptureMoves(row, col) {
         let moves = []
         let piece = getPieceAt(row, col)
         if (!piece) return moves
 
+        // King fast forward captures
+        if (piece.isKing && UserSettings.kingFastForward) {
+            let fastMoves = getKingFastForwardMoves(row, col)
+            return fastMoves.filter(move => move.isCapture).map(move => ({row: move.row, col: move.col}))
+        }
+
         let directions = []
         if (piece.isKing) {
             directions = [[-1, -1], [-1, 1], [1, -1], [1, 1]]
         } else if (piece.player === 1) {
+            // Normal forward directions for player 1
             directions = [[-1, -1], [-1, 1]]
+            // Add backward directions if custom rule is enabled
+            if (UserSettings.allowBackwardCaptures) {
+                directions.push([1, -1], [1, 1])
+            }
         } else {
+            // Normal forward directions for player 2
             directions = [[1, -1], [1, 1]]
+            // Add backward directions if custom rule is enabled
+            if (UserSettings.allowBackwardCaptures) {
+                directions.push([-1, -1], [-1, 1])
+            }
         }
 
         for (let dir of directions) {
@@ -426,17 +540,26 @@ QtObject {
                     return true
                 }
 
-                // If no captures available, check regular moves
-                if (!hasAnyCaptures(player)) {
-                    let directions = piece.isKing ?
-                        [[-1, -1], [-1, 1], [1, -1], [1, 1]] :
-                        (piece.player === 1 ? [[-1, -1], [-1, 1]] : [[1, -1], [1, 1]])
-
-                    for (let dir of directions) {
-                        let newRow = piece.row + dir[0]
-                        let newCol = piece.col + dir[1]
-                        if (isValidMove(piece.row, piece.col, newRow, newCol)) {
+                // If no captures available OR optional captures is enabled, check regular moves
+                if (!hasAnyCaptures(player) || UserSettings.optionalCaptures) {
+                    // King fast forward moves
+                    if (piece.isKing && UserSettings.kingFastForward) {
+                        let fastMoves = getKingFastForwardMoves(piece.row, piece.col)
+                        if (fastMoves.length > 0) {
                             return true
+                        }
+                    } else {
+                        // Regular moves
+                        let directions = piece.isKing ?
+                            [[-1, -1], [-1, 1], [1, -1], [1, 1]] :
+                            (piece.player === 1 ? [[-1, -1], [-1, 1]] : [[1, -1], [1, 1]])
+
+                        for (let dir of directions) {
+                            let newRow = piece.row + dir[0]
+                            let newCol = piece.col + dir[1]
+                            if (isValidMove(piece.row, piece.col, newRow, newCol)) {
+                                return true
+                            }
                         }
                     }
                 }
@@ -461,13 +584,26 @@ QtObject {
             return captureMoves.some(m => m.row === toRow && m.col === toCol)
         }
 
+        // King fast forward moves
+        if (piece.isKing && UserSettings.kingFastForward) {
+            let fastMoves = getKingFastForwardMoves(fromRow, fromCol)
+            let validFastMove = fastMoves.some(m => m.row === toRow && m.col === toCol)
+            if (validFastMove) {
+                // Check if it's a capture move when captures are mandatory
+                if (!UserSettings.optionalCaptures && hasAnyCaptures(piece.player)) {
+                    return fastMoves.some(m => m.row === toRow && m.col === toCol && m.isCapture)
+                }
+                return true
+            }
+        }
+
         let rowDiff = toRow - fromRow
         let colDiff = Math.abs(toCol - fromCol)
 
         // Regular move
         if (colDiff === 1 && Math.abs(rowDiff) === 1) {
-            // Check if any captures are available for current player
-            if (hasAnyCaptures(piece.player)) {
+            // Check if any captures are available for current player (unless optional captures is enabled)
+            if (!UserSettings.optionalCaptures && hasAnyCaptures(piece.player)) {
                 return false // Must capture if possible
             }
 
@@ -489,8 +625,14 @@ QtObject {
                 if (piece.isKing) {
                     return true
                 } else {
-                    return (piece.player === 1 && rowDiff === -2) ||
-                           (piece.player === 2 && rowDiff === 2)
+                    // Check if backward captures are allowed
+                    let isForwardCapture = (piece.player === 1 && rowDiff === -2) ||
+                                         (piece.player === 2 && rowDiff === 2)
+                    let isBackwardCapture = UserSettings.allowBackwardCaptures &&
+                                          ((piece.player === 1 && rowDiff === 2) ||
+                                           (piece.player === 2 && rowDiff === -2))
+
+                    return isForwardCapture || isBackwardCapture
                 }
             }
         }

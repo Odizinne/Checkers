@@ -168,7 +168,8 @@ QtObject {
                     })
                 }
 
-                if (captureMoves.length === 0) {
+                // If optional captures is enabled OR no captures available, include regular moves
+                if (UserSettings.optionalCaptures || captureMoves.length === 0) {
                     let regularMoves = getRegularMoves(boardState, piece.row, piece.col, piece.player, piece.isKing)
                     for (let move of regularMoves) {
                         allMoves.push({
@@ -181,7 +182,12 @@ QtObject {
             }
         }
 
-        return captureMoves.length > 0 ? captureMoves : allMoves
+        // If optional captures is disabled, prioritize captures
+        if (!UserSettings.optionalCaptures && captureMoves.length > 0) {
+            return captureMoves
+        }
+
+        return captureMoves.concat(allMoves)
     }
 
     function getCaptureMoves(boardState, row, col, player) {
@@ -189,13 +195,49 @@ QtObject {
         let piece = boardState.board[row][col]
         if (!piece) return moves
 
+        // King fast forward captures
+        if (piece.isKing && UserSettings.kingFastForward) {
+            let directions = [[-1, -1], [-1, 1], [1, -1], [1, 1]]
+
+            for (let dir of directions) {
+                for (let distance = 1; distance < 8; distance++) {
+                    let targetRow = row + (dir[0] * distance)
+                    let targetCol = col + (dir[1] * distance)
+
+                    if (targetRow < 0 || targetRow >= 8 || targetCol < 0 || targetCol >= 8)
+                        break
+
+                    let targetPiece = boardState.board[targetRow][targetCol]
+                    if (targetPiece) {
+                        if (targetPiece.player !== player) {
+                            let captureRow = targetRow + dir[0]
+                            let captureCol = targetCol + dir[1]
+                            if (captureRow >= 0 && captureRow < 8 &&
+                                captureCol >= 0 && captureCol < 8 &&
+                                !boardState.board[captureRow][captureCol]) {
+                                moves.push({row: captureRow, col: captureCol})
+                            }
+                        }
+                        break
+                    }
+                }
+            }
+            return moves
+        }
+
         let directions = []
         if (piece.isKing) {
             directions = [[-1, -1], [-1, 1], [1, -1], [1, 1]]
         } else if (player === 1) {
             directions = [[-1, -1], [-1, 1]]
+            if (UserSettings.allowBackwardCaptures) {
+                directions.push([1, -1], [1, 1])
+            }
         } else {
             directions = [[1, -1], [1, 1]]
+            if (UserSettings.allowBackwardCaptures) {
+                directions.push([-1, -1], [-1, 1])
+            }
         }
 
         for (let dir of directions) {
@@ -218,8 +260,29 @@ QtObject {
 
     function getRegularMoves(boardState, row, col, player, isKing) {
         let moves = []
-        let directions = []
 
+        // King fast forward moves
+        if (isKing && UserSettings.kingFastForward) {
+            let directions = [[-1, -1], [-1, 1], [1, -1], [1, 1]]
+
+            for (let dir of directions) {
+                for (let distance = 1; distance < 8; distance++) {
+                    let newRow = row + (dir[0] * distance)
+                    let newCol = col + (dir[1] * distance)
+
+                    if (newRow < 0 || newRow >= 8 || newCol < 0 || newCol >= 8)
+                        break
+
+                    if (boardState.board[newRow][newCol])
+                        break
+
+                    moves.push({row: newRow, col: newCol})
+                }
+            }
+            return moves
+        }
+
+        let directions = []
         if (isKing) {
             directions = [[-1, -1], [-1, 1], [1, -1], [1, 1]]
         } else if (player === 1) {
@@ -284,14 +347,34 @@ QtObject {
 
         // Handle capture
         if (move.isCapture) {
-            let middleRow = move.from.row + (move.to.row - move.from.row) / 2
-            let middleCol = move.from.col + (move.to.col - move.from.col) / 2
-            newState.board[middleRow][middleCol] = null
+            // King fast forward capture
+            if (movingPiece.isKing && UserSettings.kingFastForward) {
+                let rowDir = move.to.row > move.from.row ? 1 : -1
+                let colDir = move.to.col > move.from.col ? 1 : -1
 
-            // Remove captured piece
-            newState.pieces = newState.pieces.filter(p =>
-                !(p.row === middleRow && p.col === middleCol)
-            )
+                for (let i = 1; i < Math.abs(move.to.row - move.from.row); i++) {
+                    let checkRow = move.from.row + (rowDir * i)
+                    let checkCol = move.from.col + (colDir * i)
+                    let capturedPiece = newState.board[checkRow][checkCol]
+                    if (capturedPiece && capturedPiece.player !== movingPiece.player) {
+                        newState.board[checkRow][checkCol] = null
+                        newState.pieces = newState.pieces.filter(p =>
+                            !(p.row === checkRow && p.col === checkCol)
+                        )
+                        break
+                    }
+                }
+            } else {
+                // Regular capture
+                let middleRow = move.from.row + (move.to.row - move.from.row) / 2
+                let middleCol = move.from.col + (move.to.col - move.from.col) / 2
+                newState.board[middleRow][middleCol] = null
+
+                // Remove captured piece
+                newState.pieces = newState.pieces.filter(p =>
+                    !(p.row === middleRow && p.col === middleCol)
+                )
+            }
         }
 
         return newState
