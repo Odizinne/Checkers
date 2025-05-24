@@ -223,10 +223,39 @@ jobs:
 
       - name: Find and Upload APK
         run: |
+          echo "Looking for APK files:"
           find build -name "*.apk" -type f
+          echo "Copying and renaming final APK:"
           mkdir -p apk-output
-          find build -name "*.apk" -type f -exec cp {} apk-output/ \;
+          find build -name "Checkers.apk" -type f -exec cp {} apk-output/Checkers_${{ matrix.arch_name }}.apk \;
           ls -la apk-output/
+
+      - name: Verify APK signing
+        run: |
+          echo "=== APK SIGNING VERIFICATION ==="
+          for apk in apk-output/*.apk; do
+            echo "Checking $apk:"
+            
+            # Method 1: Use aapt to check signing
+            aapt dump badging "$apk" | grep "application-debuggable" || echo "Not debuggable (good for release)"
+            
+            # Method 2: Use apksigner to verify signature
+            if command -v apksigner >/dev/null 2>&1; then
+              echo "APK signature verification:"
+              apksigner verify --verbose "$apk" && echo "✅ APK is properly signed" || echo "❌ APK is not signed or signature invalid"
+            else
+              echo "apksigner not available, checking with unzip..."
+              # Method 3: Check for META-INF signing files
+              if unzip -l "$apk" | grep -q "META-INF.*\.(RSA\|DSA\|SF\|MF)"; then
+                echo "✅ APK contains signing certificates"
+              else
+                echo "❌ APK appears to be unsigned (no META-INF signing files)"
+              fi
+            fi
+            
+            echo "---"
+          done
+          echo "============================="
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
@@ -340,18 +369,14 @@ jobs:
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: android-arm64/Checkers.apk
+          asset_path: android-arm64/Checkers_arm64.apk
           asset_name: Checkers_arm64-v8a.apk
           asset_content_type: application/vnd.android.package-archive
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload Android APK (armv7)
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: android-armv7/Checkers.apk
+          asset_path: android-armv7/Checkers_armv7.apk
           asset_name: Checkers_armeabi-v7a.apk
           asset_content_type: application/vnd.android.package-archive
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

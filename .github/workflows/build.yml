@@ -186,10 +186,10 @@ jobs:
           echo "QT_ANDROID_KEYSTORE_PATH: $QT_ANDROID_KEYSTORE_PATH"
           echo "QT_ANDROID_KEYSTORE_ALIAS: $QT_ANDROID_KEYSTORE_ALIAS"
           echo "=========================="
-          
+
           mkdir build
           cd build
-      
+
           if [ -f "$KEYSTORE_PATH" ] && [ -n "$KEYSTORE_PASSWORD" ]; then
             echo "🔐 BUILDING SIGNED APK for ${{ matrix.android_abi }}"
             cmake .. \
@@ -213,7 +213,7 @@ jobs:
               -DANDROID_ABI=${{ matrix.android_abi }} \
               -DANDROID_PLATFORM=android-24
           fi
-      
+
           cmake --build . --config Release
           cmake --install . --config Release
 
@@ -223,10 +223,39 @@ jobs:
 
       - name: Find and Upload APK
         run: |
+          echo "Looking for APK files:"
           find build -name "*.apk" -type f
+          echo "Copying and renaming final APK:"
           mkdir -p apk-output
-          find build -name "*.apk" -type f -exec cp {} apk-output/ \;
+          find build -name "Checkers.apk" -type f -exec cp {} apk-output/Checkers_${{ matrix.arch_name }}.apk \;
           ls -la apk-output/
+
+      - name: Verify APK signing
+        run: |
+          echo "=== APK SIGNING VERIFICATION ==="
+          for apk in apk-output/*.apk; do
+            echo "Checking $apk:"
+            
+            # Method 1: Use aapt to check signing
+            aapt dump badging "$apk" | grep "application-debuggable" || echo "Not debuggable (good for release)"
+            
+            # Method 2: Use apksigner to verify signature
+            if command -v apksigner >/dev/null 2>&1; then
+              echo "APK signature verification:"
+              apksigner verify --verbose "$apk" && echo "✅ APK is properly signed" || echo "❌ APK is not signed or signature invalid"
+            else
+              echo "apksigner not available, checking with unzip..."
+              # Method 3: Check for META-INF signing files
+              if unzip -l "$apk" | grep -q "META-INF.*\.(RSA\|DSA\|SF\|MF)"; then
+                echo "✅ APK contains signing certificates"
+              else
+                echo "❌ APK appears to be unsigned (no META-INF signing files)"
+              fi
+            fi
+            
+            echo "---"
+          done
+          echo "============================="
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
