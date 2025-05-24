@@ -10,13 +10,10 @@ set(CMAKE_AUTORCC ON)
 set(QT_QML_GENERATE_QMLLS_INI ON)
 set(CMAKE_DISABLE_FIND_PACKAGE_WrapVulkanHeaders TRUE)
 
-if(WIN32 AND CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-    set(CMAKE_GENERATOR "MinGW Makefiles" CACHE STRING "" FORCE)
-endif()
-
 find_package(Qt6 REQUIRED COMPONENTS
     Quick
     Multimedia
+    LinguistTools
 )
 
 qt_standard_project_setup(REQUIRES 6.8)
@@ -86,6 +83,16 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
     Qt6::Quick
     Qt6::Multimedia
 )
+
+qt_add_translations(${CMAKE_PROJECT_NAME}
+    TS_FILES
+        i18n/Checkers_en.ts
+        i18n/Checkers_fr.ts
+    RESOURCE_PREFIX "/i18n"
+    LUPDATE_OPTIONS "-no-obsolete"
+)
+
+add_dependencies(${CMAKE_PROJECT_NAME} update_translations)
 
 include(GNUInstallDirs)
 

@@ -12,4 +12,5 @@ Settings {
     property bool allowBackwardCaptures: false
     property bool optionalCaptures: false
     property bool kingFastForward: false
+    property int boardSize: 8
 }

@@ -118,7 +118,7 @@ QtObject {
     function getBoardState() {
         let state = {
             pieces: [],
-            board: Array(8).fill(null).map(() => Array(8).fill(null))
+            board: Array(GameLogic.boardSize).fill(null).map(() => Array(GameLogic.boardSize).fill(null))
         }
 
         for (let i = 0; i < GameLogic.piecesModel.count; i++) {
@@ -141,8 +141,8 @@ QtObject {
     function getBoardKey(boardState) {
         // Create a unique key for the board position
         let key = ""
-        for (let row = 0; row < 8; row++) {
-            for (let col = 0; col < 8; col++) {
+        for (let row = 0; row < GameLogic.boardSize; row++) {
+            for (let col = 0; col < GameLogic.boardSize; col++) {
                 let piece = boardState.board[row][col]
                 if (piece) {
                     key += piece.player + (piece.isKing ? "K" : "") + ","
@@ -201,11 +201,11 @@ QtObject {
             let directions = [[-1, -1], [-1, 1], [1, -1], [1, 1]]
 
             for (let dir of directions) {
-                for (let distance = 1; distance < 8; distance++) {
+                for (let distance = 1; distance < GameLogic.boardSize; distance++) {
                     let targetRow = row + (dir[0] * distance)
                     let targetCol = col + (dir[1] * distance)
 
-                    if (targetRow < 0 || targetRow >= 8 || targetCol < 0 || targetCol >= 8)
+                    if (targetRow < 0 || targetRow >= GameLogic.boardSize || targetCol < 0 || targetCol >= GameLogic.boardSize)
                         break
 
                     let targetPiece = boardState.board[targetRow][targetCol]
@@ -213,8 +213,8 @@ QtObject {
                         if (targetPiece.player !== player) {
                             let captureRow = targetRow + dir[0]
                             let captureCol = targetCol + dir[1]
-                            if (captureRow >= 0 && captureRow < 8 &&
-                                captureCol >= 0 && captureCol < 8 &&
+                            if (captureRow >= 0 && captureRow < GameLogic.boardSize &&
+                                captureCol >= 0 && captureCol < GameLogic.boardSize &&
                                 !boardState.board[captureRow][captureCol]) {
                                 moves.push({row: captureRow, col: captureCol})
                             }
@@ -247,7 +247,7 @@ QtObject {
             let middleRow = row + dir[0]
             let middleCol = col + dir[1]
 
-            if (captureRow >= 0 && captureRow < 8 && captureCol >= 0 && captureCol < 8 &&
+            if (captureRow >= 0 && captureRow < GameLogic.boardSize && captureCol >= 0 && captureCol < GameLogic.boardSize &&
                 !boardState.board[captureRow][captureCol]) {
                 let middlePiece = boardState.board[middleRow][middleCol]
                 if (middlePiece && middlePiece.player !== player) {
@@ -267,11 +267,11 @@ QtObject {
             let directions = [[-1, -1], [-1, 1], [1, -1], [1, 1]]
 
             for (let dir of directions) {
-                for (let distance = 1; distance < 8; distance++) {
+                for (let distance = 1; distance < GameLogic.boardSize; distance++) {
                     let newRow = row + (dir[0] * distance)
                     let newCol = col + (dir[1] * distance)
 
-                    if (newRow < 0 || newRow >= 8 || newCol < 0 || newCol >= 8)
+                    if (newRow < 0 || newRow >= GameLogic.boardSize || newCol < 0 || newCol >= GameLogic.boardSize)
                         break
 
                     if (boardState.board[newRow][newCol])
@@ -295,7 +295,7 @@ QtObject {
         for (let dir of directions) {
             let newRow = row + dir[0]
             let newCol = col + dir[1]
-            if (newRow >= 0 && newRow < 8 && newCol >= 0 && newCol < 8 &&
+            if (newRow >= 0 && newRow < GameLogic.boardSize && newCol >= 0 && newCol < GameLogic.boardSize &&
                 !boardState.board[newRow][newCol]) {
                 moves.push({row: newRow, col: newCol})
             }
@@ -312,7 +312,7 @@ QtObject {
         // Create deep copy of board state
         let newState = {
             pieces: [],
-            board: Array(8).fill(null).map(() => Array(8).fill(null))
+            board: Array(GameLogic.boardSize).fill(null).map(() => Array(GameLogic.boardSize).fill(null))
         }
 
         // Copy pieces
@@ -337,9 +337,9 @@ QtObject {
                 newState.pieces[i].row = to.row
                 newState.pieces[i].col = to.col
 
-                // Check for promotion
+                // Check for promotion - updated for dynamic board size
                 if ((newState.pieces[i].player === 1 && to.row === 0) ||
-                    (newState.pieces[i].player === 2 && to.row === 7)) {
+                    (newState.pieces[i].player === 2 && to.row === GameLogic.boardSize - 1)) {
                     newState.pieces[i].isKing = true
                 }
 
@@ -414,10 +414,12 @@ QtObject {
         score += (player2Pieces - player1Pieces) * 100
         score += (player2Kings - player1Kings) * 50
 
-        // Back row protection bonus for AI
+        // Back row protection bonus for AI - updated for dynamic board size
         let backRowBonus = 0
-        for (let col = 1; col < 8; col += 2) {
-            if (boardState.board[7][col] && boardState.board[7][col].player === 2 && !boardState.board[7][col].isKing) {
+        for (let col = 1; col < GameLogic.boardSize; col += 2) {
+            if (boardState.board[GameLogic.boardSize - 1][col] &&
+                boardState.board[GameLogic.boardSize - 1][col].player === 2 &&
+                !boardState.board[GameLogic.boardSize - 1][col].isKing) {
                 backRowBonus += 10
             }
         }
@@ -437,19 +439,20 @@ QtObject {
         // Base value
         score += piece.isKing ? 150 : 100
 
-        // Center control is valuable
-        let centerDistance = Math.abs(piece.row - 3.5) + Math.abs(piece.col - 3.5)
-        score += (7 - centerDistance) * 3
+        // Center control is valuable - adjusted for dynamic board size
+        let centerDistance = Math.abs(piece.row - (GameLogic.boardSize - 1) / 2) +
+                           Math.abs(piece.col - (GameLogic.boardSize - 1) / 2)
+        score += ((GameLogic.boardSize * 2) - centerDistance) * 3
 
         // Advanced position bonus
         if (piece.player === 1) {
-            score += (7 - piece.row) * 5
+            score += (GameLogic.boardSize - 1 - piece.row) * 5
         } else {
             score += piece.row * 5
         }
 
         // Side pieces are slightly less valuable (easier to trap)
-        if (piece.col === 0 || piece.col === 7) {
+        if (piece.col === 0 || piece.col === GameLogic.boardSize - 1) {
             score -= 5
         }
 

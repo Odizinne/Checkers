@@ -12,7 +12,32 @@ Rectangle {
 
     property bool allItemsCreated: false
     property int createdItemsCount: 0
-    readonly property int totalItems: GameLogic.boardSize * GameLogic.boardSize
+    readonly property int totalItems: GameLogic.boardModel ? GameLogic.boardModel.count : 0
+
+    // Add state management to prevent Grid size changes during model updates
+    property int currentBoardSize: GameLogic.boardSize
+    property bool modelClearing: false
+
+    // Watch for board size changes
+    Connections {
+        target: GameLogic
+        function onBoardSizeChanged() {
+            // Mark that we're about to clear the model
+            board.modelClearing = true
+        }
+    }
+
+    // Watch for model changes
+    Connections {
+        target: GameLogic.boardModel
+        function onCountChanged() {
+            if (GameLogic.boardModel.count === 0 && board.modelClearing) {
+                // Model is now empty, safe to update board size
+                board.currentBoardSize = GameLogic.boardSize
+                board.modelClearing = false
+            }
+        }
+    }
 
     // Single wood texture for entire board
     Image {
@@ -39,13 +64,13 @@ Rectangle {
     // Board squares
     Grid {
         id: grid
-        rows: GameLogic.boardSize
-        columns: GameLogic.boardSize
+        rows: board.currentBoardSize    // Use the stable board size
+        columns: board.currentBoardSize // Use the stable board size
         opacity: board.allItemsCreated ? 1 : 0
 
-        readonly property int cellSize: Math.floor(board.width / GameLogic.boardSize)
-        width: cellSize * GameLogic.boardSize
-        height: cellSize * GameLogic.boardSize
+        readonly property int cellSize: Math.floor(board.width / board.currentBoardSize)
+        width: cellSize * board.currentBoardSize
+        height: cellSize * board.currentBoardSize
         anchors.centerIn: parent
 
         Behavior on opacity {
@@ -67,12 +92,16 @@ Rectangle {
 
             onItemRemoved: (index, item) => {
                 board.createdItemsCount--
-                if (board.createdItemsCount < board.totalItems) {
-                    board.allItemsCreated = false
-                }
+                board.allItemsCreated = false
             }
 
-            Item {
+            // Reset counter when model changes
+            onModelChanged: {
+                board.createdItemsCount = 0
+                board.allItemsCreated = false
+            }
+
+            delegate: Item {
                 id: boardRec
                 width: grid.cellSize
                 height: grid.cellSize
@@ -131,5 +160,10 @@ Rectangle {
                 }
             }
         }
+    }
+
+    // Initialize current board size
+    Component.onCompleted: {
+        currentBoardSize = GameLogic.boardSize
     }
 }

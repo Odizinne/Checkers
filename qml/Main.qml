@@ -19,7 +19,7 @@ ApplicationWindow {
     readonly property bool isPortrait: height > width
     readonly property real scaleFactor: Math.max(Screen.pixelDensity / 6, 1.2)
     readonly property int boardSize: table.maxSize
-    readonly property int cellSize: boardSize / 8
+    readonly property int cellSize: boardSize / GameLogic.boardSize
     readonly property int buttonWidth: Math.round(80 * scaleFactor)
     readonly property int buttonHeight: Math.round(32 * scaleFactor)
     readonly property int buttonSpacing: Math.round(8 * scaleFactor)
@@ -291,6 +291,29 @@ ApplicationWindow {
         }
     }
 
+    Connections {
+        target: GameLogic
+        function onBoardSizeChanged() {
+            // Update cell size when board size changes
+            GameLogic.cellSize = root.cellSize
+
+            // Update all existing pieces with new positions and sizes
+            for (let i = 0; i < piecesModel.count; i++) {
+                let piece = piecesModel.get(i)
+                piecesModel.set(i, {
+                    id: piece.id,
+                    row: piece.row,
+                    col: piece.col,
+                    player: piece.player,
+                    isKing: piece.isKing,
+                    isAlive: piece.isAlive,
+                    x: piece.col * GameLogic.cellSize + GameLogic.cellSize / 2,
+                    y: piece.row * GameLogic.cellSize + GameLogic.cellSize / 2
+                })
+            }
+        }
+    }
+
     Component.onCompleted: {
         audioInitTimer.start()
         compOpacity = 1
@@ -323,7 +346,7 @@ ApplicationWindow {
 
         onWidthChanged: {
             GameLogic.isResizing = true
-            GameLogic.cellSize = root.cellSize
+            GameLogic.cellSize = root.cellSize  // This should update when board size changes
             for (let i = 0; i < piecesModel.count; i++) {
                 let piece = piecesModel.get(i)
                 piecesModel.set(i, {

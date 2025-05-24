@@ -168,6 +168,36 @@ Popup {
                 RowLayout {
                     Layout.fillWidth: true
                     Label {
+                        text: qsTr("Board size")
+                        Layout.fillWidth: true
+                    }
+
+                    ComboBox {
+                        id: boardSizeCombo
+                        model: [
+                            { text: qsTr("8x8 (12 pieces)"), value: 8 },
+                            { text: qsTr("10x10 (20 pieces)"), value: 10 }
+                        ]
+                        textRole: "text"
+                        valueRole: "value"
+                        Layout.preferredWidth: 160
+
+                        Component.onCompleted: {
+                            currentIndex = UserSettings.boardSize === 8 ? 0 : 1
+                        }
+
+                        onActivated: {
+                            UserSettings.boardSize = currentValue
+                            GameLogic.initializeBoard()
+                        }
+
+                        Material.roundedScale: Material.SmallScale
+                    }
+                }
+
+                RowLayout {
+                    Layout.fillWidth: true
+                    Label {
                         text: qsTr("Show hints")
                         Layout.fillWidth: true
                     }

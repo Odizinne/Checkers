@@ -6,7 +6,7 @@ QtObject {
     id: gameLogic
 
     // Game state properties
-    property int boardSize: 8
+    property int boardSize: UserSettings.boardSize
     property int cellSize: 80
     property bool gameOver: false
     property int winner: 0
@@ -81,6 +81,9 @@ QtObject {
         capturedWhiteCount = 0
         capturedBlackCount = 0
 
+        boardModel.clear()
+        piecesModel.clear()
+
         // After fade out completes, rebuild the board
         resetTimer.start()
     }
@@ -89,6 +92,9 @@ QtObject {
         boardModel.clear()
         piecesModel.clear()
 
+        let player1Count = 0
+        let player2Count = 0
+
         for (let row = 0; row < boardSize; row++) {
             for (let col = 0; col < boardSize; col++) {
                 boardModel.append({
@@ -96,29 +102,67 @@ QtObject {
                     col: col
                 })
 
+                // Only place pieces on dark squares (where row + col is odd)
                 if ((row + col) % 2 === 1) {
-                    if (row < 3) {
-                        piecesModel.append({
-                            id: "piece_" + row + "_" + col,
-                            row: row,
-                            col: col,
-                            player: 2,
-                            isKing: false,
-                            isAlive: true,
-                            x: col * cellSize + cellSize / 2,
-                            y: row * cellSize + cellSize / 2
-                        })
-                    } else if (row > 4) {
-                        piecesModel.append({
-                            id: "piece_" + row + "_" + col,
-                            row: row,
-                            col: col,
-                            player: 1,
-                            isKing: false,
-                            isAlive: true,
-                            x: col * cellSize + cellSize / 2,
-                            y: row * cellSize + cellSize / 2
-                        })
+                    // 8x8 board setup (3 rows each side, 12 pieces per player)
+                    if (boardSize === 8) {
+                        if (row < 3) {
+                            // Player 2 pieces (top)
+                            piecesModel.append({
+                                id: "piece_" + row + "_" + col,
+                                row: row,
+                                col: col,
+                                player: 2,
+                                isKing: false,
+                                isAlive: true,
+                                x: col * cellSize + cellSize / 2,
+                                y: row * cellSize + cellSize / 2
+                            })
+                            player2Count++
+                        } else if (row >= 5) {
+                            // Player 1 pieces (bottom)
+                            piecesModel.append({
+                                id: "piece_" + row + "_" + col,
+                                row: row,
+                                col: col,
+                                player: 1,
+                                isKing: false,
+                                isAlive: true,
+                                x: col * cellSize + cellSize / 2,
+                                y: row * cellSize + cellSize / 2
+                            })
+                            player1Count++
+                        }
+                    }
+                    // 10x10 board setup (4 rows each side, 20 pieces per player)
+                    else if (boardSize === 10) {
+                        if (row < 4) {
+                            // Player 2 pieces (top)
+                            piecesModel.append({
+                                id: "piece_" + row + "_" + col,
+                                row: row,
+                                col: col,
+                                player: 2,
+                                isKing: false,
+                                isAlive: true,
+                                x: col * cellSize + cellSize / 2,
+                                y: row * cellSize + cellSize / 2
+                            })
+                            player2Count++
+                        } else if (row >= 6) {
+                            // Player 1 pieces (bottom)
+                            piecesModel.append({
+                                id: "piece_" + row + "_" + col,
+                                row: row,
+                                col: col,
+                                player: 1,
+                                isKing: false,
+                                isAlive: true,
+                                x: col * cellSize + cellSize / 2,
+                                y: row * cellSize + cellSize / 2
+                            })
+                            player1Count++
+                        }
                     }
                 }
             }
@@ -132,8 +176,6 @@ QtObject {
         inChainCapture = false
         chainCapturePosition = null
         kingUsedFastForward = null
-
-        // End reset animation
         isResetting = false
     }
 
