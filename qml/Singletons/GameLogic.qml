@@ -21,7 +21,7 @@ QtObject {
     property var capturedBlackPieces: []
     property int capturedWhiteCount: 0
     property int capturedBlackCount: 0
-
+    property bool isResizing: false
     // Models - will be set from Main.qml
     property var boardModel: null
     property var piecesModel: null

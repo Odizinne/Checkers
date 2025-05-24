@@ -337,20 +337,23 @@ ApplicationWindow {
         }
 
         onWidthChanged: {
+            GameLogic.isResizing = true
             GameLogic.cellSize = root.cellSize
             for (let i = 0; i < piecesModel.count; i++) {
                 let piece = piecesModel.get(i)
                 piecesModel.set(i, {
-                                    id: piece.id,
-                                    row: piece.row,
-                                    col: piece.col,
-                                    player: piece.player,
-                                    isKing: piece.isKing,
-                                    isAlive: piece.isAlive,
-                                    x: piece.col * GameLogic.cellSize + GameLogic.cellSize / 2,
-                                    y: piece.row * GameLogic.cellSize + GameLogic.cellSize / 2
-                                })
+                    id: piece.id,
+                    row: piece.row,
+                    col: piece.col,
+                    player: piece.player,
+                    isKing: piece.isKing,
+                    isAlive: piece.isAlive,
+                    x: piece.col * GameLogic.cellSize + GameLogic.cellSize / 2,
+                    y: piece.row * GameLogic.cellSize + GameLogic.cellSize / 2
+                })
             }
+            // Reset flag after a brief delay to allow position updates
+            Qt.callLater(function() { GameLogic.isResizing = false })
         }
 
         Board {
