@@ -10,6 +10,10 @@ Rectangle {
 
     signal cellClicked(int row, int col)
 
+    property bool allItemsCreated: false
+    property int createdItemsCount: 0
+    readonly property int totalItems: GameLogic.boardSize * GameLogic.boardSize
+
     // Single wood texture for entire board
     Image {
         id: woodTexture
@@ -37,14 +41,36 @@ Rectangle {
         id: grid
         rows: GameLogic.boardSize
         columns: GameLogic.boardSize
+        opacity: board.allItemsCreated ? 1 : 0
 
         readonly property int cellSize: Math.floor(board.width / GameLogic.boardSize)
         width: cellSize * GameLogic.boardSize
         height: cellSize * GameLogic.boardSize
         anchors.centerIn: parent
 
+        Behavior on opacity {
+            NumberAnimation {
+                duration: 400
+                easing.type: Easing.OutQuad
+            }
+        }
+
         Repeater {
             model: GameLogic.boardModel
+
+            onItemAdded: (index, item) => {
+                board.createdItemsCount++
+                if (board.createdItemsCount >= board.totalItems) {
+                    board.allItemsCreated = true
+                }
+            }
+
+            onItemRemoved: (index, item) => {
+                board.createdItemsCount--
+                if (board.createdItemsCount < board.totalItems) {
+                    board.allItemsCreated = false
+                }
+            }
 
             Item {
                 id: boardRec
@@ -103,6 +129,17 @@ Rectangle {
                     anchors.fill: parent
                     onClicked: board.cellClicked(boardRec.model.row, boardRec.model.col)
                 }
+            }
+        }
+    }
+
+    // Reset state when board is reinitialized
+    Connections {
+        target: GameLogic
+        function onIsResettingChanged() {
+            if (GameLogic.isResetting) {
+                board.allItemsCreated = false
+                board.createdItemsCount = 0
             }
         }
     }

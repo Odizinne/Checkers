@@ -23,10 +23,18 @@ ApplicationWindow {
     readonly property int buttonWidth: Math.round(80 * scaleFactor)
     readonly property int buttonHeight: Math.round(32 * scaleFactor)
     readonly property int buttonSpacing: Math.round(8 * scaleFactor)
+    property real compOpacity: 0.0
 
     header: ToolBar {
         height: 40
         Material.background: UserSettings.darkMode ? "#2B2B2B" : "#FFFFFF"
+        opacity: root.compOpacity
+        Behavior on opacity {
+            NumberAnimation {
+                duration: 400
+                easing.type: Easing.OutQuad
+            }
+        }
 
         ToolButton {
             anchors.left: parent.left
@@ -72,6 +80,13 @@ ApplicationWindow {
     footer: ToolBar {
         height: 40
         Material.background: UserSettings.darkMode ? "#2B2B2B" : "#FFFFFF"
+        opacity: root.compOpacity
+        Behavior on opacity {
+            NumberAnimation {
+                duration: 400
+                easing.type: Easing.OutQuad
+            }
+        }
 
         Item {
             anchors.fill: parent
@@ -219,6 +234,7 @@ ApplicationWindow {
 
     Component.onCompleted: {
         audioInitTimer.start()
+        compOpacity = 1
     }
 
     Rectangle {
