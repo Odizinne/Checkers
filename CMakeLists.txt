@@ -10,6 +10,10 @@ set(CMAKE_AUTORCC ON)
 set(QT_QML_GENERATE_QMLLS_INI ON)
 set(CMAKE_DISABLE_FIND_PACKAGE_WrapVulkanHeaders TRUE)
 
+if(WIN32 AND CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+    set(CMAKE_GENERATOR "MinGW Makefiles" CACHE STRING "" FORCE)
+endif()
+
 find_package(Qt6 REQUIRED COMPONENTS
     Quick
     Multimedia
