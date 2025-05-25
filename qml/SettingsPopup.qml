@@ -270,6 +270,7 @@ Popup {
                                     Helper.changeApplicationLanguage(currentIndex)
                                     currentIndex = UserSettings.languageIndex
                                 }
+                                Component.onCompleted: currentIndex = UserSettings.languageIndex
                             }
                         }
 
