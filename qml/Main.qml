@@ -95,7 +95,7 @@ ApplicationWindow {
             ToolButton {
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
-                icon.source: "qrc:/icons/menu.png"
+                icon.source: "qrc:/icons/menu.svg"
                 icon.color: UserSettings.darkMode ? "white" : "black"
                 onClicked: menu.visible = true
                 icon.width: 16
@@ -105,7 +105,7 @@ ApplicationWindow {
             ToolButton {
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
-                icon.source: "qrc:/icons/undo.png"
+                icon.source: "qrc:/icons/undo.svg"
                 icon.color: UserSettings.darkMode ? "white" : "black"
                 onClicked: GameLogic.undoLastMove()
                 icon.width: 16
@@ -248,7 +248,7 @@ ApplicationWindow {
 
             ItemDelegate {
                 text: qsTr("New game")
-                icon.source: "qrc:/icons/new.png"
+                icon.source: "qrc:/icons/new.svg"
                 icon.width: 18
                 icon.height: 18
                 font.pixelSize: 14
@@ -262,7 +262,7 @@ ApplicationWindow {
 
             ItemDelegate {
                 text: qsTr("Rules")
-                icon.source: "qrc:/icons/rules.png"
+                icon.source: "qrc:/icons/rules.svg"
                 icon.width: 18
                 icon.height: 18
                 font.pixelSize: 14
@@ -276,7 +276,7 @@ ApplicationWindow {
 
             ItemDelegate {
                 text: qsTr("Settings")
-                icon.source: "qrc:/icons/settings.png"
+                icon.source: "qrc:/icons/settings.svg"
                 icon.width: 18
                 icon.height: 18
                 font.pixelSize: 14
@@ -290,7 +290,7 @@ ApplicationWindow {
 
             ItemDelegate {
                 text: qsTr("About")
-                icon.source: "qrc:/icons/about.png"
+                icon.source: "qrc:/icons/about.svg"
                 icon.width: 18
                 icon.height: 18
                 font.pixelSize: 14
@@ -304,7 +304,7 @@ ApplicationWindow {
 
             ItemDelegate {
                 text: qsTr("Quit")
-                icon.source: "qrc:/icons/exit.png"
+                icon.source: "qrc:/icons/exit.svg"
                 icon.width: 18
                 icon.height: 18
                 font.pixelSize: 14
@@ -319,8 +319,8 @@ ApplicationWindow {
 
         ItemDelegate {
             text: qsTr("Support me")
-            icon.source: "qrc:/icons/donate2.png"
-            icon.color: "transparent"
+            icon.source: "qrc:/icons/donate2.svg"
+            icon.color: Material.accent
             anchors.bottom: parent.bottom
             anchors.right: parent.right
             anchors.left: parent.left

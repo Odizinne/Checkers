@@ -46,8 +46,8 @@ Popup {
                 Layout.fillWidth: true
                 Layout.preferredWidth: parent.buttonWidth
                 text: qsTr("Support")
-                icon.source: "qrc:/icons/donate2.png"
-                icon.color: "transparent"
+                icon.source: "qrc:/icons/donate2.svg"
+                icon.color: Material.accent
                 icon.width: 20
                 icon.height: 20
                 font.bold: true

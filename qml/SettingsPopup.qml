@@ -1,4 +1,5 @@
 import QtQuick.Controls.Material
+import QtQuick.Controls.impl
 import QtQuick.Layouts
 import QtQuick
 import Odizinne.Checkers
@@ -305,13 +306,14 @@ Popup {
                             }
 
                             Item {
-                                Layout.preferredHeight: 24
-                                Layout.preferredWidth: 24
+                                Layout.preferredHeight: 20
+                                Layout.preferredWidth: 20
 
-                                Image {
+                                IconImage {
                                     id: sunImage
                                     anchors.fill: parent
-                                    source: "qrc:/icons/sun.png"
+                                    source: "qrc:/icons/sun.svg"
+                                    color: "black"
                                     opacity: !themeSwitch.checked ? 1 : 0
                                     rotation: themeSwitch.checked ? 360 : 0
                                     mipmap: true
@@ -333,10 +335,11 @@ Popup {
                                     }
                                 }
 
-                                Image {
+                                IconImage {
                                     anchors.fill: parent
                                     id: moonImage
-                                    source: "qrc:/icons/moon.png"
+                                    source: "qrc:/icons/moon.svg"
+                                    color: "white"
                                     opacity: themeSwitch.checked ? 1 : 0
                                     rotation: themeSwitch.checked ? 360 : 0
                                     mipmap: true

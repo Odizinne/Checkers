@@ -38,7 +38,7 @@ Popup {
             }
 
             Button {
-                icon.source: "qrc:/icons/github.png"
+                icon.source: "qrc:/icons/github.svg"
                 onClicked: Qt.openUrlExternally("https://github.com/odizinne/Checkers")
                 Material.roundedScale: Material.SmallScale
                 icon.width: 18
@@ -51,8 +51,8 @@ Popup {
             }
 
             Button {
-                icon.source: "qrc:/icons/donate.png"
-                icon.color: "transparent"
+                icon.source: "qrc:/icons/donate2.svg"
+                icon.color: Material.accent
                 onClicked: Qt.openUrlExternally("https://ko-fi.com/odizinne")
                 Material.roundedScale: Material.SmallScale
                 icon.width: 18

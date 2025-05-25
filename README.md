@@ -4,3 +4,5 @@ Icons from:
 - Freepik
 - VectorPortal
 - denis.klyuchnikov.1
+- AbtoCreative
+- ariefstudio
