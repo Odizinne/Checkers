@@ -261,6 +261,20 @@ ApplicationWindow {
             }
 
             ItemDelegate {
+                text: qsTr("Rules")
+                icon.source: "qrc:/icons/rules.png"
+                icon.width: 18
+                icon.height: 18
+                font.pixelSize: 14
+                height: 45
+                width: parent.width
+                onClicked: {
+                    rulesPopup.visible = true
+                    menu.visible = false
+                }
+            }
+
+            ItemDelegate {
                 text: qsTr("Settings")
                 icon.source: "qrc:/icons/settings.png"
                 icon.width: 18
@@ -461,5 +475,10 @@ ApplicationWindow {
                 donatePopup.visible = true
             }
         }
+    }
+
+    RulesPopup {
+        id: rulesPopup
+        anchors.centerIn: parent
     }
 }

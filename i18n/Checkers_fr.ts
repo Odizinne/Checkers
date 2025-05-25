@@ -93,23 +93,84 @@ Si vous souhaitez soutenir mon travail, toute contribution serait grandement app
     </message>
     <message>
         <location filename="../qml/Main.qml" line="264"/>
-        <source>Settings</source>
+        <source>Rules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/Main.qml" line="278"/>
-        <source>About</source>
+        <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/Main.qml" line="292"/>
+        <source>About</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/Main.qml" line="306"/>
         <source>Quit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="307"/>
+        <location filename="../qml/Main.qml" line="321"/>
         <source>Support me</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RulesPopup</name>
+    <message>
+        <location filename="../qml/RulesPopup.qml" line="24"/>
+        <source>How to play Checkers</source>
+        <translation>Comment jouer aux Dames</translation>
+    </message>
+    <message>
+        <location filename="../qml/RulesPopup.qml" line="57"/>
+        <source>&lt;h2&gt;Objective&lt;/h2&gt;
+                                   &lt;p&gt;Capture all of your opponent&apos;s pieces or block them so they cannot move.&lt;/p&gt;
+                                   &lt;h3&gt;Game Elements&lt;/h3&gt;
+                                   &lt;p&gt;&lt;b&gt;• Regular Pieces:&lt;/b&gt; Move diagonally forward one square at a time. When they reach the opposite end of the board, they become kings.
+                                   &lt;br&gt;&lt;b&gt;• Kings:&lt;/b&gt; Can move diagonally in any direction (forward or backward).
+                                   &lt;br&gt;&lt;b&gt;• Captures:&lt;/b&gt; Jump over an opponent&apos;s piece diagonally to capture it. The captured piece is removed from the board.
+                                   &lt;br&gt;&lt;b&gt;• Multiple Captures:&lt;/b&gt; If you can capture another piece after your first capture, you must continue capturing with the same piece.&lt;/p&gt;
+                                   &lt;h3&gt;Basic Rules&lt;/h3&gt;
+                                   &lt;p&gt;&lt;b&gt;• Movement:&lt;/b&gt; Pieces move diagonally on dark squares only.
+                                   &lt;br&gt;&lt;b&gt;• Mandatory Captures:&lt;/b&gt; If you can capture an opponent&apos;s piece, you must do so.
+                                   &lt;br&gt;&lt;b&gt;• Turn Order:&lt;/b&gt; Players alternate turns, with white typically moving first.
+                                   &lt;br&gt;&lt;b&gt;• Promotion:&lt;/b&gt; When a regular piece reaches the far end of the board, it becomes a king.&lt;/p&gt;
+                                   &lt;h3&gt;Game Strategies&lt;/h3&gt;
+                                   &lt;p&gt;&lt;b&gt;• Control the center:&lt;/b&gt; Central squares give you more movement options and control.
+                                   &lt;br&gt;&lt;b&gt;• Protect your back row:&lt;/b&gt; Keep pieces on your back row to prevent opponent pieces from becoming kings.
+                                   &lt;br&gt;&lt;b&gt;• Force trades when ahead:&lt;/b&gt; If you have more pieces, trading pieces equally benefits you.
+                                   &lt;br&gt;&lt;b&gt;• Look for multiple captures:&lt;/b&gt; Set up moves that force your opponent into positions where you can capture multiple pieces.&lt;/p&gt;
+                                   &lt;h3&gt;Winning the Game&lt;/h3&gt;
+                                   &lt;p&gt;You win by capturing all opponent pieces or blocking all their possible moves. The game is a draw if neither player can make progress.&lt;/p&gt;
+                                   &lt;p&gt;Good luck and enjoy the game!&lt;/p&gt;</source>
+        <translation>&lt;h2&gt;Objectif&lt;/h2&gt;
+                                   &lt;p&gt;Capturez tous les pions de votre adversaire ou bloquez-les pour qu&apos;ils ne puissent plus bouger.&lt;/p&gt;
+                                   &lt;h3&gt;Éléments du jeu&lt;/h3&gt;
+                                   &lt;p&gt;&lt;b&gt;• Pions normaux :&lt;/b&gt; Se déplacent en diagonale vers l&apos;avant d&apos;une case à la fois. Quand ils atteignent l&apos;extrémité opposée du plateau, ils deviennent des dames.
+                                   &lt;br&gt;&lt;b&gt;• Dames :&lt;/b&gt; Peuvent se déplacer en diagonale dans toutes les directions (avant ou arrière).
+                                   &lt;br&gt;&lt;b&gt;• Captures :&lt;/b&gt; Sautez par-dessus un pion adverse en diagonale pour le capturer. Le pion capturé est retiré du plateau.
+                                   &lt;br&gt;&lt;b&gt;• Captures multiples :&lt;/b&gt; Si vous pouvez capturer un autre pion après votre première capture, vous devez continuer à capturer avec le même pion.&lt;/p&gt;
+                                   &lt;h3&gt;Règles de base&lt;/h3&gt;
+                                   &lt;p&gt;&lt;b&gt;• Déplacement :&lt;/b&gt; Les pions se déplacent en diagonale uniquement sur les cases sombres.
+                                   &lt;br&gt;&lt;b&gt;• Captures obligatoires :&lt;/b&gt; Si vous pouvez capturer un pion adverse, vous devez le faire.
+                                   &lt;br&gt;&lt;b&gt;• Ordre des tours :&lt;/b&gt; Les joueurs alternent les tours, les blancs commençant généralement.
+                                   &lt;br&gt;&lt;b&gt;• Promotion :&lt;/b&gt; Quand un pion normal atteint l&apos;extrémité du plateau, il devient une dame.&lt;/p&gt;
+                                   &lt;h3&gt;Stratégies de jeu&lt;/h3&gt;
+                                   &lt;p&gt;&lt;b&gt;• Contrôlez le centre :&lt;/b&gt; Les cases centrales vous donnent plus d&apos;options de déplacement et de contrôle.
+                                   &lt;br&gt;&lt;b&gt;• Protégez votre rangée arrière :&lt;/b&gt; Gardez des pions sur votre rangée arrière pour empêcher les pions adverses de devenir des dames.
+                                   &lt;br&gt;&lt;b&gt;• Forcez les échanges quand vous êtes en avance :&lt;/b&gt; Si vous avez plus de pions, échanger des pions à égalité vous avantage.
+                                   &lt;br&gt;&lt;b&gt;• Cherchez les captures multiples :&lt;/b&gt; Préparez des coups qui forcent votre adversaire dans des positions où vous pouvez capturer plusieurs pions.&lt;/p&gt;
+                                   &lt;h3&gt;Gagner la partie&lt;/h3&gt;
+                                   &lt;p&gt;Vous gagnez en capturant tous les pions adverses ou en bloquant tous leurs mouvements possibles. La partie est nulle si aucun joueur ne peut progresser.&lt;/p&gt;
+                                   &lt;p&gt;Bonne chance et amusez-vous bien !&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <location filename="../qml/RulesPopup.qml" line="83"/>
+        <source>Close</source>
+        <translation>Fermer</translation>
     </message>
 </context>
 <context>

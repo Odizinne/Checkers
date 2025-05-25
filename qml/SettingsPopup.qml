@@ -38,7 +38,7 @@ Popup {
         anchors.bottom: saveButton.top
         anchors.bottomMargin: 10
         contentWidth: width
-        contentHeight: textContainer.height
+        contentHeight: textContainer.height + 10
 
         Item {
             id: textContainer

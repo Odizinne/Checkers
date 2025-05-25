@@ -12,5 +12,6 @@
         <file>donate.png</file>
         <file>donate2.png</file>
         <file>exit.png</file>
+        <file>rules.png</file>
     </qresource>
 </RCC>

@@ -92,22 +92,64 @@ If you&apos;d like to support my work, any contribution would be greatly appreci
     </message>
     <message>
         <location filename="../qml/Main.qml" line="264"/>
-        <source>Settings</source>
+        <source>Rules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/Main.qml" line="278"/>
-        <source>About</source>
+        <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/Main.qml" line="292"/>
+        <source>About</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/Main.qml" line="306"/>
         <source>Quit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="307"/>
+        <location filename="../qml/Main.qml" line="321"/>
         <source>Support me</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RulesPopup</name>
+    <message>
+        <location filename="../qml/RulesPopup.qml" line="24"/>
+        <source>How to play Checkers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/RulesPopup.qml" line="57"/>
+        <source>&lt;h2&gt;Objective&lt;/h2&gt;
+                                   &lt;p&gt;Capture all of your opponent&apos;s pieces or block them so they cannot move.&lt;/p&gt;
+                                   &lt;h3&gt;Game Elements&lt;/h3&gt;
+                                   &lt;p&gt;&lt;b&gt;• Regular Pieces:&lt;/b&gt; Move diagonally forward one square at a time. When they reach the opposite end of the board, they become kings.
+                                   &lt;br&gt;&lt;b&gt;• Kings:&lt;/b&gt; Can move diagonally in any direction (forward or backward).
+                                   &lt;br&gt;&lt;b&gt;• Captures:&lt;/b&gt; Jump over an opponent&apos;s piece diagonally to capture it. The captured piece is removed from the board.
+                                   &lt;br&gt;&lt;b&gt;• Multiple Captures:&lt;/b&gt; If you can capture another piece after your first capture, you must continue capturing with the same piece.&lt;/p&gt;
+                                   &lt;h3&gt;Basic Rules&lt;/h3&gt;
+                                   &lt;p&gt;&lt;b&gt;• Movement:&lt;/b&gt; Pieces move diagonally on dark squares only.
+                                   &lt;br&gt;&lt;b&gt;• Mandatory Captures:&lt;/b&gt; If you can capture an opponent&apos;s piece, you must do so.
+                                   &lt;br&gt;&lt;b&gt;• Turn Order:&lt;/b&gt; Players alternate turns, with white typically moving first.
+                                   &lt;br&gt;&lt;b&gt;• Promotion:&lt;/b&gt; When a regular piece reaches the far end of the board, it becomes a king.&lt;/p&gt;
+                                   &lt;h3&gt;Game Strategies&lt;/h3&gt;
+                                   &lt;p&gt;&lt;b&gt;• Control the center:&lt;/b&gt; Central squares give you more movement options and control.
+                                   &lt;br&gt;&lt;b&gt;• Protect your back row:&lt;/b&gt; Keep pieces on your back row to prevent opponent pieces from becoming kings.
+                                   &lt;br&gt;&lt;b&gt;• Force trades when ahead:&lt;/b&gt; If you have more pieces, trading pieces equally benefits you.
+                                   &lt;br&gt;&lt;b&gt;• Look for multiple captures:&lt;/b&gt; Set up moves that force your opponent into positions where you can capture multiple pieces.&lt;/p&gt;
+                                   &lt;h3&gt;Winning the Game&lt;/h3&gt;
+                                   &lt;p&gt;You win by capturing all opponent pieces or blocking all their possible moves. The game is a draw if neither player can make progress.&lt;/p&gt;
+                                   &lt;p&gt;Good luck and enjoy the game!&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/RulesPopup.qml" line="83"/>
+        <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

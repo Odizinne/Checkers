@@ -39,6 +39,7 @@ set(QML_FILES
     qml/ScrollingArea.qml
     qml/SplashScreen.qml
     qml/DonatePopup.qml
+    qml/RulesPopup.qml
 )
 
 set(QML_SINGLETONS

@@ -32,7 +32,7 @@ Item {
     }
 
     Rectangle {
-        color: "#040504"
+        color: UserSettings.darkMode ? "#040504" : "#FBFAFB"
         anchors.fill: parent
 
         Rectangle {
@@ -42,7 +42,7 @@ Item {
             radius: width / 2
             color: "transparent"
             border.width: 3
-            border.color: "#F5F5F5"
+            border.color: UserSettings.darkMode ? "#F5F5F5" : "#0A0A0A"
             anchors.centerIn: parent
 
             Column {
@@ -55,7 +55,7 @@ Item {
 
                     Label {
                         text: "Odizinne"
-                        color: "#F5F5F5"
+                        color: UserSettings.darkMode ? "#F5F5F5" : "#0A0A0A"
                         font.family: jbBold.name
                         font.letterSpacing: -2
                         font.pixelSize: 36
@@ -65,7 +65,7 @@ Item {
                     Label {
                         id: subtitleLabel
                         text: "Crafted in the Open"
-                        color: "#CCCCCC"
+                        color: UserSettings.darkMode ? "#CCCCCC" : "#333333"
                         font.family: jbLight.name
                         font.pixelSize: 14
                         anchors.horizontalCenter: parent.horizontalCenter
@@ -79,7 +79,7 @@ Item {
                     width: subtitleLabel.width
                     height: 3
                     radius: 1.5
-                    color: "#333333"
+                    color: UserSettings.darkMode ? "#333333" : "#CCCCCC"
                     anchors.horizontalCenter: parent.horizontalCenter
 
                     // Progress fill
@@ -87,7 +87,7 @@ Item {
                         id: progressFill
                         height: parent.height
                         radius: parent.radius
-                        color: "#F5F5F5"
+                        color: UserSettings.darkMode ? "#F5F5F5" : "#0A0A0A"
                         width: 0
 
                         NumberAnimation {
