@@ -1,0 +1,429 @@
+import QtQuick.Controls.Material
+import QtQuick.Controls.impl
+import QtQuick.Layouts
+import QtQuick
+import Odizinne.Checkers
+
+Page {
+    id: settingsPage
+    Material.background: UserSettings.darkMode ? "#1C1C1C" : "#E3E3E3"
+
+    property bool initialBackwardCaptures: false
+    property bool initialOptionalCaptures: false
+    property bool initialKingFastForward: false
+    property int initialBoardSize: 8
+
+    // Navigation signal
+    signal navigateBack()
+
+    Component.onCompleted: {
+        initialBackwardCaptures = UserSettings.allowBackwardCaptures
+        initialOptionalCaptures = UserSettings.optionalCaptures
+        initialKingFastForward = UserSettings.kingFastForward
+        initialBoardSize = UserSettings.boardSize
+    }
+
+    Component.onDestruction: {
+        if (initialBackwardCaptures !== UserSettings.allowBackwardCaptures ||
+                initialOptionalCaptures !== UserSettings.optionalCaptures ||
+                initialBoardSize !== UserSettings.boardSize ||
+                initialKingFastForward !== UserSettings.kingFastForward) {
+            GameLogic.initializeBoard()
+        }
+    }
+
+    header: ToolBar {
+        Material.elevation: 6
+        Material.background: UserSettings.darkMode ? "#2B2B2B" : "#FFFFFF"
+
+        ToolButton {
+            anchors.left: parent.left
+            anchors.verticalCenter: parent.verticalCenter
+            icon.source: "qrc:/icons/back.svg"
+            icon.color: UserSettings.darkMode ? "white" : "black"
+            onClicked: settingsPage.navigateBack()
+            icon.width: 18
+            icon.height: 18
+        }
+
+        Label {
+            text: qsTr("Settings")
+            color: UserSettings.darkMode ? "white" : "black"
+            anchors.centerIn: parent
+            font.pixelSize: 18
+            font.bold: true
+        }
+    }
+
+    ScrollView {
+        anchors.fill: parent
+        ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+
+        Column {
+            width: parent.width
+            spacing: 0
+
+            // Custom Rules Section
+            Label {
+                width: parent.width
+                anchors.left: parent.left
+                anchors.leftMargin: 16
+                text: qsTr("Custom Rules")
+                font.pixelSize: 16
+                font.bold: true
+                height: 48
+                verticalAlignment: Text.AlignBottom
+                bottomPadding: 8
+                color: UserSettings.darkMode ? "white" : "black"
+            }
+
+            MenuSeparator {
+                width: parent.width
+            }
+
+            SwitchDelegate {
+                width: parent.width
+                height: 72
+                text: " "
+                checked: UserSettings.allowBackwardCaptures
+                onClicked: UserSettings.allowBackwardCaptures = checked
+
+                Column {
+                    anchors.left: parent.left
+                    anchors.leftMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
+                    spacing: 2
+
+                    Label {
+                        text: qsTr("Backward Captures")
+                        font.pixelSize: 16
+                        color: UserSettings.darkMode ? "white" : "black"
+                    }
+
+                    Label {
+                        text: qsTr("Regular pieces can capture backward")
+                        opacity: 0.7
+                        font.pixelSize: 12
+                        color: UserSettings.darkMode ? "white" : "black"
+                    }
+                }
+            }
+
+            SwitchDelegate {
+                width: parent.width
+                height: 72
+                text: " "
+                checked: UserSettings.optionalCaptures
+                onClicked: UserSettings.optionalCaptures = checked
+
+                Column {
+                    anchors.left: parent.left
+                    anchors.leftMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
+                    spacing: 2
+
+                    Label {
+                        text: qsTr("Optional Captures")
+                        font.pixelSize: 16
+                        color: UserSettings.darkMode ? "white" : "black"
+                    }
+
+                    Label {
+                        text: qsTr("Players can choose not to capture")
+                        opacity: 0.7
+                        font.pixelSize: 12
+                        color: UserSettings.darkMode ? "white" : "black"
+                    }
+                }
+            }
+
+            SwitchDelegate {
+                width: parent.width
+                height: 72
+                text: " "
+                checked: UserSettings.kingFastForward
+                onClicked: UserSettings.kingFastForward = checked
+
+                Column {
+                    anchors.left: parent.left
+                    anchors.leftMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
+                    spacing: 2
+
+                    Label {
+                        text: qsTr("King Fast Forward")
+                        font.pixelSize: 16
+                        color: UserSettings.darkMode ? "white" : "black"
+                    }
+
+                    Label {
+                        text: qsTr("Kings move freely diagonally")
+                        opacity: 0.7
+                        font.pixelSize: 12
+                        color: UserSettings.darkMode ? "white" : "black"
+                    }
+                }
+            }
+
+            Item {
+                width: parent.width
+                height: 16
+            }
+
+            // Board Settings Section
+            Label {
+                width: parent.width
+                anchors.left: parent.left
+                anchors.leftMargin: 16
+                text: qsTr("Board Settings")
+                font.pixelSize: 16
+                font.bold: true
+                height: 48
+                verticalAlignment: Text.AlignBottom
+                bottomPadding: 8
+                color: UserSettings.darkMode ? "white" : "black"
+            }
+
+            MenuSeparator {
+                width: parent.width
+            }
+
+            ItemDelegate {
+                width: parent.width
+                height: 72
+                text: qsTr("Board size")
+                onClicked: boardSizeDialog.open()
+
+                Label {
+                    anchors.right: parent.right
+                    anchors.rightMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
+                    text: UserSettings.boardSize + "x" + UserSettings.boardSize
+                    opacity: 0.7
+                    color: UserSettings.darkMode ? "white" : "black"
+                }
+            }
+
+            SwitchDelegate {
+                width: parent.width
+                height: 72
+                text: qsTr("Show hints")
+                checked: UserSettings.showHints
+                onClicked: UserSettings.showHints = checked
+            }
+
+            SwitchDelegate {
+                width: parent.width
+                height: 72
+                text: qsTr("Wood texture")
+                checked: UserSettings.enableWood
+                onClicked: UserSettings.enableWood = checked
+            }
+
+            Item {
+                width: parent.width
+                height: 16
+            }
+
+            // Application Settings Section
+            Label {
+                width: parent.width
+                anchors.left: parent.left
+                anchors.leftMargin: 16
+                text: qsTr("Application Settings")
+                font.pixelSize: 16
+                font.bold: true
+                height: 48
+                verticalAlignment: Text.AlignBottom
+                bottomPadding: 8
+                color: UserSettings.darkMode ? "white" : "black"
+            }
+
+            MenuSeparator {
+                width: parent.width
+            }
+
+            ItemDelegate {
+                width: parent.width
+                height: 72
+                text: qsTr("Language")
+                onClicked: languageDialog.open()
+
+                Label {
+                    anchors.right: parent.right
+                    anchors.rightMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
+                    text: {
+                        switch (UserSettings.languageIndex) {
+                        case 0: return qsTr("System")
+                        case 1: return "English"
+                        case 2: return "Français"
+                        default: return "English"
+                        }
+                    }
+                    opacity: 0.7
+                    color: UserSettings.darkMode ? "white" : "black"
+                }
+            }
+
+            Item {
+                width: parent.width
+                height: 72
+
+                Row {
+                    anchors.fill: parent
+                    anchors.leftMargin: 16
+                    anchors.rightMargin: 16
+                    spacing: 16
+
+                    Label {
+                        text: qsTr("Volume")
+                        anchors.verticalCenter: parent.verticalCenter
+                        width: 80
+                        color: UserSettings.darkMode ? "white" : "black"
+                    }
+
+                    Slider {
+                        anchors.verticalCenter: parent.verticalCenter
+                        width: parent.width - 80 - 16
+                        from: 0.0
+                        to: 1.0
+                        value: UserSettings.volume
+                        onValueChanged: UserSettings.volume = value
+                    }
+                }
+            }
+
+            SwitchDelegate {
+                width: parent.width
+                height: 72
+                text: qsTr("Dark mode")
+                checked: UserSettings.darkMode
+                onClicked: UserSettings.darkMode = checked
+
+                Item {
+                    anchors.right: parent.right
+                    anchors.rightMargin: 70
+                    anchors.verticalCenter: parent.verticalCenter
+                    width: 20
+                    height: 20
+
+                    IconImage {
+                        anchors.fill: parent
+                        source: "qrc:/icons/sun.svg"
+                        color: "black"
+                        opacity: !parent.parent.checked ? 1 : 0
+                        rotation: parent.parent.checked ? 360 : 0
+                        mipmap: true
+
+                        Behavior on rotation {
+                            NumberAnimation {
+                                duration: 500
+                                easing.type: Easing.OutQuad
+                            }
+                        }
+
+                        Behavior on opacity {
+                            NumberAnimation { duration: 500 }
+                        }
+
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: parent.parent.parent.checked = !parent.parent.parent.checked
+                        }
+                    }
+
+                    IconImage {
+                        anchors.fill: parent
+                        source: "qrc:/icons/moon.svg"
+                        color: "white"
+                        opacity: parent.parent.checked ? 1 : 0
+                        rotation: parent.parent.checked ? 360 : 0
+                        mipmap: true
+
+                        Behavior on rotation {
+                            NumberAnimation {
+                                duration: 500
+                                easing.type: Easing.OutQuad
+                            }
+                        }
+
+                        Behavior on opacity {
+                            NumberAnimation { duration: 100 }
+                        }
+
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: parent.parent.parent.checked = !parent.parent.parent.checked
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // Board size dialog
+    Dialog {
+        id: boardSizeDialog
+        anchors.centerIn: parent
+        title: qsTr("Board size")
+        modal: true
+
+        Column {
+            RadioButton {
+                text: "8x8"
+                checked: UserSettings.boardSize === 8
+                onClicked: {
+                    UserSettings.boardSize = 8
+                    boardSizeDialog.close()
+                }
+            }
+            RadioButton {
+                text: "10x10"
+                checked: UserSettings.boardSize === 10
+                onClicked: {
+                    UserSettings.boardSize = 10
+                    boardSizeDialog.close()
+                }
+            }
+        }
+    }
+
+    // Language dialog
+    Dialog {
+        id: languageDialog
+        anchors.centerIn: parent
+        title: qsTr("Language")
+        modal: true
+
+        Column {
+            RadioButton {
+                text: qsTr("System")
+                checked: UserSettings.languageIndex === 0
+                onClicked: {
+                    UserSettings.languageIndex = 0
+                    Helper.changeApplicationLanguage(0)
+                    languageDialog.close()
+                }
+            }
+            RadioButton {
+                text: "English"
+                checked: UserSettings.languageIndex === 1
+                onClicked: {
+                    UserSettings.languageIndex = 1
+                    Helper.changeApplicationLanguage(1)
+                    languageDialog.close()
+                }
+            }
+            RadioButton {
+                text: "Français"
+                checked: UserSettings.languageIndex === 2
+                onClicked: {
+                    UserSettings.languageIndex = 2
+                    Helper.changeApplicationLanguage(2)
+                    languageDialog.close()
+                }
+            }
+        }
+    }
+}

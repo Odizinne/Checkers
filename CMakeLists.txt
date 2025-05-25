@@ -34,12 +34,13 @@ set(QML_FILES
     qml/Board.qml
     qml/GameOverPopup.qml
     qml/Piece.qml
-    qml/AboutPopup.qml
-    qml/SettingsPopup.qml
     qml/ScrollingArea.qml
     qml/SplashScreen.qml
     qml/DonatePopup.qml
-    qml/RulesPopup.qml
+    qml/GamePage.qml
+    qml/SettingsPage.qml
+    qml/AboutPage.qml
+    qml/RulesPage.qml
 )
 
 set(QML_SINGLETONS

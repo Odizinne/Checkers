@@ -6,3 +6,4 @@ Icons from:
 - denis.klyuchnikov.1
 - AbtoCreative
 - ariefstudio
+- Kirill Kazachek

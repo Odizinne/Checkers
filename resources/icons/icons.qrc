@@ -14,5 +14,6 @@
         <file>rules.svg</file>
         <file>computer.svg</file>
         <file>people.svg</file>
+        <file>back.svg</file>
     </qresource>
 </RCC>
