@@ -21,7 +21,7 @@ Si vous souhaitez soutenir mon travail, toute contribution serait grandement app
         <translation>Soutenir</translation>
     </message>
     <message>
-        <location filename="../qml/DonatePopup.qml" line="65"/>
+        <location filename="../qml/DonatePopup.qml" line="64"/>
         <source>Maybe later</source>
         <translation>Peut-être plus tard</translation>
     </message>

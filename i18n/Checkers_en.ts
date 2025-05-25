@@ -20,7 +20,7 @@ If you&apos;d like to support my work, any contribution would be greatly appreci
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DonatePopup.qml" line="65"/>
+        <location filename="../qml/DonatePopup.qml" line="64"/>
         <source>Maybe later</source>
         <translation type="unfinished"></translation>
     </message>

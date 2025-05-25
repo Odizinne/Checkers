@@ -52,7 +52,6 @@ Popup {
                 icon.height: 20
                 font.bold: true
                 onClicked: {
-                    UserSettings.showDonate = false
                     Qt.openUrlExternally("https://ko-fi.com/odizinne")
                     donatePopup.close()
                 }
@@ -64,7 +63,6 @@ Popup {
                 Layout.preferredWidth: parent.buttonWidth
                 text: qsTr("Maybe later")
                 onClicked: {
-                    UserSettings.showDonate = false
                     donatePopup.close()
                 }
             }
