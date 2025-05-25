@@ -216,17 +216,17 @@ If you&apos;d like to support my work, any contribution would be greatly appreci
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPopup.qml" line="282"/>
+        <location filename="../qml/SettingsPopup.qml" line="283"/>
         <source>Volume</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPopup.qml" line="303"/>
+        <location filename="../qml/SettingsPopup.qml" line="304"/>
         <source>Dark mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPopup.qml" line="384"/>
+        <location filename="../qml/SettingsPopup.qml" line="385"/>
         <source>Save and close</source>
         <translation type="unfinished"></translation>
     </message>

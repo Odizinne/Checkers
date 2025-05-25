@@ -236,17 +236,17 @@ Si vous souhaitez soutenir mon travail, toute contribution serait grandement app
         <translation>Système</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPopup.qml" line="282"/>
+        <location filename="../qml/SettingsPopup.qml" line="283"/>
         <source>Volume</source>
         <translation>Volume</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPopup.qml" line="303"/>
+        <location filename="../qml/SettingsPopup.qml" line="304"/>
         <source>Dark mode</source>
         <translation>Mode sombre</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPopup.qml" line="384"/>
+        <location filename="../qml/SettingsPopup.qml" line="385"/>
         <source>Save and close</source>
         <translation>Enregistrer et fermer</translation>
     </message>
