@@ -9,10 +9,10 @@ Popup {
     id: control
     width: 350
     height: 500
-    modal: true
+    modal: Qt.platform.os !== "android"
     visible: false
     Material.background: UserSettings.darkMode ? "#1C1C1C" : "#E3E3E3"
-    Material.roundedScale: Material.SmallScale
+    Material.roundedScale: Qt.platform.os === "android" ? Material.NotRounded : Material.SmallScale
 
     ColumnLayout {
         anchors.fill: parent
@@ -29,7 +29,7 @@ Popup {
 
         Pane {
             Layout.fillWidth: true
-            Layout.preferredHeight: 370
+            Layout.fillHeight: true
             Material.roundedScale: Material.SmallScale
             Material.elevation: 6
             Material.background: UserSettings.darkMode ? "#2B2B2B" : "#FFFFFF"

@@ -6,26 +6,30 @@ import Odizinne.Checkers
 
 Popup {
     id: settingsPopup
-    modal: true
+    modal: Qt.platform.os !== "android"
     visible: false
     width: 350
     height: 550
     Material.background: UserSettings.darkMode ? "#1C1C1C" : "#E3E3E3"
-    Material.roundedScale: Material.SmallScale
+    Material.roundedScale: Qt.platform.os === "android" ? Material.NotRounded : Material.SmallScale
 
     property bool initialBackwardCaptures: false
     property bool initialOptionalCaptures: false
     property bool initialKingFastForward: false
+    property int initialBoardSize: 8
 
     onOpened: {
         initialBackwardCaptures = UserSettings.allowBackwardCaptures
         initialOptionalCaptures = UserSettings.optionalCaptures
         initialKingFastForward = UserSettings.kingFastForward
+        initialBoardSize = UserSettings.boardSize
+
     }
 
     onClosed: {
         if (initialBackwardCaptures !== UserSettings.allowBackwardCaptures ||
                 initialOptionalCaptures !== UserSettings.optionalCaptures ||
+                initialBoardSize !== UserSettings.boardSize ||
                 initialKingFastForward !== UserSettings.kingFastForward) {
             GameLogic.initializeBoard()
         }
@@ -197,7 +201,6 @@ Popup {
                                 onActivated: {
                                     if (UserSettings.boardSize !== currentValue) {
                                         UserSettings.boardSize = currentValue
-                                        GameLogic.initializeBoard()
                                     }
                                 }
 
@@ -386,5 +389,4 @@ Popup {
         onClicked: settingsPopup.close()
         Material.roundedScale: Material.SmallScale
     }
-
 }

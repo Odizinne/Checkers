@@ -29,6 +29,7 @@ Popup {
                 id: newGameButton
                 Layout.preferredWidth: parent.buttonWidth
                 text: qsTr("Restart")
+                Material.roundedScale: Material.SmallScale
                 onClicked: {
                     GameLogic.initializeBoard()
                     gameoverpopup.close()
@@ -38,6 +39,7 @@ Popup {
             Button {
                 id: closeButton
                 text: qsTr("Close")
+                Material.roundedScale: Material.SmallScale
                 Layout.preferredWidth: parent.buttonWidth
                 onClicked: {
                     gameoverpopup.close()

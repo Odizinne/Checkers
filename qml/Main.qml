@@ -16,6 +16,7 @@ ApplicationWindow {
     title: "Checkers"
     color: UserSettings.darkMode ? "#1C1C1C" : "#E3E3E3"
     Material.theme: UserSettings.darkMode ? Material.Dark : Material.Light
+    property var popups: [settingsPopup, rulesPopup]
 
     readonly property bool isPortrait: height > width
     readonly property real scaleFactor: Math.max(Screen.pixelDensity / 6, 1.2)
@@ -29,15 +30,35 @@ ApplicationWindow {
 
     onClosing: function(close) {
         if (Qt.platform.os === "android") {
-            if (!backPressedOnce) {
+            if (settingsPopup.visible) {
+                close.accepted = false  // Prevent closing
+                settingsPopup.close()
+                return
+            } else if (rulesPopup.visible) {
                 close.accepted = false
+                rulesPopup.close()
+                return
+            } else if (donatePopup.visible) {
+                close.accepted = false
+                donatePopup.close()
+                return
+            } else if (aboutPopup.visible) {
+                close.accepted = false
+                aboutPopup.close()
+                return
+            }
+
+            if (!backPressedOnce) {
+                close.accepted = false  // Prevent closing
                 backPressedOnce = true
                 exitTooltip.show()
                 exitTimer.start()
                 return
             }
+
+            // Second press - allow closing
+            close.accepted = true
         }
-        close.accepted = true
     }
 
     Timer {
@@ -459,7 +480,24 @@ ApplicationWindow {
 
     SettingsPopup {
         id: settingsPopup
-        anchors.centerIn: parent
+
+        Component.onCompleted: {
+            if (Qt.platform.os === "android") {
+                width = root.width
+                height = root.height
+                //x = 0
+                //y = 0
+                parent = Overlay.overlay  // This makes it relative to the entire window
+                anchors.fill = parent
+                anchors.topMargin = root.SafeArea.margins.top
+                anchors.bottomMargin = root.SafeArea.margins.bottom
+                anchors.leftMargin = root.SafeArea.margins.left
+                anchors.rightMargin = root.SafeArea.margins.right
+
+            } else {
+                anchors.centerIn = parent
+            }
+        }
     }
 
     SplashScreen {
@@ -482,6 +520,22 @@ ApplicationWindow {
 
     RulesPopup {
         id: rulesPopup
-        anchors.centerIn: parent
+        Component.onCompleted: {
+            if (Qt.platform.os === "android") {
+                width = root.width
+                height = root.height
+                //x = 0
+                //y = 0
+                parent = Overlay.overlay  // This makes it relative to the entire window
+                anchors.fill = parent
+                anchors.topMargin = root.SafeArea.margins.top
+                anchors.bottomMargin = root.SafeArea.margins.bottom
+                anchors.leftMargin = root.SafeArea.margins.left
+                anchors.rightMargin = root.SafeArea.margins.right
+
+            } else {
+                anchors.centerIn = parent
+            }
+        }
     }
 }
