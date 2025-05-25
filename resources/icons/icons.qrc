@@ -10,8 +10,6 @@
         <file>settings.png</file>
         <file>github.png</file>
         <file>donate.png</file>
-        <file>volume_up.png</file>
-        <file>volume_down.png</file>
-        <file>volume_muted.png</file>
+        <file>exit.png</file>
     </qresource>
 </RCC>

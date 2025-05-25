@@ -32,49 +32,54 @@
         <translation>Appuyez à nouveau sur retour pour quitter</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="111"/>
+        <location filename="../qml/Main.qml" line="112"/>
         <source>Winner: White</source>
         <translation>Gagnant : Blancs</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="111"/>
+        <location filename="../qml/Main.qml" line="112"/>
         <source>Winner: Black</source>
         <translation>Gagnant : Noirs</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="112"/>
+        <location filename="../qml/Main.qml" line="113"/>
         <source>White Turn</source>
         <translation>Tour des blancs</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="112"/>
+        <location filename="../qml/Main.qml" line="113"/>
         <source>Black Turn</source>
         <translation>Tour des noirs</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="124"/>
+        <location filename="../qml/Main.qml" line="125"/>
         <source>Computer</source>
         <translation>Ordinateur</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="124"/>
+        <location filename="../qml/Main.qml" line="125"/>
         <source>2 Players</source>
         <translation>2 Joueurs</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="232"/>
+        <location filename="../qml/Main.qml" line="234"/>
         <source>New game</source>
         <translation>Nouvelle partie</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="246"/>
+        <location filename="../qml/Main.qml" line="248"/>
         <source>Settings</source>
         <translation>Paramètres</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="260"/>
+        <location filename="../qml/Main.qml" line="262"/>
         <source>About</source>
         <translation>À propos</translation>
+    </message>
+    <message>
+        <location filename="../qml/Main.qml" line="276"/>
+        <source>Quit</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

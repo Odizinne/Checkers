@@ -37,6 +37,7 @@ set(QML_FILES
     qml/AboutPopup.qml
     qml/SettingsPopup.qml
     qml/ScrollingArea.qml
+    qml/SplashScreen.qml
 )
 
 set(QML_SINGLETONS
@@ -56,6 +57,7 @@ qt_add_executable(${CMAKE_PROJECT_NAME}
     resources/sounds/sounds.qrc
     resources/icons/icons.qrc
     resources/textures/textures.qrc
+    resources/images/images.qrc
     resources/appicon.rc
 )
 

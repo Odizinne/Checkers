@@ -67,9 +67,10 @@ ApplicationWindow {
     }
 
     header: ToolBar {
+        id: headerBar
         height: 40
         Material.background: UserSettings.darkMode ? "#2B2B2B" : "#FFFFFF"
-        opacity: root.compOpacity
+        opacity: board.allItemsCreated ? 1 : 0
         Behavior on opacity {
             NumberAnimation {
                 duration: 400
@@ -137,9 +138,10 @@ ApplicationWindow {
     }
 
     footer: ToolBar {
+        id: footerBar
         height: 40
         Material.background: UserSettings.darkMode ? "#2B2B2B" : "#FFFFFF"
-        opacity: root.compOpacity
+        opacity: board.allItemsCreated ? 1 : 0
         Behavior on opacity {
             NumberAnimation {
                 duration: 400
@@ -269,6 +271,20 @@ ApplicationWindow {
                     menu.visible = false
                 }
             }
+
+            ItemDelegate {
+                text: qsTr("Quit")
+                icon.source: "qrc:/icons/exit.png"
+                icon.width: 20
+                icon.height: 20
+                font.pixelSize: 16
+                height: 50
+                width: parent.width
+                onClicked: {
+                    root.backPressedOnce = true
+                    Qt.quit()
+                }
+            }
         }
     }
 
@@ -280,14 +296,6 @@ ApplicationWindow {
             } else {
                 root.visibility = Window.Windowed
             }
-        }
-    }
-
-    Timer {
-        id: audioInitTimer
-        interval: 50
-        onTriggered: {
-            AudioEngine.playSilent()
         }
     }
 
@@ -316,8 +324,8 @@ ApplicationWindow {
 
     Component.onCompleted: {
         Helper.changeApplicationLanguage(UserSettings.languageIndex)
-        audioInitTimer.start()
-        compOpacity = 1
+        AudioEngine.playSilent()
+        splashScreen.opacity = 1
     }
 
     Rectangle {
@@ -342,12 +350,11 @@ ApplicationWindow {
             GameLogic.boardModel = boardModel
             GameLogic.piecesModel = piecesModel
             GameLogic.cellSize = root.cellSize
-            GameLogic.initializeBoard()
         }
 
         onWidthChanged: {
             GameLogic.isResizing = true
-            GameLogic.cellSize = root.cellSize  // This should update when board size changes
+            GameLogic.cellSize = root.cellSize
             for (let i = 0; i < piecesModel.count; i++) {
                 let piece = piecesModel.get(i)
                 piecesModel.set(i, {
@@ -366,6 +373,7 @@ ApplicationWindow {
         }
 
         Board {
+            id: board
             anchors.fill: parent
             onCellClicked: (row, col) => GameLogic.handleCellClick(row, col)
         }
@@ -401,5 +409,13 @@ ApplicationWindow {
     SettingsPopup {
         id: settingsPopup
         anchors.centerIn: parent
+    }
+
+    SplashScreen {
+        id: splashScreen
+        anchors.fill: parent
+        anchors.topMargin: -headerBar.height
+        anchors.bottomMargin: -footerBar.height
+        //Component.onCompleted: splashScreen.opacity = 1
     }
 }
