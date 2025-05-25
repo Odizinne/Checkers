@@ -117,7 +117,7 @@ If you&apos;d like to support my work, any contribution would be greatly appreci
 <context>
     <name>Main</name>
     <message>
-        <location filename="../qml/Main.qml" line="56"/>
+        <location filename="../qml/Main.qml" line="69"/>
         <source>Press back again to exit</source>
         <translation type="unfinished"></translation>
     </message>

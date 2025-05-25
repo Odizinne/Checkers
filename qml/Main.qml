@@ -21,6 +21,19 @@ ApplicationWindow {
 
     onClosing: function(close) {
         if (Qt.platform.os === "android") {
+            // Check if any popups are open and close them first
+            if (gameOverPopup.opened) {
+                close.accepted = false
+                gameOverPopup.close()
+                return
+            }
+
+            if (donatePopup.visible) {
+                close.accepted = false
+                donatePopup.close()
+                return
+            }
+
             // If we're not on the main game page, go back
             if (stackView.depth > 1) {
                 close.accepted = false
@@ -28,7 +41,7 @@ ApplicationWindow {
                 return
             }
 
-            // If on main page, show exit confirmation
+            // If on main page and no popups open, show exit confirmation
             if (!backPressedOnce) {
                 close.accepted = false
                 backPressedOnce = true
