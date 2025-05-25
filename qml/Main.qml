@@ -70,11 +70,19 @@ ApplicationWindow {
         id: headerBar
         height: 40
         Material.background: UserSettings.darkMode ? "#2B2B2B" : "#FFFFFF"
-        opacity: board.allItemsCreated ? 1 : 0
+        property bool hasShown: false
+        opacity: hasShown ? 1 : (board.allItemsCreated ? 1 : 0)
+
         Behavior on opacity {
             NumberAnimation {
                 duration: 400
                 easing.type: Easing.OutQuad
+            }
+        }
+
+        onOpacityChanged: {
+            if (opacity === 1 && board.allItemsCreated) {
+                hasShown = true
             }
         }
 
@@ -141,11 +149,19 @@ ApplicationWindow {
         id: footerBar
         height: 40
         Material.background: UserSettings.darkMode ? "#2B2B2B" : "#FFFFFF"
-        opacity: board.allItemsCreated ? 1 : 0
+        property bool hasShown: false
+        opacity: hasShown ? 1 : (board.allItemsCreated ? 1 : 0)
+
         Behavior on opacity {
             NumberAnimation {
                 duration: 400
                 easing.type: Easing.OutQuad
+            }
+        }
+
+        onOpacityChanged: {
+            if (opacity === 1 && board.allItemsCreated) {
+                hasShown = true
             }
         }
 
