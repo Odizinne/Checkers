@@ -13,7 +13,6 @@ Item {
     property real originalY: model.y - height/2
     property bool isDragging: false
 
-    // Update original position when model changes
     onOriginalXChanged: {
         if (!isDragging) {
             x = originalX

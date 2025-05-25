@@ -17,7 +17,6 @@ Page {
     readonly property int boardSize: table.maxSize
     readonly property int cellSize: boardSize / GameLogic.boardSize
 
-    // Navigation signals
     signal navigateToSettings()
     signal navigateToRules()
     signal navigateToAbout()
@@ -206,7 +205,6 @@ Page {
             anchors.fill: parent
             spacing: 0
 
-            // App identity section
             Item {
                 width: parent.width
                 height: 70
@@ -259,7 +257,7 @@ Page {
                 height: 50
                 width: parent.width
                 onClicked: {
-                    navigateToRules()
+                    gamePage.navigateToRules()
                     menu.visible = false
                 }
             }
@@ -272,7 +270,7 @@ Page {
                 height: 50
                 width: parent.width
                 onClicked: {
-                    navigateToSettings()
+                    gamePage.navigateToSettings()
                     menu.visible = false
                 }
             }
@@ -285,7 +283,7 @@ Page {
                 height: 50
                 width: parent.width
                 onClicked: {
-                    navigateToAbout()
+                    gamePage.navigateToAbout()
                     menu.visible = false
                 }
             }
@@ -300,7 +298,7 @@ Page {
                 font.bold: true
                 width: parent.width
                 onClicked: {
-                    navigateToDonate()
+                    gamePage.navigateToDonate()
                     menu.visible = false
                 }
             }

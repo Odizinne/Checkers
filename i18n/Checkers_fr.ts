@@ -70,47 +70,47 @@ Si vous souhaitez soutenir mon travail, toute contribution serait grandement app
 <context>
     <name>GamePage</name>
     <message>
-        <location filename="../qml/GamePage.qml" line="77"/>
+        <location filename="../qml/GamePage.qml" line="76"/>
         <source>Winner: White</source>
         <translation>Gagnant : Blancs</translation>
     </message>
     <message>
-        <location filename="../qml/GamePage.qml" line="77"/>
+        <location filename="../qml/GamePage.qml" line="76"/>
         <source>Winner: Black</source>
         <translation>Gagnant : Noirs</translation>
     </message>
     <message>
-        <location filename="../qml/GamePage.qml" line="78"/>
+        <location filename="../qml/GamePage.qml" line="77"/>
         <source>White Turn</source>
         <translation>Tour des Blancs</translation>
     </message>
     <message>
-        <location filename="../qml/GamePage.qml" line="78"/>
+        <location filename="../qml/GamePage.qml" line="77"/>
         <source>Black Turn</source>
         <translation>Tour des Noirs</translation>
     </message>
     <message>
-        <location filename="../qml/GamePage.qml" line="242"/>
+        <location filename="../qml/GamePage.qml" line="240"/>
         <source>New game</source>
         <translation>Nouvelle partie</translation>
     </message>
     <message>
-        <location filename="../qml/GamePage.qml" line="255"/>
+        <location filename="../qml/GamePage.qml" line="253"/>
         <source>Rules</source>
         <translation>Règles</translation>
     </message>
     <message>
-        <location filename="../qml/GamePage.qml" line="268"/>
+        <location filename="../qml/GamePage.qml" line="266"/>
         <source>Settings</source>
         <translation>Paramètres</translation>
     </message>
     <message>
-        <location filename="../qml/GamePage.qml" line="281"/>
+        <location filename="../qml/GamePage.qml" line="279"/>
         <source>About</source>
         <translation>À propos</translation>
     </message>
     <message>
-        <location filename="../qml/GamePage.qml" line="294"/>
+        <location filename="../qml/GamePage.qml" line="292"/>
         <source>Support me</source>
         <translation>Me soutenir</translation>
     </message>
@@ -118,7 +118,7 @@ Si vous souhaitez soutenir mon travail, toute contribution serait grandement app
 <context>
     <name>Main</name>
     <message>
-        <location filename="../qml/Main.qml" line="69"/>
+        <location filename="../qml/Main.qml" line="64"/>
         <source>Press back again to exit</source>
         <translation>Appuyez une nouvelle fois pour quitter</translation>
     </message>
@@ -177,90 +177,90 @@ Si vous souhaitez soutenir mon travail, toute contribution serait grandement app
 <context>
     <name>SettingsPage</name>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="50"/>
+        <location filename="../qml/SettingsPage.qml" line="48"/>
         <source>Settings</source>
         <translation>Paramètres</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="71"/>
+        <location filename="../qml/SettingsPage.qml" line="68"/>
         <source>Custom Rules</source>
         <translation>Règles personnalisées</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="98"/>
+        <location filename="../qml/SettingsPage.qml" line="95"/>
         <source>Backward Captures</source>
         <translation>Prises arrière</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="104"/>
+        <location filename="../qml/SettingsPage.qml" line="101"/>
         <source>Regular pieces can capture backward</source>
         <translation>Les pions normaux peuvent capturer vers l&apos;arrière</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="126"/>
+        <location filename="../qml/SettingsPage.qml" line="123"/>
         <source>Optional Captures</source>
         <translation>Prises optionnelles</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="132"/>
+        <location filename="../qml/SettingsPage.qml" line="129"/>
         <source>Players can choose not to capture</source>
         <translation>Les joueurs peuvent choisir de ne pas capturer</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="154"/>
+        <location filename="../qml/SettingsPage.qml" line="151"/>
         <source>King Fast Forward</source>
         <translation>Avancement rapide</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="160"/>
+        <location filename="../qml/SettingsPage.qml" line="157"/>
         <source>Kings move freely diagonally</source>
         <translation>Les dames se déplacent librement en diagonale</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="178"/>
+        <location filename="../qml/SettingsPage.qml" line="174"/>
         <source>Board Settings</source>
         <translation>Paramètres du plateau</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="194"/>
-        <location filename="../qml/SettingsPage.qml" line="369"/>
+        <location filename="../qml/SettingsPage.qml" line="190"/>
+        <location filename="../qml/SettingsPage.qml" line="354"/>
         <source>Board size</source>
         <translation>Taille du plateau</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="210"/>
+        <location filename="../qml/SettingsPage.qml" line="206"/>
         <source>Show hints</source>
         <translation>Afficher les indices</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="218"/>
+        <location filename="../qml/SettingsPage.qml" line="214"/>
         <source>Wood texture</source>
         <translation>Texture bois</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="233"/>
+        <location filename="../qml/SettingsPage.qml" line="228"/>
         <source>Application Settings</source>
         <translation>Paramètres de l&apos;application</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="249"/>
-        <location filename="../qml/SettingsPage.qml" line="396"/>
+        <location filename="../qml/SettingsPage.qml" line="244"/>
+        <location filename="../qml/SettingsPage.qml" line="380"/>
         <source>Language</source>
         <translation>Langue</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="258"/>
-        <location filename="../qml/SettingsPage.qml" line="401"/>
+        <location filename="../qml/SettingsPage.qml" line="253"/>
+        <location filename="../qml/SettingsPage.qml" line="385"/>
         <source>System</source>
         <translation>Système</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="280"/>
+        <location filename="../qml/SettingsPage.qml" line="275"/>
         <source>Volume</source>
         <translation>Volume</translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="300"/>
+        <location filename="../qml/SettingsPage.qml" line="296"/>
         <source>Dark mode</source>
         <translation>Mode sombre</translation>
     </message>

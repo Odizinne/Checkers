@@ -73,7 +73,6 @@ Item {
                     }
                 }
 
-                // Progress bar container
                 Rectangle {
                     id: progressContainer
                     width: subtitleLabel.width
@@ -82,7 +81,6 @@ Item {
                     color: UserSettings.darkMode ? "#333333" : "#CCCCCC"
                     anchors.horizontalCenter: parent.horizontalCenter
 
-                    // Progress fill
                     Rectangle {
                         id: progressFill
                         height: parent.height

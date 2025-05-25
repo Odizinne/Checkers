@@ -1,6 +1,5 @@
 import QtQuick.Controls.Material
 import QtQuick.Controls.impl
-import QtQuick.Layouts
 import QtQuick
 import Odizinne.Checkers
 
@@ -13,7 +12,6 @@ Page {
     property bool initialKingFastForward: false
     property int initialBoardSize: 8
 
-    // Navigation signal
     signal navigateBack()
 
     Component.onCompleted: {
@@ -63,7 +61,6 @@ Page {
             width: parent.width
             spacing: 0
 
-            // Custom Rules Section
             Label {
                 width: parent.width
                 anchors.left: parent.left
@@ -170,7 +167,6 @@ Page {
                 height: 16
             }
 
-            // Board Settings Section
             Label {
                 width: parent.width
                 anchors.left: parent.left
@@ -225,7 +221,6 @@ Page {
                 height: 16
             }
 
-            // Application Settings Section
             Label {
                 width: parent.width
                 anchors.left: parent.left
@@ -295,6 +290,7 @@ Page {
             }
 
             SwitchDelegate {
+                id: darkModeSwitch
                 width: parent.width
                 height: 72
                 text: qsTr("Dark mode")
@@ -312,8 +308,8 @@ Page {
                         anchors.fill: parent
                         source: "qrc:/icons/sun.svg"
                         color: "black"
-                        opacity: !parent.parent.checked ? 1 : 0
-                        rotation: parent.parent.checked ? 360 : 0
+                        opacity: !darkModeSwitch.checked ? 1 : 0
+                        rotation: darkModeSwitch.checked ? 360 : 0
                         mipmap: true
 
                         Behavior on rotation {
@@ -326,19 +322,14 @@ Page {
                         Behavior on opacity {
                             NumberAnimation { duration: 500 }
                         }
-
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: parent.parent.parent.checked = !parent.parent.parent.checked
-                        }
                     }
 
                     IconImage {
                         anchors.fill: parent
                         source: "qrc:/icons/moon.svg"
                         color: "white"
-                        opacity: parent.parent.checked ? 1 : 0
-                        rotation: parent.parent.checked ? 360 : 0
+                        opacity: darkModeSwitch.checked ? 1 : 0
+                        rotation: darkModeSwitch.checked ? 360 : 0
                         mipmap: true
 
                         Behavior on rotation {
@@ -351,18 +342,12 @@ Page {
                         Behavior on opacity {
                             NumberAnimation { duration: 100 }
                         }
-
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: parent.parent.parent.checked = !parent.parent.parent.checked
-                        }
                     }
                 }
             }
         }
     }
 
-    // Board size dialog
     Dialog {
         id: boardSizeDialog
         anchors.centerIn: parent
@@ -389,7 +374,6 @@ Page {
         }
     }
 
-    // Language dialog
     Dialog {
         id: languageDialog
         anchors.centerIn: parent

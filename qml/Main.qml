@@ -4,7 +4,6 @@ import QtQuick
 import QtQuick.Window
 import Odizinne.Checkers
 import QtQuick.Controls.Material
-import QtQuick.Controls.impl
 
 ApplicationWindow {
     id: root
@@ -21,7 +20,6 @@ ApplicationWindow {
 
     onClosing: function(close) {
         if (Qt.platform.os === "android") {
-            // Check if any popups are open and close them first
             if (gameOverPopup.opened) {
                 close.accepted = false
                 gameOverPopup.close()
@@ -34,14 +32,12 @@ ApplicationWindow {
                 return
             }
 
-            // If we're not on the main game page, go back
             if (stackView.depth > 1) {
                 close.accepted = false
                 stackView.pop()
                 return
             }
 
-            // If on main page and no popups open, show exit confirmation
             if (!backPressedOnce) {
                 close.accepted = false
                 backPressedOnce = true
@@ -50,7 +46,6 @@ ApplicationWindow {
                 return
             }
 
-            // Second press - allow closing
             close.accepted = true
         }
     }
@@ -88,7 +83,6 @@ ApplicationWindow {
         initialItem: gamePage
     }
 
-    // All page components instantiated here
     GamePage {
         id: gamePage
         visible: false
@@ -121,7 +115,6 @@ ApplicationWindow {
         onNavigateBack: stackView.pop()
     }
 
-    // Popups stay as popups
     GameOverPopup {
         id: gameOverPopup
         anchors.centerIn: parent
@@ -143,7 +136,6 @@ ApplicationWindow {
         }
     }
 
-    // Connect GameLogic signals to navigation
     Connections {
         target: GameLogic
         function onShowGameOverPopup() {
