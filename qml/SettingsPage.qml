@@ -7,28 +7,7 @@ Page {
     id: settingsPage
     Material.background: UserSettings.darkMode ? "#1C1C1C" : "#E3E3E3"
 
-    property bool initialBackwardCaptures: false
-    property bool initialOptionalCaptures: false
-    property bool initialKingFastForward: false
-    property int initialBoardSize: 8
-
     signal navigateBack()
-
-    Component.onCompleted: {
-        initialBackwardCaptures = UserSettings.allowBackwardCaptures
-        initialOptionalCaptures = UserSettings.optionalCaptures
-        initialKingFastForward = UserSettings.kingFastForward
-        initialBoardSize = UserSettings.boardSize
-    }
-
-    Component.onDestruction: {
-        if (initialBackwardCaptures !== UserSettings.allowBackwardCaptures ||
-                initialOptionalCaptures !== UserSettings.optionalCaptures ||
-                initialBoardSize !== UserSettings.boardSize ||
-                initialKingFastForward !== UserSettings.kingFastForward) {
-            GameLogic.initializeBoard()
-        }
-    }
 
     header: ToolBar {
         Material.elevation: 6
@@ -84,7 +63,10 @@ Page {
                 height: 72
                 text: " "
                 checked: UserSettings.allowBackwardCaptures
-                onClicked: UserSettings.allowBackwardCaptures = checked
+                onClicked: {
+                    UserSettings.allowBackwardCaptures = checked
+                    GameLogic.initializeBoard()
+                }
 
                 Column {
                     anchors.left: parent.left
@@ -112,7 +94,10 @@ Page {
                 height: 72
                 text: " "
                 checked: UserSettings.optionalCaptures
-                onClicked: UserSettings.optionalCaptures = checked
+                onClicked: {
+                    UserSettings.optionalCaptures = checked
+                    GameLogic.initializeBoard()
+                }
 
                 Column {
                     anchors.left: parent.left
@@ -140,7 +125,10 @@ Page {
                 height: 72
                 text: " "
                 checked: UserSettings.kingFastForward
-                onClicked: UserSettings.kingFastForward = checked
+                onClicked: {
+                    UserSettings.kingFastForward = checked
+                    GameLogic.initializeBoard()
+                }
 
                 Column {
                     anchors.left: parent.left
@@ -361,6 +349,7 @@ Page {
                 checked: UserSettings.boardSize === 8
                 onClicked: {
                     UserSettings.boardSize = 8
+                    GameLogic.initializeBoard()
                     boardSizeDialog.close()
                 }
             }
@@ -369,6 +358,7 @@ Page {
                 checked: UserSettings.boardSize === 10
                 onClicked: {
                     UserSettings.boardSize = 10
+                    GameLogic.initializeBoard()
                     boardSizeDialog.close()
                 }
             }
