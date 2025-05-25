@@ -51,7 +51,7 @@ Popup {
             }
 
             Button {
-                icon.source: "qrc:/icons/donate2.svg"
+                icon.source: "qrc:/icons/donate.svg"
                 icon.color: Material.accent
                 onClicked: Qt.openUrlExternally("https://ko-fi.com/odizinne")
                 Material.roundedScale: Material.SmallScale

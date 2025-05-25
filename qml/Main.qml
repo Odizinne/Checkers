@@ -4,6 +4,7 @@ import QtQuick
 import QtQuick.Window
 import Odizinne.Checkers
 import QtQuick.Controls.Material
+import QtQuick.Controls.impl
 
 ApplicationWindow {
     id: root
@@ -129,9 +130,13 @@ ApplicationWindow {
             anchors.right: parent.right
             anchors.top: parent.top
             anchors.bottom: parent.bottom
-            Label {
-                text: UserSettings.vsAI ? qsTr("Computer") : qsTr("2 Players")
+
+            IconImage {
+                source: UserSettings.vsAI ? "qrc:/icons/computer.svg" : "qrc:/icons/people.svg"
                 anchors.verticalCenter: parent.verticalCenter
+                width: 18
+                height: 18
+                color: UserSettings.darkMode ? "white" : "black"
             }
 
             Switch {
@@ -319,7 +324,7 @@ ApplicationWindow {
 
         ItemDelegate {
             text: qsTr("Support me")
-            icon.source: "qrc:/icons/donate2.svg"
+            icon.source: "qrc:/icons/donate.svg"
             icon.color: Material.accent
             anchors.bottom: parent.bottom
             anchors.right: parent.right
