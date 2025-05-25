@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/fonts">
+        <file>JetBrainsMonoNL-Bold.ttf</file>
+        <file>JetBrainsMonoNL-Light.ttf</file>
+        <file>JetBrainsMonoNL-Regular.ttf</file>
+    </qresource>
+</RCC>

@@ -57,7 +57,7 @@ qt_add_executable(${CMAKE_PROJECT_NAME}
     resources/sounds/sounds.qrc
     resources/icons/icons.qrc
     resources/textures/textures.qrc
-    resources/images/images.qrc
+    resources/fonts/fonts.qrc
     resources/appicon.rc
 )
 

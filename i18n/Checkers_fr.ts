@@ -54,62 +54,62 @@ Si vous souhaitez soutenir mon travail, toute contribution serait grandement app
     <message>
         <location filename="../qml/Main.qml" line="53"/>
         <source>Press back again to exit</source>
-        <translation>Appuyez à nouveau sur retour pour quitter</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/Main.qml" line="120"/>
         <source>Winner: White</source>
-        <translation>Gagnant : Blancs</translation>
+        <translation type="unfinished">Gagnant : Blancs</translation>
     </message>
     <message>
         <location filename="../qml/Main.qml" line="120"/>
         <source>Winner: Black</source>
-        <translation>Gagnant : Noirs</translation>
+        <translation type="unfinished">Gagnant : Noirs</translation>
     </message>
     <message>
         <location filename="../qml/Main.qml" line="121"/>
         <source>White Turn</source>
-        <translation>Tour des blancs</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/Main.qml" line="121"/>
         <source>Black Turn</source>
-        <translation>Tour des noirs</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/Main.qml" line="133"/>
         <source>Computer</source>
-        <translation>Ordinateur</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/Main.qml" line="133"/>
         <source>2 Players</source>
-        <translation>2 Joueurs</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/Main.qml" line="250"/>
         <source>New game</source>
-        <translation>Nouvelle partie</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/Main.qml" line="264"/>
         <source>Settings</source>
-        <translation>Paramètres</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/Main.qml" line="278"/>
         <source>About</source>
-        <translation>À propos</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/Main.qml" line="292"/>
         <source>Quit</source>
-        <translation>Quitter</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/Main.qml" line="307"/>
         <source>Support me</source>
-        <translation>Me soutenir</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
