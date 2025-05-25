@@ -32,52 +32,52 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="112"/>
+        <location filename="../qml/Main.qml" line="121"/>
         <source>Winner: White</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="112"/>
+        <location filename="../qml/Main.qml" line="121"/>
         <source>Winner: Black</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="113"/>
+        <location filename="../qml/Main.qml" line="122"/>
         <source>White Turn</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="113"/>
+        <location filename="../qml/Main.qml" line="122"/>
         <source>Black Turn</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="125"/>
+        <location filename="../qml/Main.qml" line="134"/>
         <source>Computer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="125"/>
+        <location filename="../qml/Main.qml" line="134"/>
         <source>2 Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="234"/>
+        <location filename="../qml/Main.qml" line="251"/>
         <source>New game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="248"/>
+        <location filename="../qml/Main.qml" line="265"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="262"/>
+        <location filename="../qml/Main.qml" line="279"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="276"/>
+        <location filename="../qml/Main.qml" line="293"/>
         <source>Quit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -116,7 +116,7 @@
     </message>
     <message>
         <location filename="../qml/SettingsPopup.qml" line="138"/>
-        <source>Kings move freely diagonally on first move per turn</source>
+        <source>Kings move freely diagonally</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

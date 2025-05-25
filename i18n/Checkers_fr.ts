@@ -6,12 +6,12 @@
     <message>
         <location filename="../qml/GameOverPopup.qml" line="16"/>
         <source>Winner: White</source>
-        <translation type="unfinished">Gagnant : Blancs</translation>
+        <translation>Gagnant : Blancs</translation>
     </message>
     <message>
         <location filename="../qml/GameOverPopup.qml" line="16"/>
         <source>Winner: Black</source>
-        <translation type="unfinished">Gagnant : Noirs</translation>
+        <translation>Gagnant : Noirs</translation>
     </message>
     <message>
         <location filename="../qml/GameOverPopup.qml" line="31"/>
@@ -32,54 +32,54 @@
         <translation>Appuyez à nouveau sur retour pour quitter</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="112"/>
+        <location filename="../qml/Main.qml" line="121"/>
         <source>Winner: White</source>
         <translation>Gagnant : Blancs</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="112"/>
+        <location filename="../qml/Main.qml" line="121"/>
         <source>Winner: Black</source>
         <translation>Gagnant : Noirs</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="113"/>
+        <location filename="../qml/Main.qml" line="122"/>
         <source>White Turn</source>
         <translation>Tour des blancs</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="113"/>
+        <location filename="../qml/Main.qml" line="122"/>
         <source>Black Turn</source>
         <translation>Tour des noirs</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="125"/>
+        <location filename="../qml/Main.qml" line="134"/>
         <source>Computer</source>
         <translation>Ordinateur</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="125"/>
+        <location filename="../qml/Main.qml" line="134"/>
         <source>2 Players</source>
         <translation>2 Joueurs</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="234"/>
+        <location filename="../qml/Main.qml" line="251"/>
         <source>New game</source>
         <translation>Nouvelle partie</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="248"/>
+        <location filename="../qml/Main.qml" line="265"/>
         <source>Settings</source>
         <translation>Paramètres</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="262"/>
+        <location filename="../qml/Main.qml" line="279"/>
         <source>About</source>
         <translation>À propos</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="276"/>
+        <location filename="../qml/Main.qml" line="293"/>
         <source>Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>Quitter</translation>
     </message>
 </context>
 <context>
@@ -116,8 +116,8 @@
     </message>
     <message>
         <location filename="../qml/SettingsPopup.qml" line="138"/>
-        <source>Kings move freely diagonally on first move per turn</source>
-        <translation>Les dames se déplacent librement en diagonale au premier coup par tour</translation>
+        <source>Kings move freely diagonally</source>
+        <translation>Les dames se déplacent librement en diagonale</translation>
     </message>
     <message>
         <location filename="../qml/SettingsPopup.qml" line="159"/>

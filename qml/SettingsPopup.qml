@@ -135,7 +135,7 @@ Popup {
                                 }
 
                                 Label {
-                                    text: qsTr("Kings move freely diagonally on first move per turn")
+                                    text: qsTr("Kings move freely diagonally")
                                     opacity: 0.7
                                     Layout.fillWidth: true
                                     wrapMode: Text.WordWrap
