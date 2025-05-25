@@ -15,4 +15,6 @@ Settings {
     property int boardSize: 8
 
     property int languageIndex: 0
+    property bool showDonage: true
+    property int totalGames: 0
 }

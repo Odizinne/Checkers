@@ -10,6 +10,7 @@
         <file>settings.png</file>
         <file>github.png</file>
         <file>donate.png</file>
+        <file>donate2.png</file>
         <file>exit.png</file>
     </qresource>
 </RCC>

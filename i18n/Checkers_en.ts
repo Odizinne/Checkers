@@ -2,6 +2,30 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="en" sourcelanguage="en">
 <context>
+    <name>DonatePopup</name>
+    <message>
+        <location filename="../qml/DonatePopup.qml" line="21"/>
+        <source>Enjoying the game?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/DonatePopup.qml" line="30"/>
+        <source>This app is made with care by an independent developer.
+If you&apos;d like to support my work, any contribution would be greatly appreciated!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/DonatePopup.qml" line="48"/>
+        <source>Support</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/DonatePopup.qml" line="65"/>
+        <source>Maybe later</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>GameOverPopup</name>
     <message>
         <location filename="../qml/GameOverPopup.qml" line="16"/>
@@ -79,6 +103,11 @@
     <message>
         <location filename="../qml/Main.qml" line="292"/>
         <source>Quit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/Main.qml" line="307"/>
+        <source>Support me</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

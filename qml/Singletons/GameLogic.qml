@@ -16,7 +16,7 @@ QtObject {
     property var chainCapturePosition: null
     property var selectedPiece: null
     property bool isResetting: false
-
+    property int consecutiveGames: 0
     // Captured pieces tracking
     property var capturedWhitePieces: []
     property var capturedBlackPieces: []
@@ -31,6 +31,8 @@ QtObject {
     signal showGameOverPopup()
     property var lastMove: null
     property bool canUndo: false
+
+    signal showDonatePopup()
 
     // Animation handling
     property int animationDuration: 300
@@ -714,14 +716,32 @@ QtObject {
         if (player1Count === 0) {
             gameOver = true
             winner = 2
-            showGameOverPopup()
             AudioEngine.playWin()
+            if (UserSettings.showDonate) {
+                consecutiveGames++
+                UserSettings.totalGames++
+                if (consecutiveGames === 3 || UserSettings.totalGames === 5) {
+                    showDonatePopup()
+                    return
+                }
+            }
+            showGameOverPopup()
+
             return
         } else if (player2Count === 0) {
             gameOver = true
             winner = 1
-            showGameOverPopup()
             AudioEngine.playWin()
+            if (UserSettings.showDonate) {
+                consecutiveGames++
+                UserSettings.totalGames++
+                if (consecutiveGames === 3 || UserSettings.totalGames === 5) {
+                    showDonatePopup()
+                    UserSettings.showDonate = false
+                    return
+                }
+            }
+            showGameOverPopup()
             return
         }
 
@@ -730,8 +750,17 @@ QtObject {
         if (!hasValidMoves(currentPlayer)) {
             gameOver = true
             winner = currentPlayer === 1 ? 2 : 1
-            showGameOverPopup()
             AudioEngine.playWin()
+            if (UserSettings.showDonate) {
+                consecutiveGames++
+                UserSettings.totalGames++
+                if (consecutiveGames === 3 || UserSettings.totalGames === 5) {
+                    showDonatePopup()
+                    UserSettings.showDonate = false
+                    return
+                }
+            }
+            showGameOverPopup()
         }
     }
 

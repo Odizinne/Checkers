@@ -38,11 +38,11 @@ set(QML_FILES
     qml/SettingsPopup.qml
     qml/ScrollingArea.qml
     qml/SplashScreen.qml
+    qml/DonatePopup.qml
 )
 
 set(QML_SINGLETONS
     qml/Singletons/GameLogic.qml
-    #qml/Singletons/AIPlayer.qml
     qml/Singletons/AudioEngine.qml
     qml/Singletons/UserSettings.qml
 )

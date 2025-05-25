@@ -244,15 +244,15 @@ ApplicationWindow {
 
         Column {
             anchors.fill: parent
-            spacing: 2
+            spacing: 0
 
             ItemDelegate {
                 text: qsTr("New game")
                 icon.source: "qrc:/icons/new.png"
-                icon.width: 20
-                icon.height: 20
-                font.pixelSize: 16
-                height: 50
+                icon.width: 18
+                icon.height: 18
+                font.pixelSize: 14
+                height: 45
                 width: parent.width
                 onClicked: {
                     GameLogic.initializeBoard()
@@ -263,10 +263,10 @@ ApplicationWindow {
             ItemDelegate {
                 text: qsTr("Settings")
                 icon.source: "qrc:/icons/settings.png"
-                icon.width: 20
-                icon.height: 20
-                font.pixelSize: 16
-                height: 50
+                icon.width: 18
+                icon.height: 18
+                font.pixelSize: 14
+                height: 45
                 width: parent.width
                 onClicked: {
                     settingsPopup.visible = true
@@ -277,10 +277,10 @@ ApplicationWindow {
             ItemDelegate {
                 text: qsTr("About")
                 icon.source: "qrc:/icons/about.png"
-                icon.width: 20
-                icon.height: 20
-                font.pixelSize: 16
-                height: 50
+                icon.width: 18
+                icon.height: 18
+                font.pixelSize: 14
+                height: 45
                 width: parent.width
                 onClicked: {
                     aboutPopup.visible = true
@@ -291,15 +291,33 @@ ApplicationWindow {
             ItemDelegate {
                 text: qsTr("Quit")
                 icon.source: "qrc:/icons/exit.png"
-                icon.width: 20
-                icon.height: 20
-                font.pixelSize: 16
-                height: 50
+                icon.width: 18
+                icon.height: 18
+                font.pixelSize: 14
+                height: 45
                 width: parent.width
                 onClicked: {
                     root.backPressedOnce = true
                     Qt.quit()
                 }
+            }
+        }
+
+        ItemDelegate {
+            text: qsTr("Support me")
+            icon.source: "qrc:/icons/donate2.png"
+            icon.color: "transparent"
+            anchors.bottom: parent.bottom
+            anchors.right: parent.right
+            anchors.left: parent.left
+            icon.width: 18
+            icon.height: 18
+            font.pixelSize: 14
+            font.bold: true
+            height: 45
+            onClicked: {
+                donatePopup.visible = true
+                menu.visible = false
             }
         }
     }
@@ -432,6 +450,16 @@ ApplicationWindow {
         anchors.fill: parent
         anchors.topMargin: -headerBar.height
         anchors.bottomMargin: -footerBar.height
-        //Component.onCompleted: splashScreen.opacity = 1
+    }
+
+    DonatePopup {
+        id: donatePopup
+        anchors.centerIn: parent
+        Connections {
+            target: GameLogic
+            function onShowDonatePopup() {
+                donatePopup.visible = true
+            }
+        }
     }
 }
