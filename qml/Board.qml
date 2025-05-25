@@ -43,7 +43,7 @@ Rectangle {
     Image {
         id: woodTexture
         anchors.fill: parent
-        source: "qrc:/textures/wood.png"
+        source: "qrc:/textures/wood.jpg"
         fillMode: Image.PreserveAspectCrop
         visible: false
     }

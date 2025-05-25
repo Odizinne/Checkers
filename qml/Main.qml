@@ -99,8 +99,8 @@ ApplicationWindow {
                 icon.source: "qrc:/icons/menu.svg"
                 icon.color: UserSettings.darkMode ? "white" : "black"
                 onClicked: menu.visible = true
-                icon.width: 16
-                icon.height: 16
+                icon.width: 18
+                icon.height: 18
             }
 
             ToolButton {
@@ -109,8 +109,8 @@ ApplicationWindow {
                 icon.source: "qrc:/icons/undo.svg"
                 icon.color: UserSettings.darkMode ? "white" : "black"
                 onClicked: GameLogic.undoLastMove()
-                icon.width: 16
-                icon.height: 16
+                icon.width: 18
+                icon.height: 18
                 enabled: GameLogic.canUndo && !GameLogic.gameOver && !GameLogic.animating
                 visible: !UserSettings.vsAI
                 opacity: enabled ? 1.0 : 0.3
@@ -268,8 +268,8 @@ ApplicationWindow {
             ItemDelegate {
                 text: qsTr("Rules")
                 icon.source: "qrc:/icons/rules.svg"
-                icon.width: 18
-                icon.height: 18
+                icon.width: 20
+                icon.height: 20
                 font.pixelSize: 14
                 height: 45
                 width: parent.width
@@ -355,10 +355,8 @@ ApplicationWindow {
     Connections {
         target: GameLogic
         function onBoardSizeChanged() {
-            // Update cell size when board size changes
             GameLogic.cellSize = root.cellSize
 
-            // Update all existing pieces with new positions and sizes
             for (let i = 0; i < piecesModel.count; i++) {
                 let piece = piecesModel.get(i)
                 piecesModel.set(i, {
