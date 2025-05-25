@@ -56,6 +56,7 @@ Page {
     ScrollView {
         anchors.fill: parent
         ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+        contentWidth: parent.width
 
         Column {
             width: parent.width

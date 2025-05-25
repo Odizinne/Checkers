@@ -265,6 +265,8 @@ QList<Move> AIPlayer::getCaptureMoves(const BoardState& state, int row, int col,
         QList<QPair<int, int>> directions = {{-1, -1}, {-1, 1}, {1, -1}, {1, 1}};
 
         for (const auto& dir : directions) {
+            bool foundEnemy = false;
+
             for (int distance = 1; distance < boardSize; ++distance) {
                 int targetRow = row + (dir.first * distance);
                 int targetCol = col + (dir.second * distance);
@@ -275,23 +277,23 @@ QList<Move> AIPlayer::getCaptureMoves(const BoardState& state, int row, int col,
 
                 int targetIndex = state.board[targetRow][targetCol];
                 if (targetIndex != -1) {
-                    if (targetIndex < state.pieces.size() && state.pieces[targetIndex].player != player) {
-                        int captureRow = targetRow + dir.first;
-                        int captureCol = targetCol + dir.second;
-                        if (captureRow >= 0 && captureRow < boardSize &&
-                            captureCol >= 0 && captureCol < boardSize &&
-                            state.board[captureRow][captureCol] == -1) {
-
-                            Move move;
-                            move.fromRow = row;
-                            move.fromCol = col;
-                            move.toRow = captureRow;
-                            move.toCol = captureCol;
-                            move.isCapture = true;
-                            moves.append(move);
-                        }
+                    if (!foundEnemy && targetIndex < state.pieces.size() &&
+                        state.pieces[targetIndex].player != player) {
+                        // Found first enemy piece in this direction
+                        foundEnemy = true;
+                    } else {
+                        // Hit another piece (friendly or second enemy), stop here
+                        break;
                     }
-                    break;
+                } else if (foundEnemy) {
+                    // Empty square after enemy piece - valid capture landing spot
+                    Move move;
+                    move.fromRow = row;
+                    move.fromCol = col;
+                    move.toRow = targetRow;
+                    move.toCol = targetCol;
+                    move.isCapture = true;
+                    moves.append(move);
                 }
             }
         }

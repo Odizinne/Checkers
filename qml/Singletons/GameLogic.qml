@@ -488,11 +488,13 @@ QtObject {
         let piece = getPieceAt(row, col)
         if (!piece || !piece.isKing) return moves
 
-        // Kings can always use fast forward when rule is enabled (no restrictions)
-
         let directions = [[-1, -1], [-1, 1], [1, -1], [1, 1]]
 
         for (let dir of directions) {
+            let foundEnemy = false
+            let enemyRow = -1
+            let enemyCol = -1
+
             // Check each square in this direction
             for (let distance = 1; distance < boardSize; distance++) {
                 let newRow = row + (dir[0] * distance)
@@ -502,20 +504,22 @@ QtObject {
                     break
 
                 let targetPiece = getPieceAt(newRow, newCol)
+
                 if (targetPiece) {
-                    // If it's an enemy piece, check if we can capture it
-                    if (targetPiece.player !== piece.player) {
-                        let captureRow = newRow + dir[0]
-                        let captureCol = newCol + dir[1]
-                        if (captureRow >= 0 && captureRow < boardSize &&
-                            captureCol >= 0 && captureCol < boardSize &&
-                            !getPieceAt(captureRow, captureCol)) {
-                            moves.push({row: captureRow, col: captureCol, isCapture: true})
-                        }
+                    if (!foundEnemy && targetPiece.player !== piece.player) {
+                        // Found first enemy piece in this direction
+                        foundEnemy = true
+                        enemyRow = newRow
+                        enemyCol = newCol
+                    } else {
+                        // Hit another piece (friendly or second enemy), stop here
+                        break
                     }
-                    break // Can't move past any piece
+                } else if (foundEnemy) {
+                    // Empty square after enemy piece - valid capture landing spot
+                    moves.push({row: newRow, col: newCol, isCapture: true})
                 } else {
-                    // Empty square - can move here
+                    // Empty square with no enemy to capture - regular move
                     moves.push({row: newRow, col: newCol, isCapture: false})
                 }
             }
