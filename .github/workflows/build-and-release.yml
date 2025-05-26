@@ -28,7 +28,7 @@ jobs:
         with:
           version: ${{ env.QT_VERSION }}
           arch: 'win64_msvc2022_64'
-          modules: 'qtmultimedia'
+          modules: 'qtmultimedia qtsensors'
           add-tools-to-path: true
           cache: true
 
@@ -118,7 +118,7 @@ jobs:
           host: 'linux'
           target: 'desktop'
           arch: 'linux_gcc_64'
-          modules: 'qtmultimedia'
+          modules: 'qtmultimedia qtsensors'
           cache: true
           add-tools-to-path: true
 
@@ -128,7 +128,7 @@ jobs:
           version: ${{ env.QT_VERSION }}
           target: 'android'
           arch: ${{ matrix.qt_arch }}
-          modules: 'qtmultimedia'
+          modules: 'qtmultimedia qtsensors'
           cache: true
           add-tools-to-path: true
 
