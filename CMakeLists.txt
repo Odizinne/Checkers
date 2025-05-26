@@ -13,6 +13,7 @@ set(CMAKE_DISABLE_FIND_PACKAGE_WrapVulkanHeaders TRUE)
 find_package(Qt6 REQUIRED COMPONENTS
     Quick
     Multimedia
+    Sensors
     LinguistTools
 )
 
@@ -41,6 +42,7 @@ set(QML_FILES
     qml/SettingsPage.qml
     qml/AboutPage.qml
     qml/RulesPage.qml
+    qml/EasterEGGPage.qml
 )
 
 set(QML_SINGLETONS
@@ -103,6 +105,7 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
     PRIVATE
     Qt6::Quick
     Qt6::Multimedia
+    Qt6::Sensors
 )
 
 qt_add_translations(${CMAKE_PROJECT_NAME}

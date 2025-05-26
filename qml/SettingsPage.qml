@@ -8,6 +8,7 @@ Page {
     Material.background: UserSettings.darkMode ? "#1C1C1C" : "#E3E3E3"
 
     signal navigateBack()
+    signal navigateToEasterEgg()
 
     header: ToolBar {
         Material.elevation: 6
@@ -361,6 +362,16 @@ Page {
                 width: parent.width
                 height: 72
                 text: qsTr("App Version")
+                onClicked: {
+                    if (Qt.platform.os === "android") {
+                        tapCount++
+                        if (tapCount >= 5) {
+                            settingsPage.navigateToEasterEgg()
+                            tapCount = 0
+                        }
+                    }
+                }
+                property int tapCount: 0
 
                 Label {
                     anchors.right: parent.right
@@ -370,12 +381,21 @@ Page {
                     opacity: 0.7
                     color: UserSettings.darkMode ? "white" : "black"
                 }
+
+                Timer {
+                    interval: 2000
+                    running: parent.tapCount > 0 && parent.tapCount < 5
+                    onTriggered: parent.tapCount = 0
+                }
             }
 
             ItemDelegate {
                 width: parent.width
                 height: 72
                 text: qsTr("Qt Version")
+                onClicked: {
+                    return
+                }
 
                 Label {
                     anchors.right: parent.right

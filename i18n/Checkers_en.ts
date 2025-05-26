@@ -157,105 +157,105 @@ If you&apos;d like to support my work, any contribution would be greatly appreci
 <context>
     <name>SettingsPage</name>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="27"/>
+        <location filename="../qml/SettingsPage.qml" line="28"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="48"/>
+        <location filename="../qml/SettingsPage.qml" line="49"/>
         <source>Custom Rules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="78"/>
+        <location filename="../qml/SettingsPage.qml" line="79"/>
         <source>Backward Captures</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="84"/>
+        <location filename="../qml/SettingsPage.qml" line="85"/>
         <source>Regular pieces can capture backward</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="109"/>
+        <location filename="../qml/SettingsPage.qml" line="110"/>
         <source>Optional Captures</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="115"/>
+        <location filename="../qml/SettingsPage.qml" line="116"/>
         <source>Players can choose not to capture</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="140"/>
+        <location filename="../qml/SettingsPage.qml" line="141"/>
         <source>King Fast Forward</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="146"/>
+        <location filename="../qml/SettingsPage.qml" line="147"/>
         <source>Kings move freely diagonally</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="163"/>
+        <location filename="../qml/SettingsPage.qml" line="164"/>
         <source>Board Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="179"/>
-        <location filename="../qml/SettingsPage.qml" line="395"/>
+        <location filename="../qml/SettingsPage.qml" line="180"/>
+        <location filename="../qml/SettingsPage.qml" line="415"/>
         <source>Board size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="195"/>
+        <location filename="../qml/SettingsPage.qml" line="196"/>
         <source>Show hints</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="203"/>
+        <location filename="../qml/SettingsPage.qml" line="204"/>
         <source>Wood texture</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="217"/>
+        <location filename="../qml/SettingsPage.qml" line="218"/>
         <source>Application Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="233"/>
-        <location filename="../qml/SettingsPage.qml" line="423"/>
+        <location filename="../qml/SettingsPage.qml" line="234"/>
+        <location filename="../qml/SettingsPage.qml" line="443"/>
         <source>Language</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="242"/>
-        <location filename="../qml/SettingsPage.qml" line="428"/>
+        <location filename="../qml/SettingsPage.qml" line="243"/>
+        <location filename="../qml/SettingsPage.qml" line="448"/>
         <source>System</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="264"/>
+        <location filename="../qml/SettingsPage.qml" line="265"/>
         <source>Volume</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="285"/>
+        <location filename="../qml/SettingsPage.qml" line="286"/>
         <source>Dark mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="347"/>
+        <location filename="../qml/SettingsPage.qml" line="348"/>
         <source>Informations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="363"/>
+        <location filename="../qml/SettingsPage.qml" line="364"/>
         <source>App Version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="378"/>
+        <location filename="../qml/SettingsPage.qml" line="395"/>
         <source>Qt Version</source>
         <translation type="unfinished"></translation>
     </message>

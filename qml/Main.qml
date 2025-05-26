@@ -87,6 +87,12 @@ ApplicationWindow {
         visible: false
 
         onNavigateBack: stackView.pop()
+        onNavigateToEasterEgg: stackView.push(easterEggPage)
+    }
+
+    EasterEGGPage {
+        id: easterEggPage
+        visible: false
     }
 
     RulesPage {
