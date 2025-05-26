@@ -406,6 +406,15 @@ Page {
                     color: UserSettings.darkMode ? "white" : "black"
                 }
             }
+
+            ItemDelegate {
+                width: parent.width
+                height: 72
+                text: qsTr("Credits")
+                onClicked: {
+                    creditsDialog.open()
+                }
+            }
         }
     }
 
@@ -470,6 +479,41 @@ Page {
                     Helper.changeApplicationLanguage(2)
                     languageDialog.close()
                 }
+            }
+        }
+    }
+
+    Dialog {
+        id: creditsDialog
+        anchors.centerIn: parent
+        title: qsTr("Icons from:")
+        modal: true
+        standardButtons: Dialog.Ok
+
+        Column {
+            Label {
+                text: " - Dave Gandy"
+            }
+            Label {
+                text: " - Phoenix Group"
+            }
+            Label {
+                text: " - Freepik"
+            }
+            Label {
+                text: " - VectorPortal"
+            }
+            Label {
+                text: " - denis.klyuchnikov.1"
+            }
+            Label {
+                text: " - AbtoCreative"
+            }
+            Label {
+                text: " - ariefstudio"
+            }
+            Label {
+                text: " - Kirill Kazachek"
             }
         }
     }
