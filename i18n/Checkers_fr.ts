@@ -223,7 +223,7 @@ Si vous souhaitez soutenir mon travail, toute contribution serait grandement app
     </message>
     <message>
         <location filename="../qml/SettingsPage.qml" line="179"/>
-        <location filename="../qml/SettingsPage.qml" line="343"/>
+        <location filename="../qml/SettingsPage.qml" line="395"/>
         <source>Board size</source>
         <translation>Taille du plateau</translation>
     </message>
@@ -244,13 +244,13 @@ Si vous souhaitez soutenir mon travail, toute contribution serait grandement app
     </message>
     <message>
         <location filename="../qml/SettingsPage.qml" line="233"/>
-        <location filename="../qml/SettingsPage.qml" line="371"/>
+        <location filename="../qml/SettingsPage.qml" line="423"/>
         <source>Language</source>
         <translation>Langue</translation>
     </message>
     <message>
         <location filename="../qml/SettingsPage.qml" line="242"/>
-        <location filename="../qml/SettingsPage.qml" line="376"/>
+        <location filename="../qml/SettingsPage.qml" line="428"/>
         <source>System</source>
         <translation>Système</translation>
     </message>
@@ -263,6 +263,21 @@ Si vous souhaitez soutenir mon travail, toute contribution serait grandement app
         <location filename="../qml/SettingsPage.qml" line="285"/>
         <source>Dark mode</source>
         <translation>Mode sombre</translation>
+    </message>
+    <message>
+        <location filename="../qml/SettingsPage.qml" line="347"/>
+        <source>Informations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/SettingsPage.qml" line="363"/>
+        <source>App Version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/SettingsPage.qml" line="378"/>
+        <source>Qt Version</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

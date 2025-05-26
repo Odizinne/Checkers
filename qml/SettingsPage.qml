@@ -334,6 +334,58 @@ Page {
                     }
                 }
             }
+
+            Item {
+                width: parent.width
+                height: 16
+            }
+
+            Label {
+                width: parent.width
+                anchors.left: parent.left
+                anchors.leftMargin: 16
+                text: qsTr("Informations")
+                font.pixelSize: 16
+                font.bold: true
+                height: 48
+                verticalAlignment: Text.AlignBottom
+                bottomPadding: 8
+                color: UserSettings.darkMode ? "white" : "black"
+            }
+
+            MenuSeparator {
+                width: parent.width
+            }
+
+            ItemDelegate {
+                width: parent.width
+                height: 72
+                text: qsTr("App Version")
+
+                Label {
+                    anchors.right: parent.right
+                    anchors.rightMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
+                    text: Helper.getAppVersion()
+                    opacity: 0.7
+                    color: UserSettings.darkMode ? "white" : "black"
+                }
+            }
+
+            ItemDelegate {
+                width: parent.width
+                height: 72
+                text: qsTr("Qt Version")
+
+                Label {
+                    anchors.right: parent.right
+                    anchors.rightMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
+                    text: Helper.getQtVersion()
+                    opacity: 0.7
+                    color: UserSettings.darkMode ? "white" : "black"
+                }
+            }
         }
     }
 

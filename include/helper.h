@@ -16,6 +16,8 @@ public:
     static Helper* instance();
 
     Q_INVOKABLE void changeApplicationLanguage(int languageIndex);
+    Q_INVOKABLE QString getAppVersion() const;
+    Q_INVOKABLE QString getQtVersion() const;
 
 private:
     explicit Helper(QObject *parent = nullptr);

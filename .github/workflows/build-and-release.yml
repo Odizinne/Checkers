@@ -2,16 +2,6 @@ name: Build and release
 
 on:
   workflow_dispatch:
-    inputs:
-      release_type:
-        description: 'Type of release (major, minor, patch)'
-        required: false
-        default: 'patch'
-        type: choice
-        options:
-          - patch
-          - minor
-          - major
 
 env:
   QT_VERSION: '6.9.0'
@@ -22,6 +12,10 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Get version from CMake
+        id: cmake_version
+        uses: DarwinInnovation/cmake-project-version-action@v1
 
       - name: Set up Visual Studio shell
         uses: egor-tensin/vs-shell@v2
@@ -72,47 +66,11 @@ jobs:
           name: Checkers_win64_msvc2022
           path: build/Checkers_win64_msvc2022.zip
 
-      - name: Calculate next version for installer
-        id: get_version
-        shell: bash
-        run: |
-          git fetch --tags
-          
-          RELEASE_TYPE="${{ github.event.inputs.release_type || 'patch' }}"
-          LATEST_TAG=$(git tag --list '*.*.*' --sort=-version:refname | head -n 1)
-
-          if [ -z "$LATEST_TAG" ]; then
-            NEW_VERSION="0.0.1"
-          else
-            echo "Latest tag: $LATEST_TAG"
-            IFS='.' read -r MAJOR MINOR PATCH <<< "$LATEST_TAG"
-
-            case $RELEASE_TYPE in
-              major)
-                MAJOR=$((MAJOR + 1))
-                MINOR=0
-                PATCH=0
-                ;;
-              minor)
-                MINOR=$((MINOR + 1))
-                PATCH=0
-                ;;
-              patch)
-                PATCH=$((PATCH + 1))
-                ;;
-            esac
-
-            NEW_VERSION="${MAJOR}.${MINOR}.${PATCH}"
-          fi
-
-          echo "Next version will be: $NEW_VERSION"
-          echo "TagVersion=${NEW_VERSION}" >> $GITHUB_ENV
-
       - name: Update .iss version
         shell: pwsh
         run: |
           $content = Get-Content tools/installer.iss
-          $new = $content -replace '(?<=#define AppVersion ")[^"]+', "${{ env.TagVersion }}"
+          $new = $content -replace '(?<=#define AppVersion ")[^"]+', "${{ steps.cmake_version.outputs.version }}"
           Set-Content tools/installer.iss -Value $new
 
       - name: Create Installer 
@@ -334,6 +292,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Get version from CMake
+        id: cmake_version
+        uses: DarwinInnovation/cmake-project-version-action@v1
+
       - name: Download Windows artifact
         uses: actions/download-artifact@v4
         with:
@@ -357,45 +319,14 @@ jobs:
           name: Checkers_Android_armv7
           path: android-armv7
           
-      - name: Bump version and create release
-        id: bump_release
+      - name: Create release and tag
         run: |
-          git fetch --tags
-
-          RELEASE_TYPE="${{ github.event.inputs.release_type || 'patch' }}"
-          LATEST_TAG=$(git tag --list '*.*.*' --sort=-version:refname | head -n 1)
-
-          if [ -z "$LATEST_TAG" ]; then
-            # No existing semver tags, start with 0.0.1
-            NEW_TAG="0.0.1"
-          else
-            # Parse the latest tag
-            echo "Latest tag: $LATEST_TAG"
-            IFS='.' read -r MAJOR MINOR PATCH <<< "$LATEST_TAG"
-
-            case $RELEASE_TYPE in
-              major)
-                MAJOR=$((MAJOR + 1))
-                MINOR=0
-                PATCH=0
-                ;;
-              minor)
-                MINOR=$((MINOR + 1))
-                PATCH=0
-                ;;
-              patch)
-                PATCH=$((PATCH + 1))
-                ;;
-            esac
-
-            NEW_TAG="${MAJOR}.${MINOR}.${PATCH}"
-          fi
-
-          echo "Release type: $RELEASE_TYPE"
-          echo "New tag is $NEW_TAG"
-          git tag $NEW_TAG
-          git push origin $NEW_TAG
-          echo "new_tag=$NEW_TAG" >> $GITHUB_ENV
+          VERSION="${{ steps.cmake_version.outputs.version }}"
+          echo "Creating release for version: $VERSION"
+          
+          git tag $VERSION
+          git push origin $VERSION
+          echo "new_tag=$VERSION" >> $GITHUB_ENV
 
       - name: Create GitHub release
         id: create_release

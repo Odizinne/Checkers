@@ -13,6 +13,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Get version from CMake
+        id: cmake_version
+        uses: DarwinInnovation/cmake-project-version-action@v1
+
       - name: Set up Visual Studio shell
         uses: egor-tensin/vs-shell@v2
         with:
@@ -62,30 +66,11 @@ jobs:
           name: Checkers_win64_msvc2022
           path: build/Checkers_win64_msvc2022.zip
       
-      - name: Get current version for installer
-        id: get_version
-        shell: bash
-        run: |
-          git fetch --tags
-          # Get the latest semver tag (no v prefix)
-          LATEST_TAG=$(git tag --list '*.*.*' --sort=-version:refname | head -n 1)
-
-          if [ -z "$LATEST_TAG" ]; then
-            # No existing semver tags, use 0.0.0
-            CURRENT_VERSION="0.0.0"
-          else
-            # Use the current tag version directly
-            CURRENT_VERSION=$LATEST_TAG
-          fi
-
-          echo "Current version: $CURRENT_VERSION"
-          echo "TagVersion=${CURRENT_VERSION}" >> $GITHUB_ENV
-      
       - name: Update .iss version
         shell: pwsh
         run: |
           $content = Get-Content tools/installer.iss
-          $new = $content -replace '(?<=#define AppVersion ")[^"]+', "${{ env.TagVersion }}"
+          $new = $content -replace '(?<=#define AppVersion ")[^"]+', "${{ steps.cmake_version.outputs.version }}"
           Set-Content tools/installer.iss -Value $new
       
       - name: Create Installer

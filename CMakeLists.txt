@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.27)
 
-project(Checkers VERSION 0.1 LANGUAGES CXX)
+project(Checkers VERSION 0.5.1 LANGUAGES CXX)
 
 set(CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}/install" CACHE PATH "Installation directory" FORCE)
 set(CMAKE_CXX_STANDARD 20)
@@ -63,8 +63,14 @@ qt_add_executable(${CMAKE_PROJECT_NAME}
     resources/appicon.rc
 )
 
+configure_file(
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/version.h.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/version.h"
+)
+
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/include
+    ${CMAKE_CURRENT_BINARY_DIR}
 )
 
 qt_add_qml_module(${CMAKE_PROJECT_NAME}
@@ -85,7 +91,7 @@ set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
     QT_ANDROID_APP_ICON "@mipmap/ic_launcher"
     QT_ANDROID_TARGET_SDK_VERSION 34
     QT_ANDROID_MIN_SDK_VERSION 24
-    QT_ANDROID_VERSION_NAME "1.0"
+    QT_ANDROID_VERSION_NAME "${PROJECT_VERSION}"
     QT_ANDROID_VERSION_CODE 1
 )
 

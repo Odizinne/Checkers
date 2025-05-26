@@ -1,4 +1,5 @@
 #include "helper.h"
+#include "version.h"
 #include <QGuiApplication>
 #include <QLocale>
 
@@ -63,4 +64,14 @@ void Helper::changeApplicationLanguage(int languageIndex)
     if (m_engine) {
         m_engine->retranslate();
     }
+}
+
+QString Helper::getAppVersion() const
+{
+    return APP_VERSION_STRING;
+}
+
+QString Helper::getQtVersion() const
+{
+    return QT_VERSION_STRING;
 }
