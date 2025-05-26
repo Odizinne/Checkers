@@ -20,18 +20,6 @@ ApplicationWindow {
 
     onClosing: function(close) {
         if (Qt.platform.os === "android") {
-            if (gameOverPopup.opened) {
-                close.accepted = false
-                gameOverPopup.close()
-                return
-            }
-
-            if (donatePopup.visible) {
-                close.accepted = false
-                donatePopup.close()
-                return
-            }
-
             if (stackView.depth > 1) {
                 close.accepted = false
                 stackView.pop()

@@ -22,23 +22,23 @@
 <context>
     <name>DonatePopup</name>
     <message>
-        <location filename="../qml/DonatePopup.qml" line="21"/>
+        <location filename="../qml/DonatePopup.qml" line="34"/>
         <source>Enjoying the game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DonatePopup.qml" line="30"/>
+        <location filename="../qml/DonatePopup.qml" line="43"/>
         <source>This app is made with care by an independent developer.
 If you&apos;d like to support my work, any contribution would be greatly appreciated!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DonatePopup.qml" line="48"/>
+        <location filename="../qml/DonatePopup.qml" line="61"/>
         <source>Support</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DonatePopup.qml" line="64"/>
+        <location filename="../qml/DonatePopup.qml" line="77"/>
         <source>Maybe later</source>
         <translation type="unfinished"></translation>
     </message>
@@ -46,22 +46,22 @@ If you&apos;d like to support my work, any contribution would be greatly appreci
 <context>
     <name>GameOverPopup</name>
     <message>
-        <location filename="../qml/GameOverPopup.qml" line="16"/>
+        <location filename="../qml/GameOverPopup.qml" line="29"/>
         <source>Winner: White</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/GameOverPopup.qml" line="16"/>
+        <location filename="../qml/GameOverPopup.qml" line="29"/>
         <source>Winner: Black</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/GameOverPopup.qml" line="31"/>
+        <location filename="../qml/GameOverPopup.qml" line="44"/>
         <source>Restart</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/GameOverPopup.qml" line="41"/>
+        <location filename="../qml/GameOverPopup.qml" line="54"/>
         <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
@@ -117,7 +117,7 @@ If you&apos;d like to support my work, any contribution would be greatly appreci
 <context>
     <name>Main</name>
     <message>
-        <location filename="../qml/Main.qml" line="64"/>
+        <location filename="../qml/Main.qml" line="52"/>
         <source>Press back again to exit</source>
         <translation type="unfinished"></translation>
     </message>

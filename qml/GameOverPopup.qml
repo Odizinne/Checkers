@@ -7,6 +7,19 @@ Popup {
     id: gameoverpopup
     modal: true
     visible: false
+    focus: true
+    closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
+
+    Keys.onBackPressed: function(event) {
+        gameoverpopup.close()
+        event.accepted = true
+    }
+
+    onVisibleChanged: {
+        if (!visible) {
+            parent.forceActiveFocus()
+        }
+    }
 
     ColumnLayout {
         anchors.fill: parent

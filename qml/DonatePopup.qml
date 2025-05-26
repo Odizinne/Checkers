@@ -11,6 +11,19 @@ Popup {
     height: implicitHeight + 30
     Material.background: UserSettings.darkMode ? "#1C1C1C" : "#E3E3E3"
     Material.roundedScale: Material.SmallScale
+    focus: true
+    closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
+
+    Keys.onBackPressed: function(event) {
+        donatePopup.close()
+        event.accepted = true
+    }
+
+    onVisibleChanged: {
+        if (!visible) {
+            parent.forceActiveFocus()
+        }
+    }
 
     ColumnLayout {
         anchors.fill: parent

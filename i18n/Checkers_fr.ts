@@ -22,24 +22,24 @@
 <context>
     <name>DonatePopup</name>
     <message>
-        <location filename="../qml/DonatePopup.qml" line="21"/>
+        <location filename="../qml/DonatePopup.qml" line="34"/>
         <source>Enjoying the game?</source>
         <translation>Vous appréciez le jeu ?</translation>
     </message>
     <message>
-        <location filename="../qml/DonatePopup.qml" line="30"/>
+        <location filename="../qml/DonatePopup.qml" line="43"/>
         <source>This app is made with care by an independent developer.
 If you&apos;d like to support my work, any contribution would be greatly appreciated!</source>
         <translation>Cette application est créée avec soin par une développeuse indépendante.
 Si vous souhaitez soutenir mon travail, toute contribution serait grandement appréciée !</translation>
     </message>
     <message>
-        <location filename="../qml/DonatePopup.qml" line="48"/>
+        <location filename="../qml/DonatePopup.qml" line="61"/>
         <source>Support</source>
         <translation>Soutenir</translation>
     </message>
     <message>
-        <location filename="../qml/DonatePopup.qml" line="64"/>
+        <location filename="../qml/DonatePopup.qml" line="77"/>
         <source>Maybe later</source>
         <translation>Peut-être plus tard</translation>
     </message>
@@ -47,22 +47,22 @@ Si vous souhaitez soutenir mon travail, toute contribution serait grandement app
 <context>
     <name>GameOverPopup</name>
     <message>
-        <location filename="../qml/GameOverPopup.qml" line="16"/>
+        <location filename="../qml/GameOverPopup.qml" line="29"/>
         <source>Winner: White</source>
         <translation>Gagnant : Blancs</translation>
     </message>
     <message>
-        <location filename="../qml/GameOverPopup.qml" line="16"/>
+        <location filename="../qml/GameOverPopup.qml" line="29"/>
         <source>Winner: Black</source>
         <translation>Gagnant : Noirs</translation>
     </message>
     <message>
-        <location filename="../qml/GameOverPopup.qml" line="31"/>
+        <location filename="../qml/GameOverPopup.qml" line="44"/>
         <source>Restart</source>
         <translation>Recommencer</translation>
     </message>
     <message>
-        <location filename="../qml/GameOverPopup.qml" line="41"/>
+        <location filename="../qml/GameOverPopup.qml" line="54"/>
         <source>Close</source>
         <translation>Fermer</translation>
     </message>
@@ -118,7 +118,7 @@ Si vous souhaitez soutenir mon travail, toute contribution serait grandement app
 <context>
     <name>Main</name>
     <message>
-        <location filename="../qml/Main.qml" line="64"/>
+        <location filename="../qml/Main.qml" line="52"/>
         <source>Press back again to exit</source>
         <translation>Appuyez une nouvelle fois pour quitter</translation>
     </message>
