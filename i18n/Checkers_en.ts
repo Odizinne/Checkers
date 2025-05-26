@@ -9,12 +9,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/AboutPage.qml" line="58"/>
+        <location filename="../qml/AboutPage.qml" line="62"/>
         <source>by Odizinne</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/AboutPage.qml" line="66"/>
+        <location filename="../qml/AboutPage.qml" line="70"/>
         <source>A classic checkers game built with Qt</source>
         <translation type="unfinished"></translation>
     </message>
