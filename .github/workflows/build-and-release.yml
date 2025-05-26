@@ -294,7 +294,7 @@ jobs:
 
       - name: Get version from CMake
         id: cmake_version
-        uses: DarwinInnovation/cmake-project-version-action@v1
+        uses: DarwinInnovation/cmake-project-version-action@v1.0
 
       - name: Download Windows artifact
         uses: actions/download-artifact@v4
