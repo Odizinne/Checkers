@@ -69,47 +69,47 @@ If you&apos;d like to support my work, any contribution would be greatly appreci
 <context>
     <name>GamePage</name>
     <message>
-        <location filename="../qml/GamePage.qml" line="76"/>
+        <location filename="../qml/GamePage.qml" line="62"/>
         <source>Winner: White</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/GamePage.qml" line="76"/>
+        <location filename="../qml/GamePage.qml" line="62"/>
         <source>Winner: Black</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/GamePage.qml" line="77"/>
+        <location filename="../qml/GamePage.qml" line="63"/>
         <source>White Turn</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/GamePage.qml" line="77"/>
+        <location filename="../qml/GamePage.qml" line="63"/>
         <source>Black Turn</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/GamePage.qml" line="240"/>
+        <location filename="../qml/GamePage.qml" line="212"/>
         <source>New game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/GamePage.qml" line="253"/>
+        <location filename="../qml/GamePage.qml" line="225"/>
         <source>Rules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/GamePage.qml" line="266"/>
+        <location filename="../qml/GamePage.qml" line="238"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/GamePage.qml" line="279"/>
+        <location filename="../qml/GamePage.qml" line="251"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/GamePage.qml" line="292"/>
+        <location filename="../qml/GamePage.qml" line="264"/>
         <source>Support me</source>
         <translation type="unfinished"></translation>
     </message>

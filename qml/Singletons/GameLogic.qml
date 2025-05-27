@@ -69,6 +69,8 @@ QtObject {
     function initializeBoard() {
         if (!boardModel || !piecesModel) return
 
+        let sizeChanged = boardModel.count !== boardSize * boardSize
+
         // Clear undo state
         lastMove = null
         canUndo = false
@@ -76,21 +78,34 @@ QtObject {
         // Start reset animation
         isResetting = true
 
-        // Clear captured pieces immediately so footer fades out
+        // Clear captured pieces immediately
         capturedWhitePieces = []
         capturedBlackPieces = []
         capturedWhiteCount = 0
         capturedBlackCount = 0
 
-        boardModel.clear()
-        piecesModel.clear()
 
-        // After fade out completes, rebuild the board
+        if (sizeChanged) {
+            boardModel.clear() // Only clear when size changes
+        }
+
         resetTimer.start()
     }
 
     function rebuildBoard() {
-        boardModel.clear()
+        // Only rebuild board squares if model was cleared (size changed)
+        if (boardModel.count === 0) {
+            for (let row = 0; row < boardSize; row++) {
+                for (let col = 0; col < boardSize; col++) {
+                    boardModel.append({
+                        row: row,
+                        col: col
+                    })
+                }
+            }
+        }
+
+        // Always clear and rebuild pieces
         piecesModel.clear()
 
         let player1Count = 0
@@ -98,11 +113,6 @@ QtObject {
 
         for (let row = 0; row < boardSize; row++) {
             for (let col = 0; col < boardSize; col++) {
-                boardModel.append({
-                    row: row,
-                    col: col
-                })
-
                 // Only place pieces on dark squares (where row + col is odd)
                 if ((row + col) % 2 === 1) {
                     // 8x8 board setup (3 rows each side, 12 pieces per player)

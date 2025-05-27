@@ -27,20 +27,6 @@ Page {
         id: headerBar
         Material.background: UserSettings.darkMode ? "#2B2B2B" : "#FFFFFF"
         property bool hasShown: false
-        opacity: hasShown ? 1 : (board.allItemsCreated ? 1 : 0)
-
-        Behavior on opacity {
-            NumberAnimation {
-                duration: 400
-                easing.type: Easing.OutQuad
-            }
-        }
-
-        onOpacityChanged: {
-            if (opacity === 1 && board.allItemsCreated) {
-                hasShown = true
-            }
-        }
 
         Row {
             anchors.left: parent.left
@@ -52,7 +38,7 @@ Page {
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
                 icon.source: "qrc:/icons/menu.svg"
-                icon.color: UserSettings.darkMode ? "white" : "black"
+                Material.foreground: UserSettings.darkMode ? "white" : "black"
                 onClicked: menu.visible = true
                 icon.width: 18
                 icon.height: 18
@@ -62,13 +48,13 @@ Page {
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
                 icon.source: "qrc:/icons/undo.svg"
-                icon.color: UserSettings.darkMode ? "white" : "black"
+                Material.foreground: UserSettings.darkMode ? "white" : "black"
                 onClicked: GameLogic.undoLastMove()
                 icon.width: 18
                 icon.height: 18
                 enabled: GameLogic.canUndo && !GameLogic.gameOver && !GameLogic.animating
                 visible: !UserSettings.vsAI
-                opacity: enabled ? 1.0 : 0.3
+                //  opacity: enabled ? 1.0 : 0.3
             }
         }
 
@@ -109,20 +95,6 @@ Page {
         id: footerBar
         Material.background: UserSettings.darkMode ? "#2B2B2B" : "#FFFFFF"
         property bool hasShown: false
-        opacity: hasShown ? 1 : (board.allItemsCreated ? 1 : 0)
-
-        Behavior on opacity {
-            NumberAnimation {
-                duration: 400
-                easing.type: Easing.OutQuad
-            }
-        }
-
-        onOpacityChanged: {
-            if (opacity === 1 && board.allItemsCreated) {
-                hasShown = true
-            }
-        }
 
         Item {
             anchors.fill: parent
