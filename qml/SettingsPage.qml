@@ -10,6 +10,8 @@ Page {
     signal navigateBack()
     signal navigateToEasterEgg()
 
+    property int delegateHeight: 60
+
     header: ToolBar {
         Material.elevation: 6
         Material.background: UserSettings.darkMode ? "#2B2B2B" : "#FFFFFF"
@@ -47,21 +49,17 @@ Page {
                 anchors.left: parent.left
                 anchors.leftMargin: 16
                 text: qsTr("Custom Rules")
-                font.pixelSize: 16
-                font.bold: true
+                font.pixelSize: 14
+                opacity: 0.6
                 height: 48
                 verticalAlignment: Text.AlignBottom
                 bottomPadding: 8
                 color: UserSettings.darkMode ? "white" : "black"
             }
 
-            MenuSeparator {
-                width: parent.width
-            }
-
             SwitchDelegate {
                 width: parent.width
-                height: 72
+                height: settingsPage.delegateHeight
                 text: " "
                 checked: UserSettings.allowBackwardCaptures
                 onClicked: {
@@ -77,14 +75,12 @@ Page {
 
                     Label {
                         text: qsTr("Backward Captures")
-                        font.pixelSize: 16
                         color: UserSettings.darkMode ? "white" : "black"
                     }
 
                     Label {
                         text: qsTr("Regular pieces can capture backward")
-                        opacity: 0.7
-                        font.pixelSize: 12
+                        opacity: 0.6
                         color: UserSettings.darkMode ? "white" : "black"
                     }
                 }
@@ -92,7 +88,7 @@ Page {
 
             SwitchDelegate {
                 width: parent.width
-                height: 72
+                height: settingsPage.delegateHeight
                 text: " "
                 checked: UserSettings.optionalCaptures
                 onClicked: {
@@ -108,14 +104,12 @@ Page {
 
                     Label {
                         text: qsTr("Optional Captures")
-                        font.pixelSize: 16
                         color: UserSettings.darkMode ? "white" : "black"
                     }
 
                     Label {
                         text: qsTr("Players can choose not to capture")
-                        opacity: 0.7
-                        font.pixelSize: 12
+                        opacity: 0.6
                         color: UserSettings.darkMode ? "white" : "black"
                     }
                 }
@@ -123,7 +117,7 @@ Page {
 
             SwitchDelegate {
                 width: parent.width
-                height: 72
+                height: settingsPage.delegateHeight
                 text: " "
                 checked: UserSettings.kingFastForward
                 onClicked: {
@@ -139,22 +133,19 @@ Page {
 
                     Label {
                         text: qsTr("King Fast Forward")
-                        font.pixelSize: 16
                         color: UserSettings.darkMode ? "white" : "black"
                     }
 
                     Label {
                         text: qsTr("Kings move freely diagonally")
-                        opacity: 0.7
-                        font.pixelSize: 12
+                        opacity: 0.6
                         color: UserSettings.darkMode ? "white" : "black"
                     }
                 }
             }
 
-            Item {
+            MenuSeparator {
                 width: parent.width
-                height: 16
             }
 
             Label {
@@ -162,37 +153,34 @@ Page {
                 anchors.left: parent.left
                 anchors.leftMargin: 16
                 text: qsTr("Board Settings")
-                font.pixelSize: 16
-                font.bold: true
+                font.pixelSize: 14
+                opacity: 0.6
                 height: 48
                 verticalAlignment: Text.AlignBottom
                 bottomPadding: 8
                 color: UserSettings.darkMode ? "white" : "black"
             }
 
-            MenuSeparator {
-                width: parent.width
-            }
-
             ItemDelegate {
                 width: parent.width
-                height: 72
+                height: settingsPage.delegateHeight
                 text: qsTr("Board size")
                 onClicked: boardSizeDialog.open()
+                font.bold: false
 
                 Label {
                     anchors.right: parent.right
                     anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
                     text: UserSettings.boardSize + "x" + UserSettings.boardSize
-                    opacity: 0.7
+                    opacity: 0.6
                     color: UserSettings.darkMode ? "white" : "black"
                 }
             }
 
             SwitchDelegate {
                 width: parent.width
-                height: 72
+                height: settingsPage.delegateHeight
                 text: qsTr("Show hints")
                 checked: UserSettings.showHints
                 onClicked: UserSettings.showHints = checked
@@ -200,15 +188,14 @@ Page {
 
             SwitchDelegate {
                 width: parent.width
-                height: 72
+                height: settingsPage.delegateHeight
                 text: qsTr("Wood texture")
                 checked: UserSettings.enableWood
                 onClicked: UserSettings.enableWood = checked
             }
 
-            Item {
+            MenuSeparator {
                 width: parent.width
-                height: 16
             }
 
             Label {
@@ -216,23 +203,20 @@ Page {
                 anchors.left: parent.left
                 anchors.leftMargin: 16
                 text: qsTr("Application Settings")
-                font.pixelSize: 16
-                font.bold: true
+                font.pixelSize: 14
+                opacity: 0.6
                 height: 48
                 verticalAlignment: Text.AlignBottom
                 bottomPadding: 8
                 color: UserSettings.darkMode ? "white" : "black"
             }
 
-            MenuSeparator {
-                width: parent.width
-            }
-
             ItemDelegate {
                 width: parent.width
-                height: 72
+                height: settingsPage.delegateHeight
                 text: qsTr("Language")
                 onClicked: languageDialog.open()
+                font.bold: false
 
                 Label {
                     anchors.right: parent.right
@@ -246,14 +230,14 @@ Page {
                         default: return "English"
                         }
                     }
-                    opacity: 0.7
+                    opacity: 0.6
                     color: UserSettings.darkMode ? "white" : "black"
                 }
             }
 
             Item {
                 width: parent.width
-                height: 72
+                height: settingsPage.delegateHeight
 
                 Row {
                     anchors.fill: parent
@@ -282,7 +266,7 @@ Page {
             SwitchDelegate {
                 id: darkModeSwitch
                 width: parent.width
-                height: 72
+                height: settingsPage.delegateHeight
                 text: qsTr("Dark mode")
                 checked: UserSettings.darkMode
                 onClicked: UserSettings.darkMode = checked
@@ -336,9 +320,8 @@ Page {
                 }
             }
 
-            Item {
+            MenuSeparator {
                 width: parent.width
-                height: 16
             }
 
             Label {
@@ -346,21 +329,17 @@ Page {
                 anchors.left: parent.left
                 anchors.leftMargin: 16
                 text: qsTr("Informations")
-                font.pixelSize: 16
-                font.bold: true
+                font.pixelSize: 14
+                opacity: 0.6
                 height: 48
                 verticalAlignment: Text.AlignBottom
                 bottomPadding: 8
                 color: UserSettings.darkMode ? "white" : "black"
             }
 
-            MenuSeparator {
-                width: parent.width
-            }
-
             ItemDelegate {
                 width: parent.width
-                height: 72
+                height: settingsPage.delegateHeight
                 text: qsTr("App Version")
                 onClicked: {
                     if (Qt.platform.os === "android") {
@@ -378,7 +357,7 @@ Page {
                     anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
                     text: Helper.getAppVersion()
-                    opacity: 0.7
+                    opacity: 0.6
                     color: UserSettings.darkMode ? "white" : "black"
                 }
 
@@ -391,7 +370,7 @@ Page {
 
             ItemDelegate {
                 width: parent.width
-                height: 72
+                height: settingsPage.delegateHeight
                 text: qsTr("Qt Version")
                 onClicked: {
                     return
@@ -402,14 +381,14 @@ Page {
                     anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
                     text: Helper.getQtVersion()
-                    opacity: 0.7
+                    opacity: 0.6
                     color: UserSettings.darkMode ? "white" : "black"
                 }
             }
 
             ItemDelegate {
                 width: parent.width
-                height: 72
+                height: settingsPage.delegateHeight
                 text: qsTr("Credits")
                 onClicked: {
                     creditsDialog.open()
