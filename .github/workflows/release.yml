@@ -56,7 +56,17 @@ jobs:
           name: Checkers_Android_armv7
           run_id: ${{ inputs.workflow_run_id }}
           if_no_artifact_found: fail
-          
+
+      - name: Download Linux artifact
+        uses: dawidd6/action-download-artifact@v9
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          workflow: build.yml
+          workflow_conclusion: success
+          name: Checkers_linux64_gcc
+          run_id: ${{ inputs.workflow_run_id }}
+          if_no_artifact_found: fail
+
       - name: Create release and tag
         run: |
           VERSION="${{ steps.cmake_version.outputs.version }}"
@@ -114,5 +124,15 @@ jobs:
           asset_path: Checkers_armv7.apk
           asset_name: Checkers_armeabi-v7a.apk
           asset_content_type: application/vnd.android.package-archive
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload Linux release asset
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: Checkers_linux64_gcc.zip
+          asset_name: Checkers_linux64_gcc.zip
+          asset_content_type: application/zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
