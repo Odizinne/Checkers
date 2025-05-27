@@ -4,17 +4,17 @@
 <context>
     <name>AboutPage</name>
     <message>
-        <location filename="../qml/AboutPage.qml" line="27"/>
+        <location filename="../qml/Pages/AboutPage.qml" line="27"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/AboutPage.qml" line="62"/>
+        <location filename="../qml/Pages/AboutPage.qml" line="62"/>
         <source>by Odizinne</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/AboutPage.qml" line="70"/>
+        <location filename="../qml/Pages/AboutPage.qml" line="70"/>
         <source>A classic checkers game built with Qt</source>
         <translation type="unfinished"></translation>
     </message>
@@ -69,47 +69,47 @@ If you&apos;d like to support my work, any contribution would be greatly appreci
 <context>
     <name>GamePage</name>
     <message>
-        <location filename="../qml/GamePage.qml" line="62"/>
+        <location filename="../qml/Pages/GamePage.qml" line="62"/>
         <source>Winner: White</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/GamePage.qml" line="62"/>
+        <location filename="../qml/Pages/GamePage.qml" line="62"/>
         <source>Winner: Black</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/GamePage.qml" line="63"/>
+        <location filename="../qml/Pages/GamePage.qml" line="63"/>
         <source>White Turn</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/GamePage.qml" line="63"/>
+        <location filename="../qml/Pages/GamePage.qml" line="63"/>
         <source>Black Turn</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/GamePage.qml" line="212"/>
+        <location filename="../qml/Pages/GamePage.qml" line="212"/>
         <source>New game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/GamePage.qml" line="225"/>
+        <location filename="../qml/Pages/GamePage.qml" line="225"/>
         <source>Rules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/GamePage.qml" line="238"/>
+        <location filename="../qml/Pages/GamePage.qml" line="238"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/GamePage.qml" line="251"/>
+        <location filename="../qml/Pages/GamePage.qml" line="251"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/GamePage.qml" line="264"/>
+        <location filename="../qml/Pages/GamePage.qml" line="264"/>
         <source>Support me</source>
         <translation type="unfinished"></translation>
     </message>
@@ -125,12 +125,12 @@ If you&apos;d like to support my work, any contribution would be greatly appreci
 <context>
     <name>RulesPage</name>
     <message>
-        <location filename="../qml/RulesPage.qml" line="28"/>
+        <location filename="../qml/Pages/RulesPage.qml" line="28"/>
         <source>How to play Checkers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/RulesPage.qml" line="62"/>
+        <location filename="../qml/Pages/RulesPage.qml" line="62"/>
         <source>&lt;h2&gt;Objective&lt;/h2&gt;
                            &lt;p&gt;Capture all of your opponent&apos;s pieces or block them so they cannot move.&lt;/p&gt;
                            &lt;h3&gt;Game Elements&lt;/h3&gt;
@@ -157,115 +157,115 @@ If you&apos;d like to support my work, any contribution would be greatly appreci
 <context>
     <name>SettingsPage</name>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="30"/>
+        <location filename="../qml/Pages/SettingsPage.qml" line="30"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="51"/>
+        <location filename="../qml/Pages/SettingsPage.qml" line="51"/>
         <source>Custom Rules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="77"/>
+        <location filename="../qml/Pages/SettingsPage.qml" line="77"/>
         <source>Backward Captures</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="82"/>
+        <location filename="../qml/Pages/SettingsPage.qml" line="82"/>
         <source>Regular pieces can capture backward</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="106"/>
+        <location filename="../qml/Pages/SettingsPage.qml" line="106"/>
         <source>Optional Captures</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="111"/>
+        <location filename="../qml/Pages/SettingsPage.qml" line="111"/>
         <source>Players can choose not to capture</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="135"/>
+        <location filename="../qml/Pages/SettingsPage.qml" line="135"/>
         <source>King Fast Forward</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="140"/>
+        <location filename="../qml/Pages/SettingsPage.qml" line="140"/>
         <source>Kings move freely diagonally</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="155"/>
+        <location filename="../qml/Pages/SettingsPage.qml" line="155"/>
         <source>Board Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="167"/>
-        <location filename="../qml/SettingsPage.qml" line="403"/>
+        <location filename="../qml/Pages/SettingsPage.qml" line="167"/>
+        <location filename="../qml/Pages/SettingsPage.qml" line="403"/>
         <source>Board size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="184"/>
+        <location filename="../qml/Pages/SettingsPage.qml" line="184"/>
         <source>Show hints</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="192"/>
+        <location filename="../qml/Pages/SettingsPage.qml" line="192"/>
         <source>Wood texture</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="205"/>
+        <location filename="../qml/Pages/SettingsPage.qml" line="205"/>
         <source>Application Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="217"/>
-        <location filename="../qml/SettingsPage.qml" line="431"/>
+        <location filename="../qml/Pages/SettingsPage.qml" line="217"/>
+        <location filename="../qml/Pages/SettingsPage.qml" line="431"/>
         <source>Language</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="227"/>
-        <location filename="../qml/SettingsPage.qml" line="436"/>
+        <location filename="../qml/Pages/SettingsPage.qml" line="227"/>
+        <location filename="../qml/Pages/SettingsPage.qml" line="436"/>
         <source>System</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="249"/>
+        <location filename="../qml/Pages/SettingsPage.qml" line="249"/>
         <source>Volume</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="270"/>
+        <location filename="../qml/Pages/SettingsPage.qml" line="270"/>
         <source>Dark mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="331"/>
+        <location filename="../qml/Pages/SettingsPage.qml" line="331"/>
         <source>Informations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="343"/>
+        <location filename="../qml/Pages/SettingsPage.qml" line="343"/>
         <source>App Version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="374"/>
+        <location filename="../qml/Pages/SettingsPage.qml" line="374"/>
         <source>Qt Version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="392"/>
+        <location filename="../qml/Pages/SettingsPage.qml" line="392"/>
         <source>Credits</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/SettingsPage.qml" line="468"/>
+        <location filename="../qml/Pages/SettingsPage.qml" line="468"/>
         <source>Icons from:</source>
         <translation type="unfinished"></translation>
     </message>

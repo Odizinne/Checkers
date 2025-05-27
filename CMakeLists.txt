@@ -37,12 +37,12 @@ set(QML_FILES
     qml/Piece.qml
     qml/ScrollingArea.qml
     qml/DonatePopup.qml
-    qml/GamePage.qml
-    qml/SettingsPage.qml
-    qml/AboutPage.qml
-    qml/RulesPage.qml
-    qml/EasterEGGPage.qml
-    qml/SplashPage.qml
+    qml/Pages/GamePage.qml
+    qml/Pages/SettingsPage.qml
+    qml/Pages/AboutPage.qml
+    qml/Pages/RulesPage.qml
+    qml/Pages/EasterEGGPage.qml
+    qml/Pages/SplashPage.qml
 )
 
 set(QML_SINGLETONS
