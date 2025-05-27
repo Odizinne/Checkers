@@ -28,9 +28,9 @@
     </message>
     <message>
         <location filename="../qml/DonatePopup.qml" line="43"/>
-        <source>This app is made with care by an independent developer.
+        <source>This app is made with care by an independent developer and is not financed by ad revenue.
 If you&apos;d like to support my work, any contribution would be greatly appreciated!</source>
-        <translation>Cette application est créée avec soin par une développeuse indépendante.
+        <translation>Cette application est créée avec soin par une développeuse indépendante et n&apos;est pas financée par des revenus publicitaires.
 Si vous souhaitez soutenir mon travail, toute contribution serait grandement appréciée !</translation>
     </message>
     <message>
@@ -267,27 +267,27 @@ Si vous souhaitez soutenir mon travail, toute contribution serait grandement app
     <message>
         <location filename="../qml/Pages/SettingsPage.qml" line="331"/>
         <source>Informations</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../qml/Pages/SettingsPage.qml" line="343"/>
         <source>App Version</source>
-        <translation type="unfinished"></translation>
+        <translation>Version de l&apos;application</translation>
     </message>
     <message>
         <location filename="../qml/Pages/SettingsPage.qml" line="374"/>
         <source>Qt Version</source>
-        <translation type="unfinished"></translation>
+        <translation>Version de Qt</translation>
     </message>
     <message>
         <location filename="../qml/Pages/SettingsPage.qml" line="392"/>
         <source>Credits</source>
-        <translation type="unfinished"></translation>
+        <translation>Crédits</translation>
     </message>
     <message>
         <location filename="../qml/Pages/SettingsPage.qml" line="468"/>
         <source>Icons from:</source>
-        <translation type="unfinished"></translation>
+        <translation>Icones faites par:</translation>
     </message>
 </context>
 </TS>

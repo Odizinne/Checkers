@@ -40,7 +40,7 @@ Popup {
         }
 
         Label {
-            text: qsTr("This app is made with care by an independent developer.\nIf you'd like to support my work, any contribution would be greatly appreciated!")
+            text: qsTr("This app is made with care by an independent developer and is not financed by ad revenue.\nIf you'd like to support my work, any contribution would be greatly appreciated!")
             Layout.fillWidth: true
             font.pixelSize: 14
             horizontalAlignment: Text.AlignHCenter

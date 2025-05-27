@@ -28,7 +28,7 @@
     </message>
     <message>
         <location filename="../qml/DonatePopup.qml" line="43"/>
-        <source>This app is made with care by an independent developer.
+        <source>This app is made with care by an independent developer and is not financed by ad revenue.
 If you&apos;d like to support my work, any contribution would be greatly appreciated!</source>
         <translation type="unfinished"></translation>
     </message>
