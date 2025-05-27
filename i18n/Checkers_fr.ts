@@ -118,7 +118,7 @@ Si vous souhaitez soutenir mon travail, toute contribution serait grandement app
 <context>
     <name>Main</name>
     <message>
-        <location filename="../qml/Main.qml" line="52"/>
+        <location filename="../qml/Main.qml" line="56"/>
         <source>Press back again to exit</source>
         <translation>Appuyez une nouvelle fois pour quitter</translation>
     </message>

@@ -18,6 +18,10 @@ ApplicationWindow {
 
     property bool backPressedOnce: false
 
+    // Create models at app level
+    ListModel { id: globalBoardModel }
+    ListModel { id: globalPiecesModel }
+
     onClosing: function(close) {
         if (Qt.platform.os === "android") {
             if (stackView.depth > 1) {
@@ -77,13 +81,14 @@ ApplicationWindow {
 
         onNavigateToGame: {
             stackView.replace(gamePage)
-            GameLogic.initializeBoard()
         }
     }
 
     GamePage {
         id: gamePage
         visible: false
+        boardModel: globalBoardModel
+        piecesModel: globalPiecesModel
 
         onNavigateToSettings: stackView.push(settingsPage)
         onNavigateToRules: stackView.push(rulesPage)
@@ -154,5 +159,13 @@ ApplicationWindow {
     Component.onCompleted: {
         Helper.changeApplicationLanguage(UserSettings.languageIndex)
         AudioEngine.playSilent()
+
+        // Set up GameLogic models immediately
+        GameLogic.boardModel = globalBoardModel
+        GameLogic.piecesModel = globalPiecesModel
+        GameLogic.cellSize = 80 // Default size
+
+        // Initialize the board
+        GameLogic.initializeBoard()
     }
 }

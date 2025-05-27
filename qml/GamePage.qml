@@ -9,8 +9,8 @@ Page {
     id: gamePage
     Material.background: UserSettings.darkMode ? "#1C1C1C" : "#E3E3E3"
 
-    property alias boardModel: boardModel
-    property alias piecesModel: piecesModel
+    property var boardModel: null
+    property var piecesModel: null
 
     readonly property bool isPortrait: height > width
     readonly property real scaleFactor: Math.max(Screen.pixelDensity / 6, 1.2)
@@ -287,35 +287,29 @@ Page {
         color: "transparent"
         anchors.centerIn: parent
 
-        ListModel {
-            id: boardModel
-        }
-
-        ListModel {
-            id: piecesModel
-        }
-
         Component.onCompleted: {
-            GameLogic.boardModel = boardModel
-            GameLogic.piecesModel = piecesModel
+            // Update cell size when GamePage is ready
             GameLogic.cellSize = gamePage.cellSize
         }
 
         onWidthChanged: {
             GameLogic.isResizing = true
             GameLogic.cellSize = gamePage.cellSize
-            for (let i = 0; i < piecesModel.count; i++) {
-                let piece = piecesModel.get(i)
-                piecesModel.set(i, {
-                    id: piece.id,
-                    row: piece.row,
-                    col: piece.col,
-                    player: piece.player,
-                    isKing: piece.isKing,
-                    isAlive: piece.isAlive,
-                    x: piece.col * GameLogic.cellSize + GameLogic.cellSize / 2,
-                    y: piece.row * GameLogic.cellSize + GameLogic.cellSize / 2
-                })
+
+            if (gamePage.piecesModel) {
+                for (let i = 0; i < gamePage.piecesModel.count; i++) {
+                    let piece = gamePage.piecesModel.get(i)
+                    gamePage.piecesModel.set(i, {
+                        id: piece.id,
+                        row: piece.row,
+                        col: piece.col,
+                        player: piece.player,
+                        isKing: piece.isKing,
+                        isAlive: piece.isAlive,
+                        x: piece.col * GameLogic.cellSize + GameLogic.cellSize / 2,
+                        y: piece.row * GameLogic.cellSize + GameLogic.cellSize / 2
+                    })
+                }
             }
             Qt.callLater(function() { GameLogic.isResizing = false })
         }
@@ -332,7 +326,7 @@ Page {
             anchors.centerIn: parent
 
             Repeater {
-                model: piecesModel
+                model: gamePage.piecesModel
                 Piece {}
             }
         }
@@ -343,18 +337,20 @@ Page {
         function onBoardSizeChanged() {
             GameLogic.cellSize = gamePage.cellSize
 
-            for (let i = 0; i < piecesModel.count; i++) {
-                let piece = piecesModel.get(i)
-                piecesModel.set(i, {
-                    id: piece.id,
-                    row: piece.row,
-                    col: piece.col,
-                    player: piece.player,
-                    isKing: piece.isKing,
-                    isAlive: piece.isAlive,
-                    x: piece.col * GameLogic.cellSize + GameLogic.cellSize / 2,
-                    y: piece.row * GameLogic.cellSize + GameLogic.cellSize / 2
-                })
+            if (gamePage.piecesModel) {
+                for (let i = 0; i < gamePage.piecesModel.count; i++) {
+                    let piece = gamePage.piecesModel.get(i)
+                    gamePage.piecesModel.set(i, {
+                        id: piece.id,
+                        row: piece.row,
+                        col: piece.col,
+                        player: piece.player,
+                        isKing: piece.isKing,
+                        isAlive: piece.isAlive,
+                        x: piece.col * GameLogic.cellSize + GameLogic.cellSize / 2,
+                        y: piece.row * GameLogic.cellSize + GameLogic.cellSize / 2
+                    })
+                }
             }
         }
     }
