@@ -64,21 +64,13 @@ Rectangle {
     // Board squares
     Grid {
         id: grid
-        rows: board.currentBoardSize    // Use the stable board size
-        columns: board.currentBoardSize // Use the stable board size
-        opacity: board.allItemsCreated ? 1 : 0
+        rows: board.currentBoardSize
+        columns: board.currentBoardSize
 
         readonly property int cellSize: Math.floor(board.width / board.currentBoardSize)
         width: cellSize * board.currentBoardSize
         height: cellSize * board.currentBoardSize
         anchors.centerIn: parent
-
-        Behavior on opacity {
-            NumberAnimation {
-                duration: 400
-                easing.type: Easing.OutQuad
-            }
-        }
 
         Repeater {
             model: GameLogic.boardModel

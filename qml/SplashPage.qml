@@ -2,17 +2,11 @@ import QtQuick
 import QtQuick.Controls.Material
 import Odizinne.Checkers
 
-Item {
-    opacity: 0
-    id: splashScreen
-    layer.enabled: true
-    z: 1000
-    onOpacityChanged: {
-        if (splashScreen.opacity === 1) {
-            hideTimer.start()
-            progressAnimation.start()
-        }
-    }
+Page {
+    id: splashPage
+    Material.background: UserSettings.darkMode ? "#1C1C1C" : "#E3E3E3"
+    
+    signal navigateToGame()
 
     FontLoader {
         id: jbBold
@@ -22,13 +16,6 @@ Item {
     FontLoader {
         id: jbLight
         source: "qrc:/fonts/JetBrainsMonoNL-Light.ttf"
-    }
-
-    Behavior on opacity {
-        NumberAnimation {
-            duration: 400
-            easing.type: Easing.OutQuad
-        }
     }
 
     Rectangle {
@@ -107,10 +94,14 @@ Item {
         id: hideTimer
         interval: 2000
         repeat: false
-        running: false
+        running: true
         onTriggered: {
-            splashScreen.opacity = 0
-            GameLogic.initializeBoard()
+            splashPage.navigateToGame()
         }
+    }
+
+    Component.onCompleted: {
+        hideTimer.start()
+        progressAnimation.start()
     }
 }

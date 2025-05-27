@@ -68,7 +68,17 @@ ApplicationWindow {
     StackView {
         id: stackView
         anchors.fill: parent
-        initialItem: gamePage
+        initialItem: splashPage
+    }
+
+    SplashPage {
+        id: splashPage
+        visible: false
+
+        onNavigateToGame: {
+            stackView.replace(gamePage)
+            GameLogic.initializeBoard()
+        }
     }
 
     GamePage {
@@ -144,11 +154,5 @@ ApplicationWindow {
     Component.onCompleted: {
         Helper.changeApplicationLanguage(UserSettings.languageIndex)
         AudioEngine.playSilent()
-        splashScreen.opacity = 1
-    }
-
-    SplashScreen {
-        id: splashScreen
-        anchors.fill: parent
     }
 }

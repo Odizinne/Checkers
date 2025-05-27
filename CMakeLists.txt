@@ -36,13 +36,13 @@ set(QML_FILES
     qml/GameOverPopup.qml
     qml/Piece.qml
     qml/ScrollingArea.qml
-    qml/SplashScreen.qml
     qml/DonatePopup.qml
     qml/GamePage.qml
     qml/SettingsPage.qml
     qml/AboutPage.qml
     qml/RulesPage.qml
     qml/EasterEGGPage.qml
+    qml/SplashPage.qml
 )
 
 set(QML_SINGLETONS
