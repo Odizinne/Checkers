@@ -203,7 +203,7 @@ If you&apos;d like to support my work, any contribution would be greatly appreci
     </message>
     <message>
         <location filename="../qml/Pages/SettingsPage.qml" line="167"/>
-        <location filename="../qml/Pages/SettingsPage.qml" line="403"/>
+        <location filename="../qml/Pages/SettingsPage.qml" line="411"/>
         <source>Board size</source>
         <translation type="unfinished"></translation>
     </message>
@@ -218,54 +218,59 @@ If you&apos;d like to support my work, any contribution would be greatly appreci
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/Pages/SettingsPage.qml" line="205"/>
+        <location filename="../qml/Pages/SettingsPage.qml" line="200"/>
+        <source>Missclick correction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/Pages/SettingsPage.qml" line="213"/>
         <source>Application Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/Pages/SettingsPage.qml" line="217"/>
-        <location filename="../qml/Pages/SettingsPage.qml" line="431"/>
+        <location filename="../qml/Pages/SettingsPage.qml" line="225"/>
+        <location filename="../qml/Pages/SettingsPage.qml" line="439"/>
         <source>Language</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/Pages/SettingsPage.qml" line="227"/>
-        <location filename="../qml/Pages/SettingsPage.qml" line="436"/>
+        <location filename="../qml/Pages/SettingsPage.qml" line="235"/>
+        <location filename="../qml/Pages/SettingsPage.qml" line="444"/>
         <source>System</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/Pages/SettingsPage.qml" line="249"/>
+        <location filename="../qml/Pages/SettingsPage.qml" line="257"/>
         <source>Volume</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/Pages/SettingsPage.qml" line="270"/>
+        <location filename="../qml/Pages/SettingsPage.qml" line="278"/>
         <source>Dark mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/Pages/SettingsPage.qml" line="331"/>
+        <location filename="../qml/Pages/SettingsPage.qml" line="339"/>
         <source>Informations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/Pages/SettingsPage.qml" line="343"/>
+        <location filename="../qml/Pages/SettingsPage.qml" line="351"/>
         <source>App Version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/Pages/SettingsPage.qml" line="374"/>
+        <location filename="../qml/Pages/SettingsPage.qml" line="382"/>
         <source>Qt Version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/Pages/SettingsPage.qml" line="392"/>
+        <location filename="../qml/Pages/SettingsPage.qml" line="400"/>
         <source>Credits</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/Pages/SettingsPage.qml" line="468"/>
+        <location filename="../qml/Pages/SettingsPage.qml" line="476"/>
         <source>Icons from:</source>
         <translation type="unfinished"></translation>
     </message>

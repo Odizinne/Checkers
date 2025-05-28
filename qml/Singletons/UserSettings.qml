@@ -1,5 +1,6 @@
 pragma Singleton
 import QtCore
+import QtQuick
 
 Settings {
     property bool darkMode: true
@@ -17,4 +18,5 @@ Settings {
     property int languageIndex: 0
     property bool showDonate: true
     property int totalGames: 0
+    property bool missClickCorrection: Qt.platform.os === "android"
 }

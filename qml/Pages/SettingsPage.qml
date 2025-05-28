@@ -194,6 +194,14 @@ Page {
                 onClicked: UserSettings.enableWood = checked
             }
 
+            SwitchDelegate {
+                width: parent.width
+                height: settingsPage.delegateHeight
+                text: qsTr("Missclick correction")
+                checked: UserSettings.missClickCorrection
+                onClicked: UserSettings.missClickCorrection = checked
+            }
+
             MenuSeparator {
                 width: parent.width
             }
