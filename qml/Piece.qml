@@ -36,11 +36,11 @@ Item {
     Image {
         id: candlePiece
         source: {
-            if (piece.model.player === 1) {
-                return piece.model.isKing ? "qrc:/icons/candle_red_off.png" : "qrc:/icons/candle_red_on.png"
-            } else {
-                return piece.model.isKing ? "qrc:/icons/candle_blue_off.png" : "qrc:/icons/candle_blue_on.png"
-            }
+            let baseColor = piece.model.player === 1 ? "red" : "blue"
+            let kingSuffix = piece.model.isKing ? "_king" : ""
+            let candleState = AudioLevelMonitor.shouldTurnOffCandle ? "_off" : "_on"
+
+            return `qrc:/icons/candle_${baseColor}${kingSuffix}${candleState}.png`
         }
         x: parent.width / 2 - width / 2 - parent.width * 0.05
         y: parent.height / 2 - height / 2 - parent.height * 0.15

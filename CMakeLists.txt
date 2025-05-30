@@ -23,11 +23,13 @@ set(SOURCES
     src/main.cpp
     src/helper.cpp
     src/aiplayer.cpp
+    src/audiolevelmonitor.cpp
 )
 
 set(HEADERS
     include/helper.h
     include/aiplayer.h
+    include/audiolevelmonitor.h
 )
 
 set(QML_FILES
