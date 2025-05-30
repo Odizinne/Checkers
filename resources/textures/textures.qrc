@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/textures">
         <file>wood.jpg</file>
+        <file>cake_board.png</file>
     </qresource>
 </RCC>

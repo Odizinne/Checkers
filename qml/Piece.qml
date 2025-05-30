@@ -33,8 +33,40 @@ Item {
         NumberAnimation { duration: 300; easing.type: Easing.InOutQuad }
     }
 
+    Image {
+        id: candlePiece
+        source: piece.model.player === 1 ? "qrc:/icons/candle_red.png" : "qrc:/icons/candle_blue.png"
+        anchors.centerIn: parent
+        visible: {
+            //
+            return true
+            //
+            var today = new Date()
+            return today.getMonth() === 5 && today.getDate() === 16
+        }
+        width: Math.min(parent.width, parent.height) * 1.8
+        height: width
+        scale: (piece.model.isAlive && !GameLogic.isResetting) ? 1 : 0
+        opacity: (piece.model.isAlive && !GameLogic.isResetting) ? 1 : 0
+
+        Behavior on scale {
+            NumberAnimation {
+                duration: GameLogic.isResetting ? 300 : 300
+                easing.type: GameLogic.isResetting ? Easing.OutQuad : Easing.InBack
+            }
+        }
+
+        Behavior on opacity {
+            NumberAnimation {
+                duration: GameLogic.isResetting ? 300 : 300
+                easing.type: GameLogic.isResetting ? Easing.OutQuad : Easing.InQuad
+            }
+        }
+    }
+
     Rectangle {
         id: outerCircle
+        visible: !candlePiece.visible
         anchors.fill: parent
         radius: width / 2
         color: piece.model.isKing ? "#F0D788" :

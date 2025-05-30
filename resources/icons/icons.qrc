@@ -1,6 +1,8 @@
 <RCC>
     <qresource prefix="/icons">
         <file>icon.png</file>
+        <file>candle_red.png</file>
+        <file>candle_blue.png</file>
         <file>menu.svg</file>
         <file>sun.svg</file>
         <file>moon.svg</file>

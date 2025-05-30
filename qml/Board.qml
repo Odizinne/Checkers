@@ -185,6 +185,19 @@ Rectangle {
         layer.enabled: true
     }
 
+    Image {
+        id: cakeBoard
+        source: "qrc:/textures/cake_board.png"
+        anchors.fill: grid
+        visible: {
+            //
+            return true
+            //
+            var today = new Date()
+            return today.getMonth() === 5 && today.getDate() === 16
+        }
+    }
+
     // Board squares
     Grid {
         id: grid
@@ -223,6 +236,7 @@ Rectangle {
                 required property var model
 
                 Rectangle {
+                    visible: !cakeBoard.visible
                     anchors.fill: parent
                     color: (boardRec.model.row + boardRec.model.col) % 2 === 0 ? "#F0D9B5" : "#B58863"
 
