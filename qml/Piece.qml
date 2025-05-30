@@ -35,8 +35,15 @@ Item {
 
     Image {
         id: candlePiece
-        source: piece.model.player === 1 ? "qrc:/icons/candle_red.png" : "qrc:/icons/candle_blue.png"
-        anchors.centerIn: parent
+        source: {
+            if (piece.model.player === 1) {
+                return piece.model.isKing ? "qrc:/icons/candle_red_off.png" : "qrc:/icons/candle_red_on.png"
+            } else {
+                return piece.model.isKing ? "qrc:/icons/candle_blue_off.png" : "qrc:/icons/candle_blue_on.png"
+            }
+        }
+        x: parent.width / 2 - width / 2 - parent.width * 0.05
+        y: parent.height / 2 - height / 2 - parent.height * 0.15
         visible: {
             //
             return true
