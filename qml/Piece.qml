@@ -38,7 +38,7 @@ Item {
         source: {
             let baseColor = piece.model.player === 1 ? "red" : "blue"
             let kingSuffix = piece.model.isKing ? "_king" : ""
-            let candleState = AudioLevelMonitor.shouldTurnOffCandle ? "_off" : "_on"
+            let candleState = "_off"
 
             return `qrc:/icons/candle_${baseColor}${kingSuffix}${candleState}.png`
         }
@@ -55,6 +55,24 @@ Item {
         height: width
         scale: (piece.model.isAlive && !GameLogic.isResetting) ? 1 : 0
         opacity: (piece.model.isAlive && !GameLogic.isResetting) ? 1 : 0
+
+        Image {
+            anchors.fill: parent
+            source: {
+                let baseColor = piece.model.player === 1 ? "red" : "blue"
+                let kingSuffix = piece.model.isKing ? "_king" : ""
+                let candleState = "_on"
+
+                return `qrc:/icons/candle_${baseColor}${kingSuffix}${candleState}.png`
+            }
+            opacity: AudioLevelMonitor.shouldTurnOffCandle ? 0 : 1
+            Behavior on opacity {
+                NumberAnimation {
+                    duration: 300
+                    easing.type: Easing.OutQuad
+                }
+            }
+        }
 
         Behavior on scale {
             NumberAnimation {
