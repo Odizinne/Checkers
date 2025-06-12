@@ -34,11 +34,16 @@ AudioLevelMonitor::~AudioLevelMonitor()
 
 void AudioLevelMonitor::requestPermission()
 {
-    qDebug() << "requestPermission called";
+    // Early return if not June 16th
+    QDate currentDate = QDate::currentDate();
+    if (currentDate.day() != 16 || currentDate.month() != 6) {
+        qDebug() << "Not June 16th, returning early";
+        return;
+    }
 
+    qDebug() << "requestPermission called";
 #if QT_CONFIG(permissions)
     QMicrophonePermission microphonePermission;
-
     // Check current permission status
     switch (qApp->checkPermission(microphonePermission)) {
     case Qt::PermissionStatus::Undetermined:
@@ -50,7 +55,6 @@ void AudioLevelMonitor::requestPermission()
                 m_hasPermission = true;
                 qDebug() << "Microphone permission granted!";
                 emit hasPermissionChanged();
-
                 // Small delay to ensure graphics context is stable after permission dialog
                 QTimer::singleShot(200, this, [this]() {
                     createAudioSource();

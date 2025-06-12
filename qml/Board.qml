@@ -191,7 +191,6 @@ Rectangle {
         anchors.fill: grid
         visible: {
             //
-            return true
             //
             var today = new Date()
             return today.getMonth() === 5 && today.getDate() === 16

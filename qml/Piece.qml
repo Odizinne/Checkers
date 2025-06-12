@@ -46,7 +46,6 @@ Item {
         y: parent.height / 2 - height / 2 - parent.height * 0.15
         visible: {
             //
-            return true
             //
             var today = new Date()
             return today.getMonth() === 5 && today.getDate() === 16
