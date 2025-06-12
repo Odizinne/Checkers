@@ -1,4 +1,4 @@
-#include "AudioLevelMonitor.h"
+#include "audiolevelmonitor.h"
 #include <QAudioFormat>
 #include <QDebug>
 
