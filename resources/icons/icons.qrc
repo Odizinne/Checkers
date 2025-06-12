@@ -2,9 +2,14 @@
     <qresource prefix="/icons">
         <file>icon.png</file>
         <file>candle_red_on.png</file>
-	<file>candle_red_off.png</file>
+	    <file>candle_red_off.png</file>
         <file>candle_blue_on.png</file>
         <file>candle_blue_off.png</file>
+        <file>candle_red_king_on.png</file>
+        <file>candle_blue_king_on.png</file>
+        <file>candle_red_king_off.png</file>
+        <file>candle_blue_king_off.png</file>
+        <file>candle_smoke.png</file>
         <file>menu.svg</file>
         <file>sun.svg</file>
         <file>moon.svg</file>

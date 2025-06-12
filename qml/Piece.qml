@@ -58,14 +58,38 @@ Item {
 
         Image {
             anchors.fill: parent
+            source: "qrc:/icons/candle_smoke.png"
+            opacity: AudioLevelMonitor.shouldTurnOffCandle ? 1 : 0
+            Behavior on opacity {
+                NumberAnimation {
+                    duration: 300
+                    easing.type: Easing.OutQuad
+                }
+            }
+        }
+
+        Image {
+            anchors.fill: parent
             source: {
                 let baseColor = piece.model.player === 1 ? "red" : "blue"
                 let kingSuffix = piece.model.isKing ? "_king" : ""
                 let candleState = "_on"
-
                 return `qrc:/icons/candle_${baseColor}${kingSuffix}${candleState}.png`
             }
-            opacity: AudioLevelMonitor.shouldTurnOffCandle ? 0 : 1
+            opacity: AudioLevelMonitor.shouldTurnOffCandle ? 0 : flickerOpacity
+
+            property real flickerOpacity: 1.0
+
+            Timer {
+                id: flickerTimer
+                interval: 300
+                repeat: true
+                running: !AudioLevelMonitor.shouldTurnOffCandle
+                onTriggered: {
+                    parent.flickerOpacity = 0.6 + Math.random() * 0.4
+                }
+            }
+
             Behavior on opacity {
                 NumberAnimation {
                     duration: 300
