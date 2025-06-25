@@ -170,7 +170,7 @@ Page {
         id: menu
         height: parent.height
         edge: Qt.LeftEdge
-        width: 230
+        width: gamePage.height > gamePage.width ? gamePage.width * 0.8 : 230
         Material.roundedScale: Material.NotRounded
 
         Column {
