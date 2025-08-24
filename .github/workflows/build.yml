@@ -104,7 +104,7 @@ jobs:
         uses: jurplel/install-qt-action@v3
         with:
           aqtversion: '==3.1.*'
-          version: '6.9.0'
+          version: ${{ env.QT_VERSION }}
           host: 'linux'
           target: 'desktop'
           arch: 'linux_gcc_64'
