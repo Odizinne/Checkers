@@ -5,7 +5,7 @@ on:
     branches:
       - main
 env:
-  QT_VERSION: '6.9.0'
+  QT_VERSION: '6.10.0'
 jobs:
   build-windows:
     runs-on: windows-latest
