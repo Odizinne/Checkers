@@ -87,16 +87,6 @@ jobs:
 
   build-android:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        include:
-          - qt_arch: android_arm64_v8a
-            android_abi: arm64-v8a
-            arch_name: arm64
-          - qt_arch: android_armv7
-            android_abi: armeabi-v7a
-            arch_name: armv7
-  
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -127,7 +117,7 @@ jobs:
         with:
           version: ${{ env.QT_VERSION }}
           target: 'android'
-          arch: ${{ matrix.qt_arch }}
+          arch: android_arm64_v8a
           modules: 'qtmultimedia qtsensors'
           cache: true
           add-tools-to-path: true
@@ -171,9 +161,9 @@ jobs:
           cd build
        
           if [ -f "$KEYSTORE_PATH" ] && [ -n "$KEYSTORE_PASSWORD" ]; then
-            echo "🔐 BUILDING RELEASE APK for ${{ matrix.android_abi }} (will sign and align manually)"
+            echo "🔐 BUILDING RELEASE APK for arm64-v8a (will sign and align manually)"
           else
-            echo "🔓 BUILDING DEBUG APK for ${{ matrix.android_abi }}"
+            echo "🔓 BUILDING DEBUG APK for arm64-v8a"
           fi
        
           cmake .. \
@@ -183,7 +173,7 @@ jobs:
             -DQT_HOST_PATH="$QT_HOST_PATH" \
             -DANDROID_SDK_ROOT="$ANDROID_SDK_ROOT" \
             -DANDROID_NDK="$ANDROID_NDK_ROOT" \
-            -DANDROID_ABI=${{ matrix.android_abi }} \
+            -DANDROID_ABI=arm64-v8a \
             -DANDROID_PLATFORM=android-24 \
             -DCMAKE_BUILD_TYPE=Release
        
@@ -248,7 +238,7 @@ jobs:
           echo "Copying and renaming signed APK:"
           mkdir -p apk-output
           # Copy the signed release APK
-          find build -name "*release.apk" -type f -exec cp {} apk-output/Checkers_${{ matrix.arch_name }}.apk \;
+          find build -name "*release.apk" -type f -exec cp {} apk-output/Checkers_arm64.apk \;
           ls -la apk-output/
 
       - name: Verify APK signing
@@ -292,7 +282,7 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: Checkers_Android_${{ matrix.arch_name }}
+          name: Checkers_Android_arm64
           path: apk-output/*.apk
 
   build-linux:
